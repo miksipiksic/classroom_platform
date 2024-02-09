@@ -1,0 +1,205 @@
+<div class="container mt-5">
+
+    <div class="form-group">
+        <label for="userType" class="mr-2">Ја сам: </label>
+    <button type="button" class="btn btn-primary" (click)="tipUcenik()">Ученик</button>
+    <button type="button" class="btn btn-primary" (click)="tipNastavnik()">Наставник</button>
+  
+    </div>
+
+    <!-- Registracija ucenika -->
+    <div *ngIf="userUcenik">
+        <form>
+          <div class="form-group">
+            <label for="korisnickoIme">Корисничко име:</label>
+            <input type="text" class="form-control" id="korisnickoIme" [(ngModel)]="user.korisnickoIme" name="korisnickoIme" required>
+          </div>
+
+          <div class="form-group">
+            <label for="lozinka">Лозинка:</label>
+            <input type="password" class="form-control" id="lozinka" [(ngModel)]="user.lozinka" name="lozinka" required>
+          </div>
+
+          <div class="form-group">
+            <label for="bezbedonosnoPitanje">Безбедоносно питање:</label>
+            <input type="text" class="form-control" id="bezbedonosnoPitanje" [(ngModel)]="user.bezbedonosnoPitanje" name="bezbedonosnoPitanje" required>
+          </div>
+
+          <div class="form-group">
+            <label for="odgovor">Одговор:</label>
+            <input type="text" class="form-control" id="odgovor" [(ngModel)]="user.odgovor" name="odgovor" required>
+          </div>
+
+          <div class="form-group">
+            <label for="ime">Име:</label>
+            <input type="text" class="form-control" id="ime" [(ngModel)]="user.ime" name="ime" required>
+          </div>
+
+          <div class="form-group">
+            <label for="prezime">Презиме:</label>
+            <input type="text" class="form-control" id="prezime" [(ngModel)]="user.prezime" name="prezime" required>
+          </div>
+
+          <div class="form-group">
+            <label for="pol">Пол:</label>
+            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='M' required>М
+            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='Z' required>Ж
+          </div>
+
+          <div class="form-group">
+            <label for="adresa">Адреса:</label>
+            <input type="text" class="form-control" id="adresa" [(ngModel)]="user.adresa" name="adresa" required>
+          </div>
+
+          <div class="form-group">
+            <label for="kontaktTelefon">Контакт телефон:</label>
+            <input type="text" class="form-control" id="kontaktTelefon" [(ngModel)]="user.kontaktTelefon" name="kontaktTelefon" required>
+          </div>
+
+          <div class="form-group">
+            <label for="imejl">И-мејл адреса:</label>
+            <input type="text" class="form-control" id="imejl" [(ngModel)]="user.imejl" name="imejl" required>
+          </div>
+
+          <div class="form-group">
+            <label for="profilnaSlika">Профилна слика:</label>
+            <input type="file" class="form-control-file" id="profilnaSlika" (change)="onImageFileSelected($event)" accept="image/*">
+          </div>
+
+          <div class="form-group">
+            <label for="tipSkole">Тип школе:</label>
+            <select class="form-control" id="tipSkole" name="tipSkole" [(ngModel)]="user.tipSkole" required>
+                <option value="" disabled>Изабери тип школе</option>
+                <option value="osnovna">основна</option>
+                <option value="srednja-gimnazija">средња-гимназија</option>
+                <option value="srednja-strucna">средња-стручна</option>
+                <option value="srednja-umetnicka">средња-уметничка</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="razred">Разред:</label>
+            <select class="form-control" id="razred" name="razred" [(ngModel)]="user.razred" required>
+                <option value="" disabled>Изабери разред</option>
+                <option *ngIf="" value="osnovna">основна</option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option *ngIf="user.tipSkole === 'osnovna'" value='5'>5</option>
+                <option *ngIf="user.tipSkole === 'osnovna'" value='6'>6</option>
+                <option *ngIf="user.tipSkole === 'osnovna'" value='7'>7</option>
+                <option *ngIf="user.tipSkole === 'osnovna'" value='8'>8</option>
+            </select>
+          </div>
+
+          
+          <button type="submit" class="btn btn-primary" (click)="registerUcenik()">Региструј се</button>
+        </form>
+    </div>
+
+    <div *ngIf="userNastavnik">
+        <form>
+          <div class="form-group">
+            <label for="korisnickoIme">Корисничко име:</label>
+            <input type="text" class="form-control" id="korisnickoIme" [(ngModel)]="user.korisnickoIme" name="korisnickoIme" required>
+          </div>
+
+          <div class="form-group">
+            <label for="lozinka">Лозинка:</label>
+            <input type="password" class="form-control" id="lozinka" [(ngModel)]="user.lozinka" name="lozinka" required>
+          </div>
+
+          <div class="form-group">
+            <label for="bezbedonosnoPitanje">Безбедоносно питање:</label>
+            <input type="text" class="form-control" id="bezbedonosnoPitanje" [(ngModel)]="user.bezbedonosnoPitanje" name="bezbedonosnoPitanje" required>
+          </div>
+
+          <div class="form-group">
+            <label for="odgovor">Одговор:</label>
+            <input type="text" class="form-control" id="odgovor" [(ngModel)]="user.odgovor" name="odgovor" required>
+          </div>
+
+          <div class="form-group">
+            <label for="ime">Име:</label>
+            <input type="text" class="form-control" id="ime" [(ngModel)]="user.ime" name="ime" required>
+          </div>
+
+          <div class="form-group">
+            <label for="prezime">Презиме:</label>
+            <input type="text" class="form-control" id="prezime" [(ngModel)]="user.prezime" name="prezime" required>
+          </div>
+
+          <div class="form-group">
+            <label for="pol">Пол:</label>
+            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='M' required>М
+            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='Z' required>Ж
+          </div>
+
+          <div class="form-group">
+            <label for="adresa">Адреса:</label>
+            <input type="text" class="form-control" id="adresa" [(ngModel)]="user.adresa" name="adresa" required>
+          </div>
+
+          <div class="form-group">
+            <label for="kontaktTelefon">Контакт телефон:</label>
+            <input type="text" class="form-control" id="kontaktTelefon" [(ngModel)]="user.kontaktTelefon" name="kontaktTelefon" required>
+          </div>
+
+          <div class="form-group">
+            <label for="imejl">И-мејл адреса:</label>
+            <input type="text" class="form-control" id="imejl" [(ngModel)]="user.imejl" name="imejl" required>
+          </div>
+
+          <div class="form-group">
+            <label for="profilnaSlika">Профилна слика:</label>
+            <input type="file" class="form-control-file" id="profilnaSlika" (change)="onImageFileSelected($event)" accept="image/*">
+          </div>
+
+          <div class="form-group">
+            <label for="biografija">Биографија:</label>
+            <input type="file" class="form-control-file" id="biografija" (change)="onPdfFileSelected($event)" accept=".pdf" required>
+          </div>
+
+          <div class="form-group">
+            <label for="predmet">Које предмете желите да подучавате?</label>
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Математика
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Физика
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Хемија
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Информатика
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Програмирања
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Српски језик и књижевност
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Енглески језик
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Немачки језик
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Италијански језик
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Француски језик
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Шпански језик
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Латински језик
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Биологија
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Историја
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Географија
+            <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Свет око нас
+            <input type="checkbox"  (change)="onCheckboxChange(dodatakPredmet, $event)">
+            <input type="text" class="form-control" id="dodatakPredmet" [(ngModel)]="dodatakPredmet" name="dodatakPredmet">
+                
+          </div>
+          <div class="form-group">
+            <label for="uzrast">Ком узрасту желите да предајете?</label>
+            <input type="checkbox" (change)="onCheckboxPredmetChange('osnovna:1-4', $event)">Основна школа 1-4. разред
+            <input type="checkbox" (change)="onCheckboxPredmetChange('osnovna:5-8', $event)">Основна школа 5-8. разред
+            <input type="checkbox" (change)="onCheckboxPredmetChange('srednja', $event)">Средња школа
+          </div>
+          
+          <div>
+            <label for="upoznavanjeSaSajtom">Где сте чули за наш сајт?</label>
+            <input type="text" class="form-control" id="upoznavanjeSaSajtom" [(ngModel)]="user.upoznavanjeSaSajtom" name="upoznavanjeSaSajtom" required>
+          </div>
+          
+
+            
+
+          
+          <button type="submit" class="btn btn-primary" (click)="registerUcenik()">Региструј се</button>
+        </form>
+    </div>
+</div>
