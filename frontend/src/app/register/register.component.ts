@@ -118,8 +118,6 @@ export class RegisterComponent {
        return;
     }
 
-    if (this.errorDetected) return;
-    alert(this.message)
 
     if (this.imageUpload == "") {
       this.user.profilnaSlika = this.defaultProfilnaSkola;
@@ -127,40 +125,34 @@ export class RegisterComponent {
 
     this.userService.postojeciKorisnikIme(this.user.korisnickoIme).subscribe(
       data => {
-        alert(data.message)
-        if (data.message == "found")  {
+        alert(data.korisnickoIme);
+        alert(this.user.korisnickoIme)
+        if (data.korisnickoIme == this.user.korisnickoIme)  {
           this.errorDetected = true;
           this.message = "Постоји корисник са датим корисничким именом."
-          return;
-        } 
+        } else {
+          this.userService.postojeciKorisnikImejl(this.user.imejl).subscribe(
+            data => {
+              
+              if (data.imejl == this.user.imejl)  {
+                this.errorDetected = true;
+                this.message = "Постоји корисник са датим имејлом.";
+              } else {
+                if (!this.errorDetected) {
+                  alert("Dodaje se")
+                  this.serviceUcenikRegister();
+            
+                }
+              }
+            
+            }
+          )
+        }
       
       }
     )
-    alert(this.message)
-    if (this.errorDetected) return;
-
-    this.userService.postojeciKorisnikImejl(this.user.imejl).subscribe(
-      data => {
-        alert(data.message)
-        if (data.message == "found")  {
-          this.errorDetected = true;
-          this.message = "Постоји корисник са датим имејлом.";
-          return;
-        } 
-      
-      }
-    )
-    alert(this.message)
-    if (!this.errorDetected) {
-      this.serviceUcenikRegister();
-
-    }
     
-    
-
-   // this.user.lozinka = await hashPassword(this.user.lozinka);
-
-   
+   // this.user.lozinka = await hashPassword(this.user.lozinka); 
   }
 
   serviceUcenikRegister() {
@@ -191,8 +183,7 @@ export class RegisterComponent {
 
     this.userService.postojeciKorisnikIme(this.user.korisnickoIme).subscribe(
       data => {
-        alert(data.message)
-        if (data.message == "found")  {
+        if (data.korisnickoIme == this.user.korisnickoIme)  {
           this.errorDetected = true;
           this.message = "Постоји корисник са датим корисничким именом."
           return;
@@ -203,8 +194,9 @@ export class RegisterComponent {
     if (this.errorDetected) return;
     this.userService.postojeciKorisnikImejl(this.user.imejl).subscribe(
       data => {
-        alert(data.message)
-        if (data.message == "found")  {
+        alert(data.imejl);
+        alert(this.user.imejl);
+        if (data.imejl == this.user.imejl)  {
           this.errorDetected = true;
           this.message = "Постоји корисник са датим имејлом."
           return;
@@ -213,6 +205,7 @@ export class RegisterComponent {
       }
     )
     if (!this.errorDetected) {
+      alert("Greska!!!")
       this.serviceNastavnikRegister();
     }
         

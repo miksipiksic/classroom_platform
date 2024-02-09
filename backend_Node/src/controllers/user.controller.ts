@@ -59,7 +59,7 @@ export class UserController {
 
         User.findOne( {korisnickoIme: korisnickoIme  }).then(
                 user=>{
-                    res.json({message: "found"})
+                    res.json(user)
                 }
             ).catch(err=>console.log(err))
     }
@@ -70,7 +70,7 @@ export class UserController {
 
         User.findOne( {imejl: imejl  }).then(
             user=>{
-                res.json({message: "found"})
+                res.json(user)
             }
         ).catch(err=>console.log(err))
     }
@@ -94,7 +94,7 @@ export class UserController {
             res.json({message: "ok"})
         }).catch((err)=>{
             console.log(err)
-            res.json({message: "Fail"})
+            res.json({message: "fail"})
         })
     }
 

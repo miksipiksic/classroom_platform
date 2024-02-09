@@ -25,14 +25,14 @@ export class UserService {
     const data = {
       korisnickoIme: korisnickoIme
     }
-    return this.http.post<Message>('http://localhost:4000/user/postojeciKorisnikIme', data);
+    return this.http.post<User>('http://localhost:4000/user/postojeciKorisnikIme', data);
   }
 
   postojeciKorisnikImejl(imejl: string) {
     const data = {
       imejl: imejl
     }
-    return this.http.post<Message>('http://localhost:4000/user/postojeciKorisnikImejl', data);
+    return this.http.post<User>('http://localhost:4000/user/postojeciKorisnikImejl', data);
   }
 
   nadjiLozinku(korisnickoIme: string) {

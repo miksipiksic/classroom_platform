@@ -58,13 +58,13 @@ class UserController {
         this.postojeciKorisnikIme = (req, res) => {
             let korisnickoIme = req.body.korisnickoIme;
             user_1.default.findOne({ korisnickoIme: korisnickoIme }).then(user => {
-                res.json({ message: "found" });
+                res.json(user);
             }).catch(err => console.log(err));
         };
         this.postojeciKorisnikImejl = (req, res) => {
             let imejl = req.body.imejl;
             user_1.default.findOne({ imejl: imejl }).then(user => {
-                res.json({ message: "found" });
+                res.json(user);
             }).catch(err => console.log(err));
         };
         this.nadjiLozinku = (req, res) => {
