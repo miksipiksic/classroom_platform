@@ -1,0 +1,7 @@
+/backend_Node/dist
+/backend_node/node_modules
+/backend_Node/package-lock.json
+/backend_Node/package.json
+/backend_Node/tsconfig.json
+/frontend/.angular
+/frontend/node_modules
