@@ -1,0 +1,7 @@
+.is-valid {
+    outline-color: initial;
+}
+
+.is-invalid {
+    outline-color: red;
+}

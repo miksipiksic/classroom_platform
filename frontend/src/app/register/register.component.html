@@ -9,15 +9,16 @@
 
     <!-- Registracija ucenika -->
     <div *ngIf="userUcenik">
-        <form>
+        <form id="registerFormUcenik">
           <div class="form-group">
             <label for="korisnickoIme">Корисничко име:</label>
-            <input type="text" class="form-control" id="korisnickoIme" [(ngModel)]="user.korisnickoIme" name="korisnickoIme" required>
+            <input type="text" class="form-control" id="korisnickoIme" [ngStyle]="{'color':outlineColor}" [(ngModel)]="user.korisnickoIme" (ngModelChange)="onUsernameChange($event)" name="korisnickoIme" required>
+
           </div>
 
           <div class="form-group">
             <label for="lozinka">Лозинка:</label>
-            <input type="password" class="form-control" id="lozinka" [(ngModel)]="user.lozinka" name="lozinka" required>
+            <input type="password" class="form-control" id="lozinka" [(ngModel)]="user.lozinka" (ngModelChange)="onPasswordChange($event)" name="lozinka" required>
           </div>
 
           <div class="form-group">
@@ -58,7 +59,7 @@
 
           <div class="form-group">
             <label for="imejl">И-мејл адреса:</label>
-            <input type="text" class="form-control" id="imejl" [(ngModel)]="user.imejl" name="imejl" required>
+            <input type="text" class="form-control" id="imejl" [(ngModel)]="user.imejl" (ngModelChange)="onEmailChange($event)" name="imejl" required>
           </div>
 
           <div class="form-group">
@@ -97,6 +98,8 @@
           <button type="submit" class="btn btn-primary" (click)="registerUcenik()">Региструј се</button>
         </form>
     </div>
+
+    
 
     <div *ngIf="userNastavnik">
         <form>

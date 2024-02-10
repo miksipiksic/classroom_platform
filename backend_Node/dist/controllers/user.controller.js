@@ -80,7 +80,7 @@ class UserController {
                 res.json({ message: "ok" });
             }).catch((err) => {
                 console.log(err);
-                res.json({ message: "Fail" });
+                res.json({ message: "fail" });
             });
         };
         this.dohvatiKorisnika = (req, res) => {

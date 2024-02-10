@@ -6,6 +6,7 @@ import User from '../models/user';
 
 import { RegistrationRequestService } from '../services/registration-request.service';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 
@@ -55,6 +56,7 @@ const convertBase64 = (file: File) => {
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]{3,})(?=.*\d)(?=.*[@$!%*?&])[A-Za-z][A-Za-z\d@$!%*?&]{5,9}$/;
 
+const emailRegex = /^[a-zA-Z][a-zA-Z\d]{19}@[a-zA-Z]{15}\.com$/;
 
 
 @Component({
@@ -63,8 +65,15 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]{3,})(?=.*\d)(?=.*[@$!%*?&])[A-Za-z
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private userService:UserService, private requestService: RegistrationRequestService, private http:HttpClient) {}
-
+  constructor(private userService:UserService, private requestService: RegistrationRequestService, private http:HttpClient
+    , private formBuilder: FormBuilder) {
+      this.loginForm = this.formBuilder.group({
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+        email: ['', [Validators.required]]
+      })
+    }
+    loginForm: FormGroup | undefined;
   ngOnInit() : void {
     this.loadImage('../assets/img/trainers/default.png');
   }
@@ -97,6 +106,7 @@ export class RegisterComponent {
   defaultProfilnaSkola: string = "";
 
   errorDetected: boolean = false;
+  usernameError: boolean = false;
   message: string = "";
 
   tipUcenik() {
@@ -112,45 +122,11 @@ export class RegisterComponent {
   async registerUcenik() {
 
    // alert(this.user.lozinka)
-    if (!passwordRegex.test(this.user.lozinka)) {
-       this.errorDetected = true;
-       this.message = "Погрешан формат лозинке.";
-       return;
-    }
-
-
-    if (this.imageUpload == "") {
-      this.user.profilnaSlika = this.defaultProfilnaSkola;
-    }
-
-    this.userService.postojeciKorisnikIme(this.user.korisnickoIme).subscribe(
-      data => {
-        alert(data.korisnickoIme);
-        alert(this.user.korisnickoIme)
-        if (data.korisnickoIme == this.user.korisnickoIme)  {
-          this.errorDetected = true;
-          this.message = "Постоји корисник са датим корисничким именом."
-        } else {
-          this.userService.postojeciKorisnikImejl(this.user.imejl).subscribe(
-            data => {
-              
-              if (data.imejl == this.user.imejl)  {
-                this.errorDetected = true;
-                this.message = "Постоји корисник са датим имејлом.";
-              } else {
+                alert(this.errorDetected);
                 if (!this.errorDetected) {
                   alert("Dodaje se")
                   this.serviceUcenikRegister();
-            
                 }
-              }
-            
-            }
-          )
-        }
-      
-      }
-    )
     
    // this.user.lozinka = await hashPassword(this.user.lozinka); 
   }
@@ -227,6 +203,68 @@ export class RegisterComponent {
       )
   }
 
+  outlineColor:string = 'initial';
+
+  onUsernameChange(value: string): void {
+    this.userService.postojeciKorisnikIme(value).subscribe(
+      data => {
+        if (data.korisnickoIme == value)  {
+          this.errorDetected = true;
+          this.usernameError = true;
+          this.message = "Постоји корисник са датим корисничким именом."
+          this.outlineColor = 'red';
+        } else {
+          alert("Ispravno")
+          this.usernameError = false;
+          this.errorDetected = false;
+          this.message = "";
+          this.outlineColor = 'initial';
+        }
+      
+      }
+    )
+  }
+
+  onEmailChange(value: string): void {
+    if (!emailRegex.test(value)) {
+      this.errorDetected = true;
+      this.message = "Погрешан формат имејл адресе.";
+      } else {
+        this.errorDetected = false;
+        this.message = "";
+        alert("Ispravno")
+      }
+
+    this.userService.postojeciKorisnikImejl(value).subscribe(
+      data => {
+        if (data.imejl == value)  {
+          this.errorDetected = true;
+          this.message = "Постоји корисник са датим имејлом."
+          
+        } else {
+          this.errorDetected = false;
+          this.message = "";
+          alert("Ispravno")
+        }
+      
+      }
+    )
+  }
+
+  onPasswordChange(value:string):void {
+    if(!passwordRegex.test(value)) {
+    this.errorDetected = true;
+    this.message = "Погрешан формат лозинке.";
+    
+    } else {
+      this.errorDetected = false;
+      this.message = "";
+      alert("Ispravno")
+    }
+  }
+
+
+
   onCheckboxChange(predmet: string, event: any) {
     if(event.target.checked) {
       this.user.predmet.push(predmet);
@@ -298,5 +336,8 @@ export class RegisterComponent {
       return; // greska
     }
   } 
+
+
+  
 
 }
