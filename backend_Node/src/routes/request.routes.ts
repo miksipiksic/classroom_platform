@@ -6,4 +6,9 @@ requestRouter.route('/registerNastavnik').post(
     (req, res) => new RequestController().registerNastavnik(req, res)
 )
 
+requestRouter.route('/dohvatiZahteve').get(
+    (req, res) => new RequestController().dohvatiZahteve(req, res)
+)
+
+
 export default requestRouter;

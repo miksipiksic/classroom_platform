@@ -1,6 +1,5 @@
 import * as express from 'express';
 import Request from '../models/request'
-
 export class RequestController {
 
     registerNastavnik = (req: express.Request, res: express.Response) => {
@@ -46,6 +45,14 @@ export class RequestController {
         new Request(nastavnik).save().then(ok => {
             res.json({message: "ok"})
         }).catch(err=> {
+            console.log(err)
+        })
+    }
+
+    dohvatiZahteve = (req: express.Request, res: express.Response) => {
+        Request.find({}).then(reqs=>{
+            res.json(reqs)
+        }).catch((err)=>{
             console.log(err)
         })
     }

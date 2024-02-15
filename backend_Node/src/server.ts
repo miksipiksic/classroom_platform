@@ -6,7 +6,13 @@ import userRouter from './routes/user.routes';
 import requestRouter from './routes/request.routes';
 
 
+
+
 const app = express();
+
+// Increase payload size limit (e.g., 10MB)
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(cors());
 app.use(bodyParser.json());

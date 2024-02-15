@@ -9,80 +9,149 @@
 
     <!-- Registracija ucenika -->
     <div *ngIf="userUcenik">
-        <form id="registerFormUcenik">
+        <form id="registerFormUcenik" #registerFormUcenik="ngForm">
           <div class="form-group">
             <label for="korisnickoIme">Корисничко име:</label>
-            <input type="text" class="form-control" id="korisnickoIme" [ngStyle]="{'color':outlineColor}" [(ngModel)]="user.korisnickoIme" (ngModelChange)="onUsernameChange($event)" name="korisnickoIme" required>
-
+            <input type="text" class="form-control" id="korisnickoIme" (input)="onUsernameChange($event)"  [(ngModel)]="user.korisnickoIme" name="korisnickoIme" required
+              #korisnickoIme="ngModel" [class.is-invalid]="(korisnickoIme.invalid && korisnickoIme.touched) || usernameError">
+              <div class="invalid-feedback" *ngIf="(korisnickoIme.invalid && korisnickoIme.touched) && korisnickoIme.errors">
+                <p *ngIf="korisnickoIme.errors['required']">Морате унети корисничко име.</p>
+            </div>
+            <div class="invalid-feedback" *ngIf="usernameError">
+              <p>{{usernameMessage}}</p>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="lozinka">Лозинка:</label>
-            <input type="password" class="form-control" id="lozinka" [(ngModel)]="user.lozinka" (ngModelChange)="onPasswordChange($event)" name="lozinka" required>
+            <input type="password" class="form-control" id="lozinka" [(ngModel)]="user.lozinka" name="lozinka" required
+            #lozinka="ngModel" pattern="^(?=.*[A-Z])(?=.*[a-z]{3,})(?=.*\d)(?=.*[@$!%*.?&])[A-Za-z][A-Za-z\d@$!.%*?&]{5,9}$" [class.is-invalid] = "lozinka.invalid && lozinka.touched">
+            <div class="invalid-feedback" *ngIf="(lozinka.invalid && lozinka.touched) && lozinka.errors">
+              <p *ngIf="lozinka.errors['pattern']"> Лозинка мора имати минимално 6 карактера. <br>
+              Лозинка мора имати максимално 10 карактера. <br>
+              Лозинка мора имати бар једно велико слово, бар три мала слова, један број и један специјални карактер (@$!.%*?&). <br>
+              Лозинка мора почињати великим словом.</p>
+              <p *ngIf="lozinka.errors['required']">Морате унети лозинку.</p>
+              
+          </div>
           </div>
 
           <div class="form-group">
             <label for="bezbedonosnoPitanje">Безбедоносно питање:</label>
-            <input type="text" class="form-control" id="bezbedonosnoPitanje" [(ngModel)]="user.bezbedonosnoPitanje" name="bezbedonosnoPitanje" required>
+            <input type="text" class="form-control" id="bezbedonosnoPitanje" [(ngModel)]="user.bezbedonosnoPitanje" name="bezbedonosnoPitanje" required
+            #pitanje="ngModel" [class.is-invalid]="pitanje.invalid && pitanje.touched">
+            <div class="invalid-feedback" *ngIf="(pitanje.invalid && pitanje.touched) && pitanje.errors">
+              <p *ngIf="pitanje.errors['required']">Морате унети безбедоносно питање.</p>
+              
+          </div>
           </div>
 
           <div class="form-group">
             <label for="odgovor">Одговор:</label>
-            <input type="text" class="form-control" id="odgovor" [(ngModel)]="user.odgovor" name="odgovor" required>
+            <input type="text" class="form-control" id="odgovor" [(ngModel)]="user.odgovor" name="odgovor" required
+            #odgovor="ngModel" [class.is-invalid]="odgovor.invalid && odgovor.touched">
+            <div class="invalid-feedback" *ngIf="(odgovor.invalid && odgovor.touched) && odgovor.errors">
+              <p *ngIf="odgovor.errors['required']">Морате унети одговор на безбедоносно питање.</p>              
+          </div>
           </div>
 
           <div class="form-group">
             <label for="ime">Име:</label>
-            <input type="text" class="form-control" id="ime" [(ngModel)]="user.ime" name="ime" required>
+            <input type="text" class="form-control" id="ime" [(ngModel)]="user.ime" name="ime" required
+            #ime="ngModel" [class.is-invalid]="ime.invalid && ime.touched">
+            <div class="invalid-feedback" *ngIf="(ime.invalid && ime.touched) && ime.errors">
+              <p *ngIf="ime.errors['required']">Морате унети име.</p>              
+          </div>
           </div>
 
           <div class="form-group">
             <label for="prezime">Презиме:</label>
-            <input type="text" class="form-control" id="prezime" [(ngModel)]="user.prezime" name="prezime" required>
+            <input type="text" class="form-control" id="prezime" [(ngModel)]="user.prezime" name="prezime" required
+            #prezime="ngModel" [class.is-invalid]="prezime.invalid && prezime.touched">
+            <div class="invalid-feedback" *ngIf="(prezime.invalid && prezime.touched) && prezime.errors">
+              <p *ngIf="prezime.errors['required']">Морате унети презиме.</p>              
+          </div>
           </div>
 
-          <div class="form-group">
+          <div #pol [class.is-invalid]="izabranPol">
+            
             <label for="pol">Пол:</label>
-            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='M' required>М
-            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='Z' required>Ж
+            <div class="form-check">
+              <input type="radio" id="option1" name="options" value="M" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
+              <label for="option1" class="form-check-label">М</label>
+            </div>
+          
+            <div class="form-check">
+              <input type="radio" id="option2" name="options" value="Z" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
+              <label for="option2" class="form-check-label">Ж</label>
+            </div>
+
+            <div class="invalid-feedback" *ngIf="!izabranPol">
+              Морате одабрати пол.
+            </div>
           </div>
 
           <div class="form-group">
             <label for="adresa">Адреса:</label>
-            <input type="text" class="form-control" id="adresa" [(ngModel)]="user.adresa" name="adresa" required>
+            <input type="text" class="form-control" id="adresa" [(ngModel)]="user.adresa" name="adresa" required
+            #adresa="ngModel" [class.is-invalid]="adresa.invalid && adresa.touched">
+            <div class="invalid-feedback" *ngIf="(adresa.invalid && adresa.touched) && adresa.errors">
+              <p *ngIf="adresa.errors['required']">Морате унети адресу.</p>              
+          </div>
           </div>
 
           <div class="form-group">
             <label for="kontaktTelefon">Контакт телефон:</label>
-            <input type="text" class="form-control" id="kontaktTelefon" [(ngModel)]="user.kontaktTelefon" name="kontaktTelefon" required>
+            <input type="text" class="form-control" id="kontaktTelefon" [(ngModel)]="user.kontaktTelefon" name="kontaktTelefon" required
+            #telefon="ngModel" pattern="^\+3816\d{7,8}$" [class.is-invalid]="telefon.invalid && telefon.touched">
+            <div class="invalid-feedback" *ngIf="(telefon.invalid && telefon.touched) && telefon.errors">
+              <p *ngIf="telefon.errors['required']">Морате унети контакт телефон.</p>     
+              <p *ngIf="telefon.errors['pattern']">Контакт телефон мора бити у формату +3816xxxxxxx.</p>         
+          </div>
           </div>
 
           <div class="form-group">
             <label for="imejl">И-мејл адреса:</label>
-            <input type="text" class="form-control" id="imejl" [(ngModel)]="user.imejl" (ngModelChange)="onEmailChange($event)" name="imejl" required>
+            <input type="email" class="form-control" id="imejl" [(ngModel)]="user.imejl" (input)="onEmailChange($event)" name="imejl" required
+            #imejl="ngModel" pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.com" [class.is-invalid]="(imejl.invalid && imejl.touched) || emailError">
+            <div class="invalid-feedback" *ngIf="((imejl.invalid && imejl.touched) && imejl.errors)">
+                <p *ngIf="imejl.errors['required']">Морате унети и-мејл адресу.</p>
+                <p *ngIf="imejl.errors['pattern'] && !imejl.errors['required']">И-мејл адреса мора бити у формату example@example.com</p>
+            </div>
+            <div class="invalid-feedback" *ngIf="emailError">
+              <p>{{emailMessage}}</p>
+
+            </div>
+            {{emailInput}}
           </div>
 
           <div class="form-group">
             <label for="profilnaSlika">Профилна слика:</label>
-            <input type="file" class="form-control-file" id="profilnaSlika" (change)="onImageFileSelected($event)" accept="image/*">
+            <input type="file" class="form-control-file" id="profilnaSlika" [class.is-invalid]="!invalidImage" (input)="onImageFileSelected($event)" accept=".png, .jpg, .jpeg"
+            >
+            <div class="invalid-feedback" *ngIf="invalidImage">
+              <p> {{messageImage}}</p>
+          </div>
           </div>
 
           <div class="form-group">
             <label for="tipSkole">Тип школе:</label>
-            <select class="form-control" id="tipSkole" name="tipSkole" [(ngModel)]="user.tipSkole" required>
+            <select class="form-control" [class.is-invalid]="!odabranTipSkole && skola.touched" #skola="ngModel" (input)="tipSkole()" id="tipSkole" name="tipSkole" [(ngModel)]="user.tipSkole" required>
                 <option value="" disabled>Изабери тип школе</option>
                 <option value="osnovna">основна</option>
                 <option value="srednja-gimnazija">средња-гимназија</option>
                 <option value="srednja-strucna">средња-стручна</option>
                 <option value="srednja-umetnicka">средња-уметничка</option>
             </select>
+            <div class="invalid-feedback" *ngIf="!odabranTipSkole && skola.touched">
+              <p>Морате одабрати тип школе.</p>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="razred">Разред:</label>
-            <select class="form-control" id="razred" name="razred" [(ngModel)]="user.razred" required>
+            <select class="form-control" [class.is-invalid]="!odabranRazred && razred.touched" #razred="ngModel" (input)="odabirRazred()" id="razred" name="razred" [(ngModel)]="user.razred" required>
                 <option value="" disabled>Изабери разред</option>
-                <option *ngIf="" value="osnovna">основна</option>
                 <option value='1'>1</option>
                 <option value='2'>2</option>
                 <option value='3'>3</option>
@@ -92,10 +161,12 @@
                 <option *ngIf="user.tipSkole === 'osnovna'" value='7'>7</option>
                 <option *ngIf="user.tipSkole === 'osnovna'" value='8'>8</option>
             </select>
+            <div class="invalid-feedback" *ngIf="!odabranRazred && razred.touched">Морате одабрати разред.</div>
           </div>
 
           
-          <button type="submit" class="btn btn-primary" (click)="registerUcenik()">Региструј се</button>
+          <button type="submit" class="btn btn-primary" [disabled]="registerFormUcenik.form.invalid" (click)="registerUcenik()">Региструј се</button>
+          <p class="text-danger" *ngIf="errorDetected">{{message}}</p>
         </form>
     </div>
 
@@ -133,11 +204,24 @@
             <input type="text" class="form-control" id="prezime" [(ngModel)]="user.prezime" name="prezime" required>
           </div>
 
-          <div class="form-group">
-            <label for="pol">Пол:</label>
-            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='M' required>М
-            <input type="radio" name="pol" id="pol" [(ngModel)]="user.pol" value='Z' required>Ж
+          
+
+          <div #pol>
+            <div class="form-check">
+              <input type="radio" id="option1" name="options" value="M" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
+              <label for="option1" class="form-check-label">М</label>
+            </div>
+          
+            <div class="form-check">
+              <input type="radio" id="option2" name="options" value="Z" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
+              <label for="option2" class="form-check-label">Ж</label>
+            </div>
+
+            <div class="invalid-feedback" *ngIf="!izabranPol">
+              Морате одабрати пол.
+            </div>
           </div>
+
 
           <div class="form-group">
             <label for="adresa">Адреса:</label>

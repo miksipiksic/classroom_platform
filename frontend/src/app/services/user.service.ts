@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import User from '../models/user';
 import { Message } from '../models/message';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,12 @@ export class UserService {
       korisnickoIme: korisnickoIme
     }
     return this.http.post<User>('http://localhost:4000/user/dohvatiKorisnika', data);
+  }
+
+  private loggedInSource = new BehaviorSubject('false');
+  currentLoggedIn = this.loggedInSource.asObservable();
+  updateNavbar(message: string) {
+    this.loggedInSource.next(message)
   }
 
   

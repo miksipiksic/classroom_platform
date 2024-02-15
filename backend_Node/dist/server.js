@@ -10,6 +10,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const user_routes_1 = __importDefault(require("./routes/user.routes"));
 const request_routes_1 = __importDefault(require("./routes/request.routes"));
 const app = (0, express_1.default)();
+// Increase payload size limit (e.g., 10MB)
+app.use(body_parser_1.default.json({ limit: '10mb' }));
+app.use(body_parser_1.default.urlencoded({ limit: '10mb', extended: true }));
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 mongoose_1.default.connect("mongodb://127.0.0.1:27017/skola");

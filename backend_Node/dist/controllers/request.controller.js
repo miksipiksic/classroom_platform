@@ -50,6 +50,13 @@ class RequestController {
                 console.log(err);
             });
         };
+        this.dohvatiZahteve = (req, res) => {
+            request_1.default.find({}).then(reqs => {
+                res.json(reqs);
+            }).catch((err) => {
+                console.log(err);
+            });
+        };
     }
 }
 exports.RequestController = RequestController;

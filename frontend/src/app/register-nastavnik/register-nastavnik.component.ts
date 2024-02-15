@@ -54,13 +54,17 @@ const convertBase64 = (file: File) => {
 }
 
 
+const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z]{3,})(?=.*\d)(?=.*[@$!%*?&])[A-Za-z][A-Za-z\d@$!%*?&]{5,9}$/;
+
+const emailRegex = /^[a-zA-Z][a-zA-Z\d]{19}@[a-zA-Z]{15}\.com$/;
+
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './register-nastavnik.component.html',
+  styleUrls: ['./register-nastavnik.component.css']
 })
-export class RegisterComponent {
+export class RegisterNastavnikComponent {
 
   
   @ViewChild('pol') pol!: ElementRef;
@@ -109,6 +113,7 @@ export class RegisterComponent {
 
   defaultProfilnaSkola: string = "";
 
+  errorDetected: boolean = false;
   usernameError: boolean = false;
   message: string = "";
 
@@ -149,6 +154,54 @@ export class RegisterComponent {
   }
 
   async registerNastavnik() {
+
+    if (!passwordRegex.test(this.user.lozinka)) {
+      
+      this.errorDetected = true;
+      this.message = "Погрешан формат лозинке."
+      return;
+    }
+
+  //  this.user.lozinka = await hashPassword(this.user.lozinka);
+  if (this.errorDetected) return;
+    
+    if (this.imageUpload == "") {
+      this.user.profilnaSlika = this.defaultProfilnaSkola;
+    }
+    
+
+    this.userService.postojeciKorisnikIme(this.user.korisnickoIme).subscribe(
+      data => {
+        if (data.korisnickoIme == this.user.korisnickoIme)  {
+          this.errorDetected = true;
+          this.message = "Постоји корисник са датим корисничким именом."
+          return;
+        } 
+      
+      }
+    )
+    if (this.errorDetected) return;
+    this.userService.postojeciKorisnikImejl(this.user.imejl).subscribe(
+      data => {
+        alert(data.imejl);
+        alert(this.user.imejl);
+        if (data.imejl == this.user.imejl)  {
+          this.errorDetected = true;
+          this.message = "Постоји корисник са датим имејлом."
+          return;
+        } 
+      
+      }
+    )
+    if (!this.errorDetected) {
+      alert("Greska!!!")
+      this.serviceNastavnikRegister();
+    }
+        
+    
+
+    
+    
   }
 
   serviceNastavnikRegister() {
@@ -162,7 +215,6 @@ export class RegisterComponent {
         }
       )
   }
-
 
   outlineColor:string = 'initial';
   usernameMessage: string = "";
