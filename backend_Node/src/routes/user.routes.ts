@@ -31,4 +31,11 @@ userRouter.route('/dohvatiKorisnika').post(
     (req, res) => new UserController().dohvatiKorisnika(req, res)
 )
 
+userRouter.route('/dohvatiUcenike').get(
+    (req, res) => new UserController().dohvatiUcenike(req, res)
+)
+userRouter.route('/dohvatiNastavnike').get(
+    (req, res) => new UserController().dohvatiNastavnike(req, res)
+)
+
 export default userRouter;

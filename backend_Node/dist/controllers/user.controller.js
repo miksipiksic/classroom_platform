@@ -89,6 +89,12 @@ class UserController {
                 res.json(user);
             }).catch(err => console.log(err));
         };
+        this.dohvatiUcenike = (req, res) => {
+            let tip = 1;
+            user_1.default.find({ tip: tip }).then(users => {
+                res.json(users);
+            }).catch(err => console.log(err));
+        };
     }
 }
 exports.UserController = UserController;

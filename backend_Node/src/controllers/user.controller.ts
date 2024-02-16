@@ -108,4 +108,23 @@ export class UserController {
                 }
             ).catch(err=>console.log(err))
     }
+
+    dohvatiUcenike = (req: express.Request, res: express.Response) => {
+            let tip = 1;
+        
+            User.find({tip: tip}).then(
+                users=>{
+                    res.json(users)
+                }
+            ).catch(err=>console.log(err))
+    }
+    dohvatiNastavnike = (req: express.Request, res: express.Response) => {
+        let tip = 2;
+    
+        User.find({tip: tip}).then(
+            users=>{
+                res.json(users)
+            }
+        ).catch(err=>console.log(err))
+}
 }

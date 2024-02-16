@@ -61,5 +61,11 @@ export class UserService {
     this.loggedInSource.next(message)
   }
 
+  dohvatiUcenike() {
+    return this.http.get<User[]>('http://localhost:4000/user/dohvatiUcenike');
+  }
+  dohvatiNastavnike() {
+    return this.http.get<User[]>('http://localhost:4000/user/dohvatiNastavnike');
+  }
   
 }

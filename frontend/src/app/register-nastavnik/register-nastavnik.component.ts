@@ -70,14 +70,9 @@ export class RegisterNastavnikComponent {
   @ViewChild('pol') pol!: ElementRef;
   
   constructor(private userService:UserService, private requestService: RegistrationRequestService, private http:HttpClient
-    , private formBuilder: FormBuilder) {
-      this.loginForm = this.formBuilder.group({
-        username: ['', [Validators.required]],
-        password: ['', [Validators.required]],
-        email: ['', [Validators.required]]
-      })
+   ) {
+      
     }
-    loginForm: FormGroup | undefined;
   ngOnInit() : void {
     if (this.user.tipSkole == "") this.odabranTipSkole = false;
     this.user.razred = 0;
@@ -136,85 +131,25 @@ export class RegisterNastavnikComponent {
     this.userUcenik = false;
   }
 
-  async registerUcenik() {
-
-   // alert(this.user.lozinka)
-      this.serviceUcenikRegister();
-    
-   // this.user.lozinka = await hashPassword(this.user.lozinka); 
-  }
-
-  serviceUcenikRegister() {
-    this.user.tip = 1;
-      this.userService.registerUcenik(this.user).subscribe(
-        rsp=>{
-          if(rsp.message=="ok") alert("Dodato")
-        }
-      )
-  }
-
-  async registerNastavnik() {
-
-    if (!passwordRegex.test(this.user.lozinka)) {
-      
-      this.errorDetected = true;
-      this.message = "Погрешан формат лозинке."
-      return;
-    }
-
-  //  this.user.lozinka = await hashPassword(this.user.lozinka);
-  if (this.errorDetected) return;
-    
-    if (this.imageUpload == "") {
-      this.user.profilnaSlika = this.defaultProfilnaSkola;
-    }
-    
-
-    this.userService.postojeciKorisnikIme(this.user.korisnickoIme).subscribe(
-      data => {
-        if (data.korisnickoIme == this.user.korisnickoIme)  {
-          this.errorDetected = true;
-          this.message = "Постоји корисник са датим корисничким именом."
-          return;
-        } 
-      
-      }
-    )
-    if (this.errorDetected) return;
-    this.userService.postojeciKorisnikImejl(this.user.imejl).subscribe(
-      data => {
-        alert(data.imejl);
-        alert(this.user.imejl);
-        if (data.imejl == this.user.imejl)  {
-          this.errorDetected = true;
-          this.message = "Постоји корисник са датим имејлом."
-          return;
-        } 
-      
-      }
-    )
-    if (!this.errorDetected) {
-      alert("Greska!!!")
-      this.serviceNastavnikRegister();
-    }
-        
-    
-
-    
-    
-  }
-
-  serviceNastavnikRegister() {
+  
+  registerNastavnik() {
     this.user.tip = 2;
 
-      this.requestService.registerNastavnik(this.user).subscribe(
-        rsp => {
-          if(rsp.message=="ok") {
-            this.message = "Послат захтев за регистрацијом."
-          }
+    
+
+    this.requestService.registerNastavnik(this.user).subscribe(
+      rsp => {
+        if(rsp.message=="ok") {
+          this.message = "Послат захтев за регистрацијом."
         }
-      )
+      }
+    )
+    
   }
+
+  initialFile: boolean = false;
+
+  
 
   outlineColor:string = 'initial';
   usernameMessage: string = "";
@@ -227,6 +162,16 @@ export class RegisterNastavnikComponent {
         if (data.korisnickoIme == this.usernameInput)  {
           this.usernameError = true;
           this.usernameMessage = "Постоји корисник са датим корисничким именом."
+        } 
+      
+      }
+    )
+
+    this.requestService.postojeciKorisnikIme(this.usernameInput).subscribe(
+      data => {
+        if (data.korisnickoIme == this.usernameInput)  {
+          this.usernameError = true;
+          this.usernameMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
         } 
       
       }
@@ -253,24 +198,81 @@ export class RegisterNastavnikComponent {
         } 
       }
     )
+    this.requestService.postojeciKorisnikImejl(this.emailInput).subscribe(
+      data => {
+        if (data.imejl == this.emailInput)  {
+          this.emailError = true;
+          this.emailMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
+        } 
+      }
+    )
   }
 
+  predmetiRecnik: { [key: string]: boolean } = {
+    "matematika": false,
+    "fizika": false,
+    "hemija": false,
+    "informatika": false,
+    "programiranje": false,
+    "srpski": false,
+    "engleski": false,
+    "nemacki": false,
+    "italijanski": false,
+    "francuski": false,
+    "spanski": false,
+    "latinski": false,
+    "biologija": false,
+    "istorija": false,
+    "geogragija": false,
+    "svet": false,
+    "dodatak": false
+  };
 
+  uzrastRecnik: {[key:string]: boolean} = {
+    "osnovna:1-4": false,
+    "osnovna:5-8": false,
+    "srednja": false
+  }
+
+  initialPredmet: boolean = false;
 
   onCheckboxChange(predmet: string, event: any) {
+    this.initialPredmet = true;
     if(event.target.checked) {
       this.user.predmet.push(predmet);
+      this.predmetiRecnik[predmet] = true;
+      this.invalidPredmeti = false;
     } else {
       this.user.predmet = this.user.predmet.filter(selected => selected !== predmet);
+      this.predmetiRecnik[predmet] = false;
+      this.invalidPredmeti = true;
+      for (let p in this.predmetiRecnik) {
+        if (this.predmetiRecnik[p]) {
+          this.invalidPredmeti = false;
+        }
+      }
     }
 
   }
+  initialUzrast: boolean = false;
+  invalidUzrast: boolean = true;
 
-  onCheckboxPredmetChange(uzrast: string, event: any) {
+  onCheckboxUzrastChange(uzrast: string, event: any) {
+    this.initialUzrast = true;
+    this.initialUzrast = true;
     if (event.target.checked) {
       this.user.uzrast.push(uzrast);
+      this.invalidUzrast = false;
+      this.uzrastRecnik[uzrast] = true;
     } else {
       this.user.uzrast = this.user.uzrast.filter(selected => selected !== uzrast);
+      this.uzrastRecnik[uzrast] = false;
+      this.invalidUzrast = true;
+      for (let p in this.uzrastRecnik) {
+        if (this.uzrastRecnik[p]) {
+          this.invalidUzrast = false;
+        }
+      }
     }
   }
 
@@ -283,6 +285,7 @@ export class RegisterNastavnikComponent {
   messageImage: string = "";
   async onImageFileSelected(event: any){
     this.messageImage = "";
+    this.invalidImage = false;
     this.selectedFile = <File>event.target.files[0];
     if (this.selectedFile instanceof File) {
       
@@ -308,11 +311,11 @@ export class RegisterNastavnikComponent {
       await img.decode();
       if (img.naturalHeight > 300 || img.naturalHeight < 100) {
         this.invalidImage = true;
-        this.messageImage = this.messageImage + "Висина слике мора бити 100-300px.\n";
+        this.messageImage = this.messageImage + "Висина слике мора бити 100-300px.";
       }
       if (img.naturalWidth > 300 || img.naturalWidth < 100) {
         this.invalidImage = true;
-        this.messageImage = this.messageImage + "Ширина слике мора бити 100-300px.\n";
+        this.messageImage = this.messageImage + "Ширина слике мора бити 100-300px.";
         return;
       }
       this.imageUpload = await convertBase64(this.selectedFile) as string;
@@ -324,19 +327,38 @@ export class RegisterNastavnikComponent {
     
   }
 
+  velicina: number = 0;
+
+  invalidFile: boolean = false;
+  fileMessage: string = "";
+
   async onPdfFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+    this.initialFile = true;
+    this.invalidFile = false;
+    this.fileMessage = "";
+    this.selectedFile = <File>event.target.files[0];
+    if (this.selectedFile instanceof File) {
+      if (!isPdfFile(this.selectedFile)) {
+        this.invalidFile = true;
+        this.fileMessage = "Биографија мора бити PDF фајл."
+        return;
+      }
+    }
     if (this.selectedFile instanceof File && isPdfFile(this.selectedFile)) {
       let fileName = this.selectedFile.name;
       let fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
 
       if (fileExtension.toLowerCase() !== 'pdf') {
-        alert("Pogresan format");
-        return; // pogresan format
+        
+        this.invalidFile = true;
+        this.fileMessage = "Биографија мора бити PDF фајл."
+        return;
       }
-      if (this.selectedFile.size > 3 * 1024 * 1024) {
-        alert("Prevelik fajl.")
-        return; // max size 3MB
+      this.velicina = this.selectedFile.size;
+      if (this.selectedFile.size > 3145728) { // 3 * 1024 * 1023 = 3MB
+        this.invalidFile = true;
+        this.fileMessage = "Максимална величина фајла је 3MB.";
+        return;
       }
       this.pdfUpload = await convertPdfToBase64(this.selectedFile) as string;
       this.user.biografija = this.pdfUpload;
@@ -351,7 +373,19 @@ export class RegisterNastavnikComponent {
     this.izabranPol = Array.from(radioButtons).some((radio: any) => (radio as HTMLInputElement).checked);
   
   }
+  dodajPredmet: boolean = false;
+  dodajPredmetFun() {
+    this.dodajPredmet = !this.dodajPredmet;
+    this.predmetiRecnik["dodatak"] = !this.predmetiRecnik["dodatak"];
+    this.invalidPredmeti = true;
+      for (let p in this.predmetiRecnik) {
+        if (this.predmetiRecnik[p] == true) {
+          this.invalidPredmeti = false;
+        }
+      }
+  }
 
+  invalidPredmeti: boolean = true;
 
   
 

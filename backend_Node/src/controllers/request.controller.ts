@@ -3,6 +3,7 @@ import Request from '../models/request'
 export class RequestController {
 
     registerNastavnik = (req: express.Request, res: express.Response) => {
+        console.log("u register Nastavnik");
         let korisnickoIme = req.body.korisnickoIme;
         let lozinka = req.body.lozinka;
         let bezbedonosnoPitanje = req.body.bezbedonosnoPitanje;
@@ -39,10 +40,11 @@ export class RequestController {
             uzrast: uzrast,
             upoznavanjeSaSajtom: upoznavanjeSaSajtom,
             tip: tip,
-            prihvace: prihvacen
+            prihvacen: prihvacen
         }
 
         new Request(nastavnik).save().then(ok => {
+            console.log("uspesno ubaceno");
             res.json({message: "ok"})
         }).catch(err=> {
             console.log(err)
@@ -55,6 +57,27 @@ export class RequestController {
         }).catch((err)=>{
             console.log(err)
         })
+    }
+
+    postojeciKorisnikIme = (req: express.Request, res: express.Response) => {
+        let korisnickoIme = req.body.korisnickoIme;
+
+        Request.findOne( {korisnickoIme: korisnickoIme  }).then(
+                rqst=>{
+                    res.json(rqst)
+                }
+            ).catch(err=>console.log(err))
+    }
+
+    postojeciKorisnikImejl = (req: express.Request, res: express.Response) => {
+        
+        let imejl = req.body.imejl;
+
+        Request.findOne( {imejl: imejl  }).then(
+            rqst=>{
+                res.json(rqst)
+            }
+        ).catch(err=>console.log(err))
     }
 
 }

@@ -1,5 +1,5 @@
 <!-- Registracija nastavnika -->
-<div *ngIf="userUcenik">
+<div>
     <form id="registerFormUcenik" #registerFormNastavnik="ngForm">
       <div class="form-group">
         <label for="korisnickoIme">Корисничко име:</label>
@@ -7,7 +7,7 @@
           #korisnickoIme="ngModel" [class.is-invalid]="(korisnickoIme.invalid && korisnickoIme.touched) || usernameError">
           <div class="invalid-feedback" *ngIf="(korisnickoIme.invalid && korisnickoIme.touched) && korisnickoIme.errors">
             <p *ngIf="korisnickoIme.errors['required']">Морате унети корисничко име.</p>
-        </div>
+            </div>
         <div class="invalid-feedback" *ngIf="usernameError">
           <p>{{usernameMessage}}</p>
         </div>
@@ -61,7 +61,7 @@
         #prezime="ngModel" [class.is-invalid]="prezime.invalid && prezime.touched">
         <div class="invalid-feedback" *ngIf="(prezime.invalid && prezime.touched) && prezime.errors">
           <p *ngIf="prezime.errors['required']">Морате унети презиме.</p>              
-      </div>
+        </div>
       </div>
 
       <div #pol [class.is-invalid]="izabranPol">
@@ -118,88 +118,82 @@
 
       <div class="form-group">
         <label for="profilnaSlika">Профилна слика:</label>
-        <input type="file" class="form-control-file" id="profilnaSlika" [class.is-invalid]="!invalidImage" (input)="onImageFileSelected($event)" accept=".png, .jpg, .jpeg"
+        <input type="file" class="form-control-file" id="profilnaSlika" [class.is-invalid]="invalidImage" (input)="onImageFileSelected($event)" accept=".png, .jpg, .jpeg"
         >
         <div class="invalid-feedback" *ngIf="invalidImage">
           <p> {{messageImage}}</p>
       </div>
       </div>
-
-      <div class="form-group">
-        <label for="tipSkole">Тип школе:</label>
-        <select class="form-control" [class.is-invalid]="!odabranTipSkole && skola.touched" #skola="ngModel" (input)="tipSkole()" id="tipSkole" name="tipSkole" [(ngModel)]="user.tipSkole" required>
-            <option value="" disabled>Изабери тип школе</option>
-            <option value="osnovna">основна</option>
-            <option value="srednja-gimnazija">средња-гимназија</option>
-            <option value="srednja-strucna">средња-стручна</option>
-            <option value="srednja-umetnicka">средња-уметничка</option>
-        </select>
-        <div class="invalid-feedback" *ngIf="!odabranTipSkole && skola.touched">
-          <p>Морате одабрати тип школе.</p>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="razred">Разред:</label>
-        <select class="form-control" [class.is-invalid]="!odabranRazred && razred.touched" #razred="ngModel" (input)="odabirRazred()" id="razred" name="razred" [(ngModel)]="user.razred" required>
-            <option value="" disabled>Изабери разред</option>
-            <option value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
-            <option value='4'>4</option>
-            <option *ngIf="user.tipSkole === 'osnovna'" value='5'>5</option>
-            <option *ngIf="user.tipSkole === 'osnovna'" value='6'>6</option>
-            <option *ngIf="user.tipSkole === 'osnovna'" value='7'>7</option>
-            <option *ngIf="user.tipSkole === 'osnovna'" value='8'>8</option>
-        </select>
-        <div class="invalid-feedback" *ngIf="!odabranRazred && razred.touched">Морате одабрати разред.</div>
-      </div>
-
+      
       
       <div class="form-group">
         <label for="biografija">Биографија:</label>
-        <input type="file" class="form-control-file" id="biografija" (change)="onPdfFileSelected($event)" accept=".pdf" required>
+        <input type="file" class="form-control-file" id="biografija"  [class.is-invalid]="invalidFile && initialFile" (input)="onPdfFileSelected($event)" accept=".pdf" required>
+        <div class="invalid-feedback" *ngIf="invalidFile && initialFile">
+            <p> {{fileMessage}} </p>
+        </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group"  [class.is-invalid]="invalidPredmeti">
         <label for="predmet">Које предмете желите да подучавате?</label>
         <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Математика
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Физика
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Хемија
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Информатика
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Програмирања
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Српски језик и књижевност
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Енглески језик
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Немачки језик
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Италијански језик
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Француски језик
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Шпански језик
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Латински језик
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Биологија
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Историја
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Географија
-        <input type="checkbox"  (change)="onCheckboxChange('matematika', $event)">Свет око нас
-        <input type="checkbox"  (change)="onCheckboxChange(dodatakPredmet, $event)">
-        <input type="text" class="form-control" id="dodatakPredmet" [(ngModel)]="dodatakPredmet" name="dodatakPredmet">
-            
-      </div>
-      <div class="form-group">
+        <input type="checkbox"  (change)="onCheckboxChange('fizika', $event)">Физика
+        <input type="checkbox"  (change)="onCheckboxChange('hemija', $event)">Хемија
+        <input type="checkbox"  (change)="onCheckboxChange('informatika', $event)">Информатика
+        <input type="checkbox"  (change)="onCheckboxChange('programiranje', $event)">Програмирање
+        <input type="checkbox"  (change)="onCheckboxChange('srpski', $event)">Српски језик и књижевност
+        <input type="checkbox"  (change)="onCheckboxChange('engleski', $event)">Енглески језик
+        <input type="checkbox"  (change)="onCheckboxChange('nemacki', $event)">Немачки језик
+        <input type="checkbox"  (change)="onCheckboxChange('italijanski', $event)">Италијански језик
+        <input type="checkbox"  (change)="onCheckboxChange('francuski', $event)">Француски језик
+        <input type="checkbox"  (change)="onCheckboxChange('spanski', $event)">Шпански језик
+        <input type="checkbox"  (change)="onCheckboxChange('latinski', $event)">Латински језик
+        <input type="checkbox"  (change)="onCheckboxChange('biologija', $event)">Биологија
+        <input type="checkbox"  (change)="onCheckboxChange('istorija', $event)">Историја
+        <input type="checkbox"  (change)="onCheckboxChange('geografija', $event)">Географија
+        <input type="checkbox"  (change)="onCheckboxChange('svet', $event)">Свет око нас
+        <input type="checkbox"  (change)="dodajPredmetFun()"> 
+        <input type="text" class="form-control" id="dodatakPredmet" [disabled]="!dodajPredmet" [(ngModel)]="dodatakPredmet" name="dodatakPredmet" required
+        #dodatPredmet="ngModel" [class.is-invalid]="dodatPredmet.touched && dodatPredmet.invalid" >
+        <div class="invalid-feedback" *ngIf=" ((dodatPredmet.touched && dodatPredmet.invalid) && dodatPredmet.errors)">
+            <p *ngIf="dodatPredmet.errors['required']"> Морате додати предмет.</p>
+        </div>
+        <div class="text-danger" *ngIf="invalidPredmeti && initialPredmet">
+            <p *ngIf="invalidPredmeti">Морате одабрати барем 1 предмет.</p>
+        </div>
+        </div>
+
+      
+      <div class="form-group" [class.is-invalid]="invalidUzrast">
         <label for="uzrast">Ком узрасту желите да предајете?</label>
-        <input type="checkbox" (change)="onCheckboxPredmetChange('osnovna:1-4', $event)">Основна школа 1-4. разред
-        <input type="checkbox" (change)="onCheckboxPredmetChange('osnovna:5-8', $event)">Основна школа 5-8. разред
-        <input type="checkbox" (change)="onCheckboxPredmetChange('srednja', $event)">Средња школа
+        <input type="checkbox" (change)="onCheckboxUzrastChange('osnovna:1-4', $event)">Основна школа 1-4. разред
+        <input type="checkbox" (change)="onCheckboxUzrastChange('osnovna:5-8', $event)">Основна школа 5-8. разред
+        <input type="checkbox" (change)="onCheckboxUzrastChange('srednja', $event)">Средња школа
+        
+      <div class="text-danger" *ngIf="invalidUzrast && initialUzrast">
+        <p *ngIf="invalidUzrast">Морате одабрати барем 1 узраст.</p>
+    </div>
+
+      </div>
+      
+      <div *ngFor="let u of user.uzrast">
+        {{u}}
       </div>
       
       <div>
         <label for="upoznavanjeSaSajtom">Где сте чули за наш сајт?</label>
         <input type="text" class="form-control" id="upoznavanjeSaSajtom" [(ngModel)]="user.upoznavanjeSaSajtom" name="upoznavanjeSaSajtom" required>
       </div>
-      
 
         
 
       
-      <button type="submit" class="btn btn-primary" [disabled]="registerFormUcenik.form.invalid" (click)="registerUcenik()">Региструј се</button>
-      <p class="text-danger" *ngIf="errorDetected">{{message}}</p>
+      <button type="submit" class="btn btn-primary" [disabled]="registerFormNastavnik.form.invalid || invalidUzrast || invalidPredmeti || invalidFile || !izabranPol" (click)="registerNastavnik()">Региструј се</button>
+      <p class="text-danger">{{message}}</p>
+      {{user.korisnickoIme}}
+      {{user.odgovor}}
+      {{user.biografija}}
+      {{user.upoznavanjeSaSajtom}}
+      
     </form>
 </div>

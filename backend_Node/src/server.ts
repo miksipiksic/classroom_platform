@@ -25,7 +25,7 @@ const router = express.Router()
 
 router.use('/user', userRouter)
 
-router.use('/request', requestRouter)
+router.use('/requests', requestRouter)
 
 
 

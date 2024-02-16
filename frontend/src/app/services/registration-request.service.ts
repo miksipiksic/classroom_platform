@@ -11,15 +11,29 @@ export class RegistrationRequestService {
 
   constructor(private http: HttpClient) { }
 
-  uri = "http://localhost:4000/request";
+  uri = "http://localhost:4000/requests";
 
 
   registerNastavnik(user: User) {
-    return this.http.post<Message>("${this.uri}/registerNastavnik", user);
+    return this.http.post<Message>("http://localhost:4000/requests/registerNastavnik", user);
   } 
 
   dohvatiZahteve() {
-    return this.http.get<Request>("${this.uri}/dohvatiZahteve");
+    return this.http.get<Request>("http://localhost:4000/requests/dohvatiZahteve");
+  }
+
+  postojeciKorisnikIme(korisnickoIme: string) {
+    const data = {
+      korisnickoIme: korisnickoIme
+    }
+    return this.http.post<Request>('http://localhost:4000/requests/postojeciKorisnikIme', data);
+  }
+
+  postojeciKorisnikImejl(imejl: string) {
+    const data = {
+      imejl: imejl
+    }
+    return this.http.post<Request>('http://localhost:4000/requests/postojeciKorisnikImejl', data);
   }
 
 }

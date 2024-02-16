@@ -13,4 +13,5 @@ userRouter.route('/promeniLozinku').post((req, res) => new user_controller_1.Use
 userRouter.route('/postojeciKorisnikIme').post((req, res) => new user_controller_1.UserController().postojeciKorisnikIme(req, res));
 userRouter.route('/postojeciKorisnikImejl').post((req, res) => new user_controller_1.UserController().postojeciKorisnikImejl(req, res));
 userRouter.route('/dohvatiKorisnika').post((req, res) => new user_controller_1.UserController().dohvatiKorisnika(req, res));
+userRouter.route('/dohvatiUcenike').get((req, res) => new user_controller_1.UserController().dohvatiUcenike(req, res));
 exports.default = userRouter;

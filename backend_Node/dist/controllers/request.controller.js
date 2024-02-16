@@ -8,6 +8,7 @@ const request_1 = __importDefault(require("../models/request"));
 class RequestController {
     constructor() {
         this.registerNastavnik = (req, res) => {
+            console.log("u register Nastavnik");
             let korisnickoIme = req.body.korisnickoIme;
             let lozinka = req.body.lozinka;
             let bezbedonosnoPitanje = req.body.bezbedonosnoPitanje;
@@ -42,9 +43,10 @@ class RequestController {
                 uzrast: uzrast,
                 upoznavanjeSaSajtom: upoznavanjeSaSajtom,
                 tip: tip,
-                prihvace: prihvacen
+                prihvacen: prihvacen
             };
             new request_1.default(nastavnik).save().then(ok => {
+                console.log("uspesno ubaceno");
                 res.json({ message: "ok" });
             }).catch(err => {
                 console.log(err);
@@ -56,6 +58,18 @@ class RequestController {
             }).catch((err) => {
                 console.log(err);
             });
+        };
+        this.postojeciKorisnikIme = (req, res) => {
+            let korisnickoIme = req.body.korisnickoIme;
+            request_1.default.findOne({ korisnickoIme: korisnickoIme }).then(rqst => {
+                res.json(rqst);
+            }).catch(err => console.log(err));
+        };
+        this.postojeciKorisnikImejl = (req, res) => {
+            let imejl = req.body.imejl;
+            request_1.default.findOne({ imejl: imejl }).then(rqst => {
+                res.json(rqst);
+            }).catch(err => console.log(err));
         };
     }
 }
