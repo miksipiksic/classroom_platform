@@ -10,4 +10,5 @@ requestRouter.route('/registerNastavnik').post((req, res) => new request_control
 requestRouter.route('/dohvatiZahteve').get((req, res) => new request_controller_1.RequestController().dohvatiZahteve(req, res));
 requestRouter.route('/postojeciKorisnikIme').post((req, res) => new request_controller_1.RequestController().postojeciKorisnikIme(req, res));
 requestRouter.route('/postojeciKorisnikImejl').post((req, res) => new request_controller_1.RequestController().postojeciKorisnikImejl(req, res));
+requestRouter.route('/obrisiZahtev').post((req, res) => new request_controller_1.RequestController().obrisiZahtev(req, res));
 exports.default = requestRouter;

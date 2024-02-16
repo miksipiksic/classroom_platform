@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import User from '../models/user';
+import RegRequest from '../models/regrequest';
 import { Message } from '../models/message';
 import { BehaviorSubject } from 'rxjs';
 
@@ -16,11 +17,6 @@ export class UserService {
   registerUcenik(user:User)  {
       return this.http.post<Message>('http://localhost:4000/user/registerUcenik', user);
     }
-
-    registerNastavnik(user: User){
-  
-        return this.http.post<Message>('http://localhost:4000/user/registerNastavnik', user);
-      }
 
   postojeciKorisnikIme(korisnickoIme: string) {
     const data = {
@@ -66,6 +62,11 @@ export class UserService {
   }
   dohvatiNastavnike() {
     return this.http.get<User[]>('http://localhost:4000/user/dohvatiNastavnike');
+  }
+
+  registerNastavnik(data: RegRequest) {
+
+    return this.http.post<Message>('http://localhost:4000/user/registerNastavnik', data);
   }
   
 }

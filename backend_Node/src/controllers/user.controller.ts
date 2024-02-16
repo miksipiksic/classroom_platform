@@ -52,6 +52,53 @@ export class UserController {
             console.log(err)
         })
     }
+    registerNastavnik = (req: express.Request, res: express.Response) => {
+        let korisnickoIme = req.body.korisnickoIme;
+        let lozinka = req.body.lozinka;
+        let bezbedonosnoPitanje = req.body.bezbedonosnoPitanje;
+        let odgovor = req.body.odgovor;
+        let ime = req.body.ime;
+        let prezime = req.body.prezime;
+        let pol = req.body.pol;
+        let adresa = req.body.adresa;
+        let kontaktTelefon = req.body.kontaktTelefon;
+        let imejl = req.body.imejl;
+        let profilnaSlika = req.body.profilnaSlika;
+        let biografija = req.body.biografija;
+        let predmet = req.body.predmet;
+        let uzrast = req.body.uzrast;
+        let tip = 2;
+        let upoznavanjeSaSajtom = req.body.upoznavanjeSaSajtom;
+        let prihvacen = req.body.prihvacen;
+        
+        let nastavnik = {
+            korisnickoIme: korisnickoIme,
+            lozinka: lozinka,
+            bezbedonosnoPitanje: bezbedonosnoPitanje,
+            odgovor: odgovor,
+            ime: ime,
+            prezime: prezime,
+            pol: pol,
+            adresa: adresa,
+            kontaktTelefon: kontaktTelefon,
+            imejl: imejl,
+            profilnaSlika: profilnaSlika,
+            biografija : biografija,
+            predmet: predmet,
+            uzrast: uzrast,
+            upoznavanjeSaSajtom: upoznavanjeSaSajtom,
+            prihvacen: prihvacen,
+            tip: tip
+        }
+
+        console.log("dodavanje u korisnike");
+
+        new User(nastavnik).save().then(ok => {
+            res.json({message: "ok"})
+        }).catch(err=> {
+            console.log(err)
+        })
+    }
 
     
     postojeciKorisnikIme = (req: express.Request, res: express.Response) => {

@@ -209,29 +209,29 @@ export class RegisterNastavnikComponent {
   }
 
   predmetiRecnik: { [key: string]: boolean } = {
-    "matematika": false,
-    "fizika": false,
-    "hemija": false,
-    "informatika": false,
-    "programiranje": false,
-    "srpski": false,
-    "engleski": false,
-    "nemacki": false,
-    "italijanski": false,
-    "francuski": false,
-    "spanski": false,
-    "latinski": false,
-    "biologija": false,
-    "istorija": false,
-    "geogragija": false,
-    "svet": false,
+    "Математика": false,
+    "Физика": false,
+    "Хемија": false,
+    "Информатика": false,
+    "Програмирање": false,
+    "Српски језик и књижевност": false,
+    "Енглески језик": false,
+    "Немачки језик": false,
+    "Италијански језик": false,
+    "Француски језик": false,
+    "Шпански језик": false,
+    "Латински језик": false,
+    "Биологија": false,
+    "Историја": false,
+    "Географија": false,
+    "Свет око нас": false,
     "dodatak": false
   };
 
   uzrastRecnik: {[key:string]: boolean} = {
-    "osnovna:1-4": false,
-    "osnovna:5-8": false,
-    "srednja": false
+    "Основна школа 1-4. разред": false,
+    "Основна школа 5-8. разред": false,
+    "Средња школа": false
   }
 
   initialPredmet: boolean = false;

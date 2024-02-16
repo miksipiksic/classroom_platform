@@ -18,6 +18,10 @@ requestRouter.route('/postojeciKorisnikImejl').post(
     (req, res) => new RequestController().postojeciKorisnikImejl(req, res)
 )
 
+requestRouter.route('/obrisiZahtev').post(
+    (req, res) => new RequestController().obrisiZahtev(req, res)
+)
+
 
 
 export default requestRouter;

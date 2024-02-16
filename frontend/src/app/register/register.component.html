@@ -77,12 +77,12 @@
             
             <label for="pol">Пол:</label>
             <div class="form-check">
-              <input type="radio" id="option1" name="options" value="M" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
+              <input type="radio" id="option1" name="options" value="М" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
               <label for="option1" class="form-check-label">М</label>
             </div>
           
             <div class="form-check">
-              <input type="radio" id="option2" name="options" value="Z" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
+              <input type="radio" id="option2" name="options" value="Ж" [(ngModel)]="user.pol" class="form-check-input" (change)="validacijaPola()">
               <label for="option2" class="form-check-label">Ж</label>
             </div>
 
@@ -138,10 +138,10 @@
             <label for="tipSkole">Тип школе:</label>
             <select class="form-control" [class.is-invalid]="!odabranTipSkole && skola.touched" #skola="ngModel" (input)="tipSkole()" id="tipSkole" name="tipSkole" [(ngModel)]="user.tipSkole" required>
                 <option value="" disabled>Изабери тип школе</option>
-                <option value="osnovna">основна</option>
-                <option value="srednja-gimnazija">средња-гимназија</option>
-                <option value="srednja-strucna">средња-стручна</option>
-                <option value="srednja-umetnicka">средња-уметничка</option>
+                <option value="основна">основна</option>
+                <option value="средња-гимназија">средња-гимназија</option>
+                <option value="средња-стручна">средња-стручна</option>
+                <option value="средња-уметничка">средња-уметничка</option>
             </select>
             <div class="invalid-feedback" *ngIf="!odabranTipSkole && skola.touched">
               <p>Морате одабрати тип школе.</p>
@@ -156,10 +156,10 @@
                 <option value='2'>2</option>
                 <option value='3'>3</option>
                 <option value='4'>4</option>
-                <option *ngIf="user.tipSkole === 'osnovna'" value='5'>5</option>
-                <option *ngIf="user.tipSkole === 'osnovna'" value='6'>6</option>
-                <option *ngIf="user.tipSkole === 'osnovna'" value='7'>7</option>
-                <option *ngIf="user.tipSkole === 'osnovna'" value='8'>8</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='5'>5</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='6'>6</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='7'>7</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='8'>8</option>
             </select>
             <div class="invalid-feedback" *ngIf="!odabranRazred && razred.touched">Морате одабрати разред.</div>
           </div>

@@ -38,4 +38,9 @@ userRouter.route('/dohvatiNastavnike').get(
     (req, res) => new UserController().dohvatiNastavnike(req, res)
 )
 
+
+userRouter.route('/registerNastavnik').post(
+    (req, res) => new UserController().registerNastavnik(req, res)
+)
+
 export default userRouter;

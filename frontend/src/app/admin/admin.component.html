@@ -1,1 +1,97 @@
-<p>admin works!</p>
+<h3> Ученици</h3>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Корисничко име</th>
+            <th scope="col">И-мејл адреса</th>
+            <th scope="col">Име и презиме</th>
+            <th scope="col">Тип школе</th>
+            <th scope="col">Разред</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let u of ucenici" class="table-group-divider">
+        <tr>
+          <td>{{u.korisnickoIme}}</td>
+          <td>{{u.imejl}}</td>
+          <td>{{u.ime}} {{u.prezime}}</td>
+          <td>{{u.tipSkole}}</td>
+          <td>{{u.razred}}</td>
+        </tr>
+    </tbody>
+</table>
+<h3> Наставници </h3>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Корисничко име</th>
+            <th scope="col">И-мејл адреса</th>
+            <th scope="col">Име и презиме</th>
+            <th scope="col">Предмети</th>
+            <th scope="col">Разред</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let u of nastavnici" class="table-group-divider">
+        <tr>
+          <td>{{u.korisnickoIme}}</td>
+          <td>{{u.imejl}}</td>
+          <td>{{u.ime}} {{u.prezime}}</td>
+          <td>
+            <table class="table table-bordered">
+                <tbody>
+                  <tr *ngFor="let p of u.predmet">
+                    <td>{{p}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </td>
+          <td>{{u.razred}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h3> Захтеви </h3>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Корисничко име</th>
+            <th scope="col">И-мејл адреса</th>
+            <th scope="col">Име и презиме</th>
+            <th scope="col">Предмети</th>
+            <th scope="col">Узраст</th>
+            <th scope="col" colspan="2">Прихвати/Одбиј</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let u of zahtevi" class="table-group-divider">
+        <tr>
+          <td>{{u.korisnickoIme}}</td>
+          <td>{{u.imejl}}</td>
+          <td>{{u.ime}} {{u.prezime}}</td>
+          <td>
+            <table class="table table-bordered table-sm">
+                <tbody>
+                  <tr *ngFor="let p of u.predmet">
+                    <td>{{p}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </td>
+          <td>
+            <table class="table table-bordered table-sm">
+                <tbody>
+                  <tr *ngFor="let p of u.uzrast">
+                    <td>{{p}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </td>
+          <td> {{u.korisnickoIme}}
+                <button class="btn btn-success" (click)="odobriZahtev(u.korisnickoIme)">Прихвати</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" (click)="odbijZahtev(u.korisnickoIme)">Одбиј</button>
+              
+          </td>
+        </tr>
+    </tbody>
+</table>

@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
 
-let Request = new Schema({
+let RegRequest = new Schema({
     korisnickoIme: {
         type: String
     },
@@ -64,4 +64,4 @@ let Request = new Schema({
     
 })
 
-export default mongoose.model('Request', Request, 'zahtevi');
+export default mongoose.model('RegRequest', RegRequest, 'zahtevi');

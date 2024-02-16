@@ -4,6 +4,8 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose';
 import userRouter from './routes/user.routes';
 import requestRouter from './routes/request.routes';
+import engagementRouter from './routes/engagement.routes';
+import schoolSubjectRouter from './routes/schoolsubject.routes';
 
 
 
@@ -27,7 +29,9 @@ router.use('/user', userRouter)
 
 router.use('/requests', requestRouter)
 
+router.use('/engagements', engagementRouter)
 
+router.use('/schoolsubjects', schoolSubjectRouter)
 
 app.use('/', router)
 

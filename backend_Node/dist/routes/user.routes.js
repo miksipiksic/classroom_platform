@@ -14,4 +14,6 @@ userRouter.route('/postojeciKorisnikIme').post((req, res) => new user_controller
 userRouter.route('/postojeciKorisnikImejl').post((req, res) => new user_controller_1.UserController().postojeciKorisnikImejl(req, res));
 userRouter.route('/dohvatiKorisnika').post((req, res) => new user_controller_1.UserController().dohvatiKorisnika(req, res));
 userRouter.route('/dohvatiUcenike').get((req, res) => new user_controller_1.UserController().dohvatiUcenike(req, res));
+userRouter.route('/dohvatiNastavnike').get((req, res) => new user_controller_1.UserController().dohvatiNastavnike(req, res));
+userRouter.route('/registerNastavnik').post((req, res) => new user_controller_1.UserController().registerNastavnik(req, res));
 exports.default = userRouter;

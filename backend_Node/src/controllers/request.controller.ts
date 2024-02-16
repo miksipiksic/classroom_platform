@@ -1,5 +1,5 @@
 import * as express from 'express';
-import Request from '../models/request'
+import RegRequest from '../models/regrequest'
 export class RequestController {
 
     registerNastavnik = (req: express.Request, res: express.Response) => {
@@ -43,7 +43,7 @@ export class RequestController {
             prihvacen: prihvacen
         }
 
-        new Request(nastavnik).save().then(ok => {
+        new RegRequest(nastavnik).save().then(ok => {
             console.log("uspesno ubaceno");
             res.json({message: "ok"})
         }).catch(err=> {
@@ -52,7 +52,7 @@ export class RequestController {
     }
 
     dohvatiZahteve = (req: express.Request, res: express.Response) => {
-        Request.find({}).then(reqs=>{
+        RegRequest.find({}).then(reqs=>{
             res.json(reqs)
         }).catch((err)=>{
             console.log(err)
@@ -62,7 +62,7 @@ export class RequestController {
     postojeciKorisnikIme = (req: express.Request, res: express.Response) => {
         let korisnickoIme = req.body.korisnickoIme;
 
-        Request.findOne( {korisnickoIme: korisnickoIme  }).then(
+        RegRequest.findOne( {korisnickoIme: korisnickoIme  }).then(
                 rqst=>{
                     res.json(rqst)
                 }
@@ -73,11 +73,20 @@ export class RequestController {
         
         let imejl = req.body.imejl;
 
-        Request.findOne( {imejl: imejl  }).then(
+        RegRequest.findOne( {imejl: imejl  }).then(
             rqst=>{
                 res.json(rqst)
             }
         ).catch(err=>console.log(err))
+    }
+
+    obrisiZahtev = (req: express.Request, res: express.Response) => {
+        console.log("brisanje")
+        RegRequest.deleteOne({korisnickoIme: req.body.korisnickoIme}).then(
+            ok => {
+                res.json({message: "ok"})
+            }
+        ).catch(err=> console.log(err))
     }
 
 }

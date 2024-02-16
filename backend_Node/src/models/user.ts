@@ -57,6 +57,9 @@ let User = new Schema({
     },
     tip: {
         type: Number
+    },
+    prihvacen: {
+        type: Number
     }
     
 })

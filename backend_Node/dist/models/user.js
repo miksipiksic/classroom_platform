@@ -60,6 +60,9 @@ let User = new Schema({
     },
     tip: {
         type: Number
+    },
+    prihvacen: {
+        type: Number
     }
 });
 exports.default = mongoose_1.default.model('User', User, 'korisnici');

@@ -1,4 +1,4 @@
-export default class Request {
+export default class RegRequest {
     korisnickoIme: string = "";
     lozinka: string = "";
     bezbedonosnoPitanje: string = "";

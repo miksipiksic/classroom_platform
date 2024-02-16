@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestController = void 0;
-const request_1 = __importDefault(require("../models/request"));
+const regrequest_1 = __importDefault(require("../models/regrequest"));
 class RequestController {
     constructor() {
         this.registerNastavnik = (req, res) => {
@@ -45,7 +45,7 @@ class RequestController {
                 tip: tip,
                 prihvacen: prihvacen
             };
-            new request_1.default(nastavnik).save().then(ok => {
+            new regrequest_1.default(nastavnik).save().then(ok => {
                 console.log("uspesno ubaceno");
                 res.json({ message: "ok" });
             }).catch(err => {
@@ -53,7 +53,7 @@ class RequestController {
             });
         };
         this.dohvatiZahteve = (req, res) => {
-            request_1.default.find({}).then(reqs => {
+            regrequest_1.default.find({}).then(reqs => {
                 res.json(reqs);
             }).catch((err) => {
                 console.log(err);
@@ -61,14 +61,20 @@ class RequestController {
         };
         this.postojeciKorisnikIme = (req, res) => {
             let korisnickoIme = req.body.korisnickoIme;
-            request_1.default.findOne({ korisnickoIme: korisnickoIme }).then(rqst => {
+            regrequest_1.default.findOne({ korisnickoIme: korisnickoIme }).then(rqst => {
                 res.json(rqst);
             }).catch(err => console.log(err));
         };
         this.postojeciKorisnikImejl = (req, res) => {
             let imejl = req.body.imejl;
-            request_1.default.findOne({ imejl: imejl }).then(rqst => {
+            regrequest_1.default.findOne({ imejl: imejl }).then(rqst => {
                 res.json(rqst);
+            }).catch(err => console.log(err));
+        };
+        this.obrisiZahtev = (req, res) => {
+            console.log("brisanje");
+            regrequest_1.default.deleteOne({ korisnickoIme: req.body.korisnickoIme }).then(ok => {
+                res.json({ message: "ok" });
             }).catch(err => console.log(err));
         };
     }
