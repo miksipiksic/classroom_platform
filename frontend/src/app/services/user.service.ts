@@ -68,5 +68,13 @@ export class UserService {
 
     return this.http.post<Message>('http://localhost:4000/user/registerNastavnik', data);
   }
+
+  dodajPredmet(korisnickoIme: string, imePredmeta: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      imePredmeta: imePredmeta
+    }
+    return this.http.post<Message>('http://localhost:4000/user/dodajPredmet', data)
+  }
   
 }

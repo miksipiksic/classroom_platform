@@ -50,7 +50,7 @@
 </table>
 
 
-<h3> Захтеви </h3>
+<h3> Захтеви за регистрацијом </h3>
 <table class="table table-bordered table-sm">
     <thead>
         <tr>
@@ -95,3 +95,36 @@
         </tr>
     </tbody>
 </table>
+
+
+<h3> Захтеви за додавањем нових предмета</h3>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Корисничко име</th>
+            <th scope="col">Назив предмета</th>
+            <th scope="col" colspan="2">Прихвати/Одбиј</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let z of zahteviPredmeti" class="table-group-divider">
+        <tr>
+          <td>{{z.korisnickoIme}}</td>
+          <td>{{z.imePredmeta}}</td>
+          <td> 
+                <button class="btn btn-success" (click)="odobriZahtevPredmet(z.korisnickoIme, z.imePredmeta)">Прихвати</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" (click)="odbijZahtevPredmet(z.korisnickoIme, z.imePredmeta)">Одбиј</button>
+              
+          </td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Додај нови предмет</h3>
+<form>
+  <input type="text" class="form-control" id="adminPredmet" [(ngModel)]="adminPredmet" name="adminPredmet">
+             
+  <button type="button" class="btn btn-primary" (click)="dodajAdminPredmet()">Додај предмет</button>
+  
+</form>

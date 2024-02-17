@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 
 import { UserService } from '../services/user.service';
@@ -7,6 +7,9 @@ import User from '../models/user';
 import { RegistrationRequestService } from '../services/registration-request.service';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SchoolSubject } from '../models/schoolsubject';
+import { SchoolsubjectService } from '../services/schoolsubject.service';
+import { SubjectRequestService } from '../services/subject-request.service';
 
 
 
@@ -64,12 +67,13 @@ const emailRegex = /^[a-zA-Z][a-zA-Z\d]{19}@[a-zA-Z]{15}\.com$/;
   templateUrl: './register-nastavnik.component.html',
   styleUrls: ['./register-nastavnik.component.css']
 })
-export class RegisterNastavnikComponent {
+export class RegisterNastavnikComponent implements OnInit{
 
   
   @ViewChild('pol') pol!: ElementRef;
   
-  constructor(private userService:UserService, private requestService: RegistrationRequestService, private http:HttpClient
+  constructor(private userService:UserService, private requestService: RegistrationRequestService,
+     private http:HttpClient, private schoolSubjectService: SchoolsubjectService, private subjectRequestService: SubjectRequestService
    ) {
       
     }
@@ -77,8 +81,14 @@ export class RegisterNastavnikComponent {
     if (this.user.tipSkole == "") this.odabranTipSkole = false;
     this.user.razred = 0;
     this.loadImage('../assets/img/trainers/default.png');
+    this.schoolSubjectService.dohvatiPredmete().subscribe(
+      data => {
+        this.listaPredmeta = data;
+      }
+    )
   }
 
+  listaPredmeta: SchoolSubject[] = [];
   loadImage(imagePath: string) {
     // Send an HTTP GET request to fetch the image
     this.http.get(imagePath, { responseType: 'blob' }).subscribe({
@@ -136,6 +146,15 @@ export class RegisterNastavnikComponent {
     this.user.tip = 2;
 
     
+    this.subjectRequestService.dodajZahtev(this.dodatakPredmet, this.user.korisnickoIme).subscribe(
+      ok => {
+        if (ok.message == "ok") {
+          alert("Dodat zahtev za predmetom")
+        }
+      }
+    )
+
+    
 
     this.requestService.registerNastavnik(this.user).subscribe(
       rsp => {
@@ -162,6 +181,13 @@ export class RegisterNastavnikComponent {
         if (data.korisnickoIme == this.usernameInput)  {
           this.usernameError = true;
           this.usernameMessage = "Постоји корисник са датим корисничким именом."
+          if (data.prihvacen == 0)
+            this.usernameMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
+          if (data.prihvacen == 2)
+            this.usernameMessage = "Захтев за регистрацијом је одбијен.";
+          if (data.prihvacen == 1)
+            this.usernameMessage = "Постоји корисник са датом и-мејл адресом"
+          
         } 
       
       }
@@ -171,8 +197,14 @@ export class RegisterNastavnikComponent {
       data => {
         if (data.korisnickoIme == this.usernameInput)  {
           this.usernameError = true;
-          this.usernameMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
-        } 
+          
+          this.usernameMessage = "Постоји корисник са датим корисничким именом."
+          if (data.prihvacen == 0)
+            this.usernameMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
+          if (data.prihvacen == 2)
+            this.usernameMessage = "Захтев за регистрацијом је одбијен.";
+          if (data.prihvacen == 1)
+            this.usernameMessage = "Постоји корисник са датом и-мејл адресом"} 
       
       }
     )
@@ -194,6 +226,12 @@ export class RegisterNastavnikComponent {
         if (data.imejl == this.emailInput)  {
           this.emailError = true;
           this.emailMessage = "Постоји корисник са датом и-мејл адресом"
+          if (data.prihvacen == 0)
+            this.emailMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
+          if (data.prihvacen == 2)
+            this.emailMessage = "Захтев за регистрацијом је одбијен.";
+          if (data.prihvacen == 1)
+            this.emailMessage = "Постоји корисник са датом и-мејл адресом"
           
         } 
       }
@@ -202,7 +240,13 @@ export class RegisterNastavnikComponent {
       data => {
         if (data.imejl == this.emailInput)  {
           this.emailError = true;
-          this.emailMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
+          if (data.prihvacen == 0)
+            this.emailMessage = "Корисник се већ регистровао. Захтев за регистрацијом још увек није прихваћен."
+          if (data.prihvacen == 2)
+            this.emailMessage = "Захтев за регистрацијом је одбијен.";
+          if (data.prihvacen == 1)
+            this.emailMessage = "Постоји корисник са датом и-мејл адресом"
+
         } 
       }
     )
@@ -236,18 +280,22 @@ export class RegisterNastavnikComponent {
 
   initialPredmet: boolean = false;
 
-  onCheckboxChange(predmet: string, event: any) {
+  onCheckboxChange(pr: SchoolSubject, event: any) {
+    let predmet = pr.imePredmeta;
     this.initialPredmet = true;
     if(event.target.checked) {
       this.user.predmet.push(predmet);
       this.predmetiRecnik[predmet] = true;
+      console.log(predmet);
       this.invalidPredmeti = false;
     } else {
       this.user.predmet = this.user.predmet.filter(selected => selected !== predmet);
       this.predmetiRecnik[predmet] = false;
       this.invalidPredmeti = true;
       for (let p in this.predmetiRecnik) {
+        console.log(p);
         if (this.predmetiRecnik[p]) {
+          
           this.invalidPredmeti = false;
         }
       }
@@ -383,6 +431,7 @@ export class RegisterNastavnikComponent {
           this.invalidPredmeti = false;
         }
       }
+    
   }
 
   invalidPredmeti: boolean = true;

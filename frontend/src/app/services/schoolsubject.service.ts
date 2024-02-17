@@ -15,7 +15,7 @@ export class SchoolsubjectService {
 
   dodajPredmet(imePredmeta: string){
   
-    return this.http.post<Message>('http://localhost:4000/schoolsubjects/dodajPredmet', imePredmeta);
+    return this.http.post<Message>('http://localhost:4000/schoolsubjects/dodajPredmet', {imePredmeta: imePredmeta});
   }
 
   dohvatiPredmete() {

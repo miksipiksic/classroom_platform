@@ -3,9 +3,10 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose';
 import userRouter from './routes/user.routes';
-import requestRouter from './routes/request.routes';
+import requestRouter from './routes/regrequest.routes';
 import engagementRouter from './routes/engagement.routes';
 import schoolSubjectRouter from './routes/schoolsubject.routes';
+import subjectRequestRouter from './routes/subjectrequest.routes';
 
 
 
@@ -32,6 +33,9 @@ router.use('/requests', requestRouter)
 router.use('/engagements', engagementRouter)
 
 router.use('/schoolsubjects', schoolSubjectRouter)
+
+
+router.use('/subjectrequests', subjectRequestRouter)
 
 app.use('/', router)
 

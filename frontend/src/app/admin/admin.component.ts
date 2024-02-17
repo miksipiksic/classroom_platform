@@ -5,6 +5,9 @@ import { RegistrationRequestService } from '../services/registration-request.ser
 import User from '../models/user';
 import RegRequest from '../models/regrequest';
 import { EngagementService } from '../services/engagement.service';
+import { SubjectRequest } from '../models/subjectrequest';
+import { SubjectRequestService } from '../services/subject-request.service';
+import { SchoolsubjectService } from '../services/schoolsubject.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +16,8 @@ import { EngagementService } from '../services/engagement.service';
 })
 export class AdminComponent {
 
-  constructor(private router: Router, private userService: UserService, private requestService: RegistrationRequestService, private engagementService: EngagementService) { }
+  constructor(private router: Router, private userService: UserService, private requestService: RegistrationRequestService,
+     private engagementService: EngagementService, private subjectRequestService: SubjectRequestService, private schoolSubjectService: SchoolsubjectService) { }
   loggedIn: string = "";
   message: string = "";
 
@@ -38,6 +42,14 @@ export class AdminComponent {
         this.zahtevi = data;
       }
     )
+
+    this.subjectRequestService.dohvatiZahteve().subscribe(
+      data => {
+        this.zahteviPredmeti = data;
+      }
+    )
+
+    
   //  this.loggedIn = sessionStorage.getItem("loggedIn");
 
     if(this.loggedIn != "admin") {
@@ -49,10 +61,12 @@ export class AdminComponent {
  //   this.username = sessionStorage.getItem("username");
   }
 
-  nastavnici!: User[];
+  nastavnici: User[] = [];
 
-  ucenici!: User[];
-  zahtevi!: RegRequest[];
+  ucenici: User[] = [];
+  zahtevi: RegRequest[] = [];
+
+  zahteviPredmeti:SubjectRequest[] = [];
 
   tipSkoleConvert(lista: User[]) {
     for (let ucenik of lista) {
@@ -73,6 +87,61 @@ export class AdminComponent {
 
   nastavnikZahtev: RegRequest = new RegRequest();
 
+  odobriZahtevPredmet(korisnickoIme: string, imePredmeta: string) {
+    this.schoolSubjectService.dodajPredmet(imePredmeta).subscribe(
+      ok => {
+        this.userService.postojeciKorisnikIme(korisnickoIme).subscribe(
+          data => {
+            if (data.korisnickoIme == korisnickoIme) {
+              // odobren
+              this.userService.dodajPredmet(korisnickoIme, imePredmeta).subscribe(
+                ok => {
+                  this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
+                    ok => {
+              
+                    }
+                  )
+                }
+              )
+            } 
+          }
+        )
+
+        this.requestService.postojeciKorisnikIme(korisnickoIme).subscribe(
+          data => {
+            if (data.korisnickoIme == korisnickoIme) {
+                this.requestService.dodajPredmet(korisnickoIme, imePredmeta).subscribe(
+                  ok => {
+                    this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
+                      ok => {
+                
+                      }
+                    )
+                  }
+                )
+              
+            }
+          }
+        )
+      }
+    )
+
+    this.zahteviPredmeti = this.zahteviPredmeti.filter((value) => ((value.korisnickoIme !== korisnickoIme) && (value.imePredmeta !== imePredmeta)));
+
+
+
+    
+  }
+
+  odbijZahtevPredmet(korisnickoIme: string, imePredmeta: string) {
+    this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
+      ok => {
+
+      }
+    )
+    this.zahteviPredmeti = this.zahteviPredmeti.filter((value) => ((value.korisnickoIme !== korisnickoIme) && (value.imePredmeta !== imePredmeta)));
+  }
+
   odbijZahtev(korisnickoIme: string) {
 
    // this.requestService.dohvatiZahteve(korisnickoIme).subscribe(
@@ -89,6 +158,8 @@ export class AdminComponent {
       }
     )
 
+    
+
   }
 
   odbijanje(zahtev: RegRequest) {
@@ -97,6 +168,7 @@ export class AdminComponent {
       data => {
         if (data.message == "ok") {
           alert("Obijen zahtev");
+          
           this.requestService.obrisiZahtev(zahtev.korisnickoIme).subscribe(
             ok => {
               if (ok.message == "ok") {
@@ -107,7 +179,7 @@ export class AdminComponent {
         }
       }
     )
-
+    this.zahtevi = this.zahtevi.filter((value) => value.korisnickoIme !== zahtev.korisnickoIme);
     
   }
 
@@ -130,10 +202,11 @@ export class AdminComponent {
       data => {
         if (data.message == "ok") {
           alert("Prihvacen zahtev");
+          
           this.requestService.obrisiZahtev(zahtev.korisnickoIme).subscribe(
             ok => {
               if (ok.message == "ok") {
-                alert("Obrisan zahtev.")
+                alert("Obrisan zahtev");
               }
             }
           )
@@ -148,8 +221,19 @@ export class AdminComponent {
         }
       )
     }
+    this.zahtevi = this.zahtevi.filter((value) => value.korisnickoIme !== zahtev.korisnickoIme);
     
     
+  }
+
+  adminPredmet: string = "";
+
+  dodajAdminPredmet() {
+    this.schoolSubjectService.dodajPredmet(this.adminPredmet).subscribe(
+      ok => {
+        
+      }
+    )
   }
 
 

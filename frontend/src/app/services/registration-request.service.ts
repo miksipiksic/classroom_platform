@@ -36,7 +36,15 @@ export class RegistrationRequestService {
     return this.http.post<RegRequest>('http://localhost:4000/requests/postojeciKorisnikImejl', data);
   }
   obrisiZahtev(korisnickoIme: string) {
-    return this.http.post<Message>('http://localhost:4000/requests/obrisiZahtev', korisnickoIme);
+    return this.http.post<Message>('http://localhost:4000/requests/obrisiZahtev', {korisnickoIme: korisnickoIme});
+  }
+
+  dodajPredmet(korisnickoIme: string, imePredmeta: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      imePredmeta: imePredmeta
+    }
+    return this.http.post<Message>('http://localhost:4000/requests/dodajPredmet', data)
   }
 
 

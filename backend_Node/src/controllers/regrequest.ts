@@ -1,6 +1,6 @@
 import * as express from 'express';
 import RegRequest from '../models/regrequest'
-export class RequestController {
+export class RegRequestController {
 
     registerNastavnik = (req: express.Request, res: express.Response) => {
         console.log("u register Nastavnik");
@@ -80,13 +80,27 @@ export class RequestController {
         ).catch(err=>console.log(err))
     }
 
-    obrisiZahtev = (req: express.Request, res: express.Response) => {
-        console.log("brisanje")
-        RegRequest.deleteOne({korisnickoIme: req.body.korisnickoIme}).then(
-            ok => {
-                res.json({message: "ok"})
-            }
-        ).catch(err=> console.log(err))
+    obrisiZahtev = (req: express.Request, res: express.Response)=>{
+        RegRequest.deleteOne({korisnickoIme: req.body.korisnickoIme}).then(ok=>{
+            res.json({message: "ok" });
+            console.log(req.body.korisnickoIme);
+        }).catch((err)=>{
+            console.log(err)
+            res.json({message: "fail"})
+        })
+    }
+
+    dodajPredmet = (req: express.Request, res: express.Response)=>{
+        console.log(req.body.korisnickoIme);
+        console.log("nije prihvacen, dodaj predmet")
+        RegRequest.updateOne({ korisnickoIme: req.body.korisnickoIme },
+            { $addToSet: { predmet: req.body.imePredmeta } }).then(ok=>{
+            res.json({message: "ok" });
+            console.log(req.body.korisnickoIme);
+        }).catch((err)=>{
+            console.log(err)
+            res.json({message: "fail"})
+        })
     }
 
 }

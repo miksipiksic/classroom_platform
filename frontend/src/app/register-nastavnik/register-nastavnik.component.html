@@ -136,22 +136,9 @@
 
       <div class="form-group"  [class.is-invalid]="invalidPredmeti">
         <label for="predmet">Које предмете желите да подучавате?</label>
-        <input type="checkbox"  (change)="onCheckboxChange('Математика', $event)">Математика
-        <input type="checkbox"  (change)="onCheckboxChange('Физика', $event)">Физика
-        <input type="checkbox"  (change)="onCheckboxChange('Хемија', $event)">Хемија
-        <input type="checkbox"  (change)="onCheckboxChange('Информатика', $event)">Информатика
-        <input type="checkbox"  (change)="onCheckboxChange('Програмирање', $event)">Програмирање
-        <input type="checkbox"  (change)="onCheckboxChange('Српски језик и књижевност', $event)">Српски језик и књижевност
-        <input type="checkbox"  (change)="onCheckboxChange('Енглески језик', $event)">Енглески језик
-        <input type="checkbox"  (change)="onCheckboxChange('Немачки језик', $event)">Немачки језик
-        <input type="checkbox"  (change)="onCheckboxChange('Италијански језик', $event)">Италијански језик
-        <input type="checkbox"  (change)="onCheckboxChange('Француски језик', $event)">Француски језик
-        <input type="checkbox"  (change)="onCheckboxChange('Шпански језик', $event)">Шпански језик
-        <input type="checkbox"  (change)="onCheckboxChange('Латински језик', $event)">Латински језик
-        <input type="checkbox"  (change)="onCheckboxChange('Биологија', $event)">Биологија
-        <input type="checkbox"  (change)="onCheckboxChange('Историја', $event)">Историја
-        <input type="checkbox"  (change)="onCheckboxChange('Географија', $event)">Географија
-        <input type="checkbox"  (change)="onCheckboxChange('Свет око нас', $event)">Свет око нас
+        <div *ngFor="let p of listaPredmeta">
+          <input type="checkbox" (change)="onCheckboxChange(p, $event)">{{p.imePredmeta}}
+        </div>
         <input type="checkbox"  (change)="dodajPredmetFun()"> 
         <input type="text" class="form-control" id="dodatakPredmet" [disabled]="!dodajPredmet" [(ngModel)]="dodatakPredmet" name="dodatakPredmet" required
         #dodatPredmet="ngModel" [class.is-invalid]="dodatPredmet.touched && dodatPredmet.invalid" >

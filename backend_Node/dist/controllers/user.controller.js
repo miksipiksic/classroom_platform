@@ -145,6 +145,15 @@ class UserController {
                 res.json(users);
             }).catch(err => console.log(err));
         };
+        this.dodajPredmet = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $addToSet: { predmet: req.body.imePredmeta } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
     }
 }
 exports.UserController = UserController;

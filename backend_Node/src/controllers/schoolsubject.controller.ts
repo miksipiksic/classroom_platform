@@ -12,7 +12,11 @@ export class SchoolSubjectController {
 
     dodajPredmet = (req: express.Request, res: express.Response) => {
         let imePredmeta = req.body.imePredmeta;
-        new SchoolSubject(imePredmeta).save().then(ok=>{
+        console.log(req.body.imePredmeta);
+        let predmet = {
+            imePredmeta: imePredmeta
+        }
+        new SchoolSubject(predmet).save().then(ok=>{
             res.json({message: "ok"})
         }).catch((err)=>{
             console.log(err)

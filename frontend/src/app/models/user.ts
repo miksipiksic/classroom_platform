@@ -17,4 +17,5 @@ export default class User {
     uzrast: Array<string> = [];
     upoznavanjeSaSajtom: string = "";
     tip: number = 0;
+    prihvacen: number = 0;
 }

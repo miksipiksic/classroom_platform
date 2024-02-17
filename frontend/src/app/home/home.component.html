@@ -85,39 +85,23 @@
     </section>
   --> 
   {{brojUcenika}}
-    <div class="row d-flex justify-content-center mt-100">
+  {{brojNastavnika}}
 
-      <div class="col-md-6">
+  <table>
+    <thead>
+      <tr>
+        <th>Предмет</th>
+        <th>Ангажовани наставник</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of recnikPredmetNastavnik | keyvalue">
+        {{entry.key}}</tr>
 
-
-
-          <div class="progress blue">
-            <span class="progress-left">
-                              <span class="progress-bar"></span>
-            </span>
-            <span class="progress-right">
-                              <span class="progress-bar"></span>
-            </span>
-            <div class="progress-value">90%</div>
-          </div>
-
-          
-            <div class="progress yellow">
-              <span class="progress-left">
-                              <span class="progress-bar"></span>
-              </span>
-              <span class="progress-right">
-                              <span class="progress-bar"></span>
-              </span>
-              <div class="progress-value">90%</div>
-            </div>
-            
+    </tbody>
+  </table>
 
 
-         
-      </div>
-     
-  </div>
   <!--
     <section id="counts" class="counts section-bg">
       <div class="container">

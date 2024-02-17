@@ -43,4 +43,8 @@ userRouter.route('/registerNastavnik').post(
     (req, res) => new UserController().registerNastavnik(req, res)
 )
 
+userRouter.route('/dodajPredmet').post(
+    (req, res) => new UserController().dodajPredmet(req, res)
+)
+
 export default userRouter;

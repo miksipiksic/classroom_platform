@@ -7,6 +7,7 @@ import User from '../models/user';
 import { RegistrationRequestService } from '../services/registration-request.service';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SchoolSubject } from '../models/schoolsubject';
 
 
 
@@ -97,7 +98,6 @@ export class RegisterComponent {
     });
   }
 
- 
   
   odabranTipSkole: boolean = false;
   user: User = new User()

@@ -72,10 +72,13 @@ class RequestController {
             }).catch(err => console.log(err));
         };
         this.obrisiZahtev = (req, res) => {
-            console.log("brisanje");
             regrequest_1.default.deleteOne({ korisnickoIme: req.body.korisnickoIme }).then(ok => {
                 res.json({ message: "ok" });
-            }).catch(err => console.log(err));
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
         };
     }
 }
