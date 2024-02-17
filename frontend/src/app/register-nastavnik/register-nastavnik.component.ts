@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SchoolSubject } from '../models/schoolsubject';
 import { SchoolsubjectService } from '../services/schoolsubject.service';
 import { SubjectRequestService } from '../services/subject-request.service';
+import { EngagementService } from '../services/engagement.service';
 
 
 
@@ -73,7 +74,8 @@ export class RegisterNastavnikComponent implements OnInit{
   @ViewChild('pol') pol!: ElementRef;
   
   constructor(private userService:UserService, private requestService: RegistrationRequestService,
-     private http:HttpClient, private schoolSubjectService: SchoolsubjectService, private subjectRequestService: SubjectRequestService
+     private http:HttpClient, private schoolSubjectService: SchoolsubjectService, private subjectRequestService: SubjectRequestService,
+     private engagementService: EngagementService
    ) {
       
     }

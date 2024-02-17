@@ -5,6 +5,7 @@ import { Engagement } from '../models/engagement';
 import { EngagementService } from '../services/engagement.service';
 import { SchoolsubjectService } from '../services/schoolsubject.service';
 import { SchoolSubject } from '../models/schoolsubject';
+import { EngagementUser } from '../models/engagementUser';
 
 @Component({
   selector: 'app-home',
@@ -38,27 +39,83 @@ export class HomeComponent implements OnInit {
     this.schoolSubjectService.dohvatiPredmete().subscribe(
       data => {
         this.predmeti = data;
-        for (let p of this.predmeti) {
-          this.recnikPredmeti.push(p.imePredmeta);
-        }
         this.engagementService.dohvatiAngazovanja().subscribe(
-          data => {
-            this.angazovanja = data;
-            for (let p of this.recnikPredmeti) {
-              for (let n of this.angazovanja) {
-                if (n.predmet.imePredmeta == p)
-                  this.recnikPredmetNastavnik[p].push(n.nastavnik.ime + " " + n.nastavnik.prezime);
+          engs => {
+            this.angazovanja = engs;
+            
+            for (let angazovanje of this.angazovanja) {
+              let predmet = angazovanje.predmet;
+              let nastavnici:User[] = [];
+              for (let n of angazovanje.nastavnici) {
+                this.userService.dohvatiKorisnika(n).subscribe(
+                  usr => {
+                    nastavnici.push(usr);
+                  }
+                )
               }
+              let a = {
+                predmet: predmet,
+                nastavnici: nastavnici
+              }  
+              this.angazovanjaUser.push(a);
             }
+            this.angazovanjaUserSort = this.angazovanjaUser;
+            this.angazovanjaUserSearch = this.angazovanjaUser;
+            //this.resetPretraga();
           }
         )
       }
     )
 
-    
-    
   }
 
+  searchIme: string ="";
+  searchPrezime: string = "";
+  searchPredmet: string = "";
+
+  onSearch() {
+    this.pretraga();
+  }
+
+  resetPretraga() {
+    this.searchIme = '';
+    this.searchPrezime = '';
+    this.searchPredmet = '';
+    this.pretraga();
+  }
+
+  pretraga() {
+    this.angazovanjaUserSearch = this.angazovanjaUser;
+
+    let searchImeString = this.searchIme;
+    let searchPrezimeString = this.searchPrezime;
+    let searchPredmetString = this.searchPredmet;
+
+    this.filterItems(searchImeString, searchPrezimeString, searchPredmetString);
+  }
+  
+  filterItems(ime: string, prezime: string, predmet: string) {
+    this.angazovanjaUserSearch = this.angazovanjaUserSearch.filter((item) => 
+    {
+      const predmetMatch = item.predmet.toLowerCase().includes(predmet.toLowerCase());
+      const imeMatch = item.nastavnici.some((nast) => nast.ime.toLowerCase().includes(ime.toLowerCase()));
+      const prezimeMatch = item.nastavnici.some((nast)=> nast.prezime.toLowerCase().includes(prezime));
+
+      console.log(item.predmet)
+      console.log(predmetMatch)
+      console.log(imeMatch)
+      console.log(prezimeMatch)
+      return predmetMatch && imeMatch && prezimeMatch;
+      
+    });
+  
+  }
+  
+  // Create the combined structure
+  
+  angazovanjaUser: EngagementUser[] = [];
+  angazovanjaUserSort: EngagementUser[] = [];
+  angazovanjaUserSearch: EngagementUser[] = []
   
   ucenici: User[] = [];
   brojUcenika: number = 0;
@@ -69,40 +126,96 @@ export class HomeComponent implements OnInit {
   angazovanja: Engagement[] = [];
   angazovanjaSort : Engagement[] = [];
 
-  recnikPredmeti: string[] = [];
-  recnikNastavnici: string[] = []
-  recnikPredmetNastavnik:  { [key: string]: string[] }  = {
-    
-    
+  uporediIme = (a: EngagementUser, b: EngagementUser): number => {
+    let nastavnik1 = a.nastavnici.map(nastavnik => nastavnik.ime).join(', ');
+    let nastavnik2 = b.nastavnici.map(nastavnik => nastavnik.ime).join(', ');
+
+    return nastavnik1.localeCompare(nastavnik2);
   }
-  
+
+  uporediPrezime = (a: EngagementUser, b: EngagementUser): number => {
+    let nastavnik1 = a.nastavnici.map(nastavnik => nastavnik.prezime).join(', ');
+    let nastavnik2 = b.nastavnici.map(nastavnik => nastavnik.prezime).join(', ');
+
+    return nastavnik1.localeCompare(nastavnik2);
+  }
+
+  uporediPredmete = (a: EngagementUser, b: EngagementUser): number => {
+    return a.predmet.localeCompare(b.predmet);
+  } 
 
 
   sortImeRastuce() {
-   // this.nastavniciSort.sort((a, b) => a.ime.localeCompare(b.ime));
+ //   this.angazovanjaUserSearch = this.angazovanjaUserSort;
+    this.angazovanjaUserSearch.sort((a,b) => {
+      let poredjenje = this.uporediIme(a, b);
+      if (poredjenje !== 0) {
+        return poredjenje
+      }
+      return this.uporediIme(a, b);
+    })
   }
 
 
   sortImeOpadajuce() {
-  //  this.nastavniciSort.sort((a, b) => b.ime.localeCompare(a.ime));
+ //   this.angazovanjaUserSearch = this.angazovanjaUserSort;
+    this.angazovanjaUserSearch.sort((a,b) => {
+      let poredjenje = this.uporediIme(a, b);
+      if (poredjenje !== 0) {
+        return poredjenje
+      }
+      return this.uporediIme(a, b);
+    })
+    this.angazovanjaUserSearch.reverse();
   }
 
-  sortPrzimeRastuce() {
-   // this.nastavniciSort.sort((a, b) => a.prezime.localeCompare(b.prezime));
+  sortPrezimeRastuce() {
+ //   this.angazovanjaUserSearch = this.angazovanjaUserSort;
+    this.angazovanjaUserSearch.sort((a,b) => {
+      let poredjenje = this.uporediPrezime(a, b);
+      if (poredjenje !== 0) {
+        return poredjenje
+      }
+      return this.uporediPrezime(a, b);
+    })
   }
 
 
   sortPrezimeOpadajuce() {
-   // this.nastavniciSort.sort((a, b) => b.prezime.localeCompare(a.prezime));
+   
+  //  this.angazovanjaUserSearch = this.angazovanjaUserSort;
+    this.angazovanjaUserSearch.sort((a,b) => {
+      let poredjenje = this.uporediPrezime(a, b);
+      if (poredjenje !== 0) {
+        return poredjenje
+      }
+      return this.uporediPrezime(a, b);
+    })
+    this.angazovanjaUserSearch.reverse();
   }
 
   sortPredmetRastuce() {
-   // this.nastavniciSort.sort((a, b) => a.predmet.localeCompare(b.predmet));
+ //   this.angazovanjaUserSearch = this.angazovanjaUserSort;
+    this.angazovanjaUserSearch.sort((a,b) => {
+      let poredjenje = this.uporediPredmete(a, b);
+      if (poredjenje !== 0) {
+        return poredjenje
+      }
+      return this.uporediPredmete(a, b);
+    })
   }
 
 
   sortPredmetOpadajuce() {
-  //  this.nastavniciSort.sort((a, b) => b.predmet.localeCompare(a.predmet));
+  //  this.angazovanjaUserSearch = this.angazovanjaUserSort;
+    this.angazovanjaUserSearch.sort((a,b) => {
+      let poredjenje = this.uporediPredmete(a, b);
+      if (poredjenje !== 0) {
+        return poredjenje
+      }
+      return this.uporediPredmete(a, b);
+    })
+    this.angazovanjaUserSearch.reverse();
   }
 
 

@@ -26,4 +26,23 @@ export class EngagementService {
   dohvatiAngazovanja() {
     return this.http.get<Engagement[]>('http://localhost:4000/engagements/dohvatiAngazovanja');
   }
+
+  dodajAngazovanjeNastavnika(predmet: string, nastavnik: string) {
+    const data = {
+      predmet: predmet,
+      nastavnik: nastavnik
+    }
+
+    return this.http.post<Message>('http://localhost:4000/engagements/dodajAngazovanjeNastavnika', data)
+
+  }
+
+  dodajPredmet(predmet: string) {
+    const data = {
+      predmet: predmet
+    }
+    return this.http.post<Message>('http://localhost:4000/engagements/dodajPredmet', data); 
+  }
+
+
 }

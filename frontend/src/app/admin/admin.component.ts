@@ -34,6 +34,7 @@ export class AdminComponent {
     this.userService.dohvatiNastavnike().subscribe(
       data => {
         this.nastavnici = data;
+        this.nastavnici = this.nastavnici.filter((value)=> (value.prihvacen !== 2));
       }
     )
 
@@ -96,6 +97,15 @@ export class AdminComponent {
               // odobren
               this.userService.dodajPredmet(korisnickoIme, imePredmeta).subscribe(
                 ok => {
+                  this.engagementService.dodajPredmet(imePredmeta).subscribe(
+                    ok => {
+                      this.engagementService.dodajAngazovanjeNastavnika(imePredmeta, korisnickoIme).subscribe(
+                        ok => {
+
+                        }
+                      )
+                    }
+                  )
                   this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
                     ok => {
               
@@ -112,6 +122,11 @@ export class AdminComponent {
             if (data.korisnickoIme == korisnickoIme) {
                 this.requestService.dodajPredmet(korisnickoIme, imePredmeta).subscribe(
                   ok => {
+                    this.engagementService.dodajPredmet(imePredmeta).subscribe(
+                      ok => {
+
+                      }
+                    )
                     this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
                       ok => {
                 
@@ -202,6 +217,13 @@ export class AdminComponent {
       data => {
         if (data.message == "ok") {
           alert("Prihvacen zahtev");
+          for (let predmet of zahtev.predmet) {
+            this.engagementService.dodajAngazovanjeNastavnika( predmet,zahtev.korisnickoIme).subscribe(
+              ok => {
+                alert("Dodato angazovanje.");
+              }
+            )
+          }
           
           this.requestService.obrisiZahtev(zahtev.korisnickoIme).subscribe(
             ok => {
@@ -210,19 +232,14 @@ export class AdminComponent {
               }
             }
           )
+          
+        
+    this.zahtevi = this.zahtevi.filter((value) => value.korisnickoIme !== zahtev.korisnickoIme);
+    
         }
       }
     )
 
-    for (let predmet of zahtev.predmet) {
-      this.engagementService.dodajAngazovanje(zahtev.korisnickoIme, predmet).subscribe(
-        ok => {
-          alert("Dodato angazovanje.");
-        }
-      )
-    }
-    this.zahtevi = this.zahtevi.filter((value) => value.korisnickoIme !== zahtev.korisnickoIme);
-    
     
   }
 
@@ -231,7 +248,11 @@ export class AdminComponent {
   dodajAdminPredmet() {
     this.schoolSubjectService.dodajPredmet(this.adminPredmet).subscribe(
       ok => {
-        
+        this.engagementService.dodajPredmet(this.adminPredmet).subscribe(
+          ok => {
+            
+          }
+        )
       }
     )
   }

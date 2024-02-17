@@ -8,8 +8,8 @@ let Engagement = new Schema({
    predmet: {
     type: String
    },
-   nastavnik: {
-    type: String
+   nastavnici: {
+    type: [String]
    }
 })
 
