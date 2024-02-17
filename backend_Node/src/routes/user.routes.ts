@@ -47,4 +47,41 @@ userRouter.route('/dodajPredmet').post(
     (req, res) => new UserController().dodajPredmet(req, res)
 )
 
+userRouter.route('/promeniIme').post(
+    (req, res) => new UserController().promeniIme(req, res)
+)
+
+
+userRouter.route('/promeniPrezime').post(
+    (req, res) => new UserController().promeniPrezime(req, res)
+)
+
+
+userRouter.route('/promeniAdresu').post(
+    (req, res) => new UserController().promeniAdresu(req, res)
+)
+
+
+userRouter.route('/promeniImejl').post(
+    (req, res) => new UserController().promeniImejl(req, res)
+)
+
+
+userRouter.route('/promeniKontaktTelefon').post(
+    (req, res) => new UserController().promeniKontaktTelefon(req, res)
+)
+
+
+userRouter.route('/promeniTipSkole').post(
+    (req, res) => new UserController().promeniTipSkole(req, res)
+)
+
+userRouter.route('/promeniRazred').post(
+    (req, res) => new UserController().promeniRazred(req, res)
+)
+
+
+userRouter.route('/promeniProfilnuSliku').post(
+    (req, res) => new UserController().promeniProfilnuSliku(req, res)
+)
 export default userRouter;

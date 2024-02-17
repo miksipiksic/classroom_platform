@@ -1,0 +1,177 @@
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Профил корисника</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Profile Picture -->
+                    <img src="{{user.profilnaSlika}}" class="img-fluid mb-3" alt="Профилна слика">
+
+                    <!-- User Information Form -->
+                    <form>
+                        <!-- First Name -->
+                        <div class="form-group">
+                            
+                {{user.ime}}
+                            <label for="firstName">Име:</label>
+                            <input type="text" class="form-control" id="firstName" value="{{user.ime}}" readonly>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lastName">Презиме:</label>
+                            <input type="text" class="form-control" id="lastName" value={{user.prezime}} readonly>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group">
+                            <label for="address">Адреса:</label>
+                            <input type="text" class="form-control" id="address" value="{{user.adresa}}" readonly>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">И-мејл:</label>
+                            <input type="email" class="form-control" id="email" value={{user.imejl}} readonly>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="form-group">
+                            <label for="phoneNumber">Контакт телефон:</label>
+                            <input type="tel" class="form-control" id="phoneNumber" value={{user.kontaktTelefon}} readonly>
+                        </div>
+
+                        <!-- School -->
+                        <div class="form-group">
+                            <label for="school">Тип школе</label>
+                            <input type="text" class="form-control" id="school" value={{user.tipSkole}} readonly>
+                        </div>
+
+                        <!-- Class -->
+                        <div class="form-group">
+                            <label for="class">Разред</label>
+                            <input type="text" class="form-control" id="class" value={{user.razred}} readonly>
+                        </div>
+
+                        <!-- Update Button -->
+                        <button type="button" class="btn btn-primary" (click)="openModal()">
+                            Измени податке
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- YourComponent.component.html -->
+
+<div class="modal" tabindex="-1" role="dialog" style="display: none;" #myModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Измени податке</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Your modal content goes here -->
+        <form id="changeFormUcenik" #changeFormUcenik="ngForm">
+
+          <div class="form-group">
+            <label for="profilnaSlika">Профилна слика:</label>
+            <input type="file" class="form-control-file" id="profilnaSlika" [class.is-invalid]="invalidImage" (input)="onImageFileSelected($event)" accept=".png, .jpg, .jpeg"
+            >
+            <div class="invalid-feedback" *ngIf="invalidImage">
+              <p> {{messageImage}}</p>
+          </div>
+          </div>
+
+        <div class="form-group">
+            <label for="ime">Име:</label>
+            <input type="text" class="form-control" [(ngModel)]="promenaIme">
+            
+          </div>
+
+          <div class="form-group">
+            <label for="prezime">Презиме:</label>
+            <input type="text" class="form-control"[(ngModel)]="promenaPrezime">
+           
+          </div>
+
+
+          <div class="form-group">
+            <label for="imejl">И-мејл адреса:</label>
+            <input type="email" class="form-control" id="imejl" [(ngModel)]="promenaImejl" (change)="onEmailChange($event)" name="imejl" 
+            #imejl="ngModel" pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.com" [class.is-invalid]="(imejl.invalid && imejl.touched) || emailError">
+            <div class="invalid-feedback" *ngIf="((imejl.invalid && imejl.touched) && imejl.errors)">
+                <p *ngIf="imejl.errors['pattern'] && !imejl.errors['required']">И-мејл адреса мора бити у формату example@example.com</p>
+            </div>
+            <div class="invalid-feedback" *ngIf="emailError">
+              <p>{{emailMessage}}</p>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="adresa">Адреса:</label>
+            <input type="text" class="form-control" [(ngModel)]="promenaAdresa">            
+          </div>
+
+          <div class="form-group">
+            <label for="kontaktTelefon">Контакт телефон:</label>
+            <input type="text" class="form-control" id="kontaktTelefon" [(ngModel)]="promenaKontaktTelefon" name="kontaktTelefon" 
+            #telefon="ngModel" pattern="^\+3816\d{7,8}$" [class.is-invalid]="telefon.invalid && telefon.touched">
+            <div class="invalid-feedback" *ngIf="(telefon.invalid && telefon.touched) && telefon.errors">
+                
+              <p *ngIf="telefon.errors['pattern']">Контакт телефон мора бити у формату +3816xxxxxxx.</p>         
+          </div>
+          </div>
+
+          <div class="form-group">
+            <label for="tipSkole">Тип школе:</label>
+            <select class="form-control" [(ngModel)]="promenaTipSkole" (input)="tipSkole($event)" [class.is-invalid]="invalidTipSkole">
+                <option value="">Изабери тип школе</option>
+                <option value="основна">основна</option>
+                <option value="средња-гимназија">средња-гимназија</option>
+                <option value="средња-стручна">средња-стручна</option>
+                <option value="средња-уметничка">средња-уметничка</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="invalidTipSkole">
+                <p>{{tipSkoleError}}</p>
+              </div>
+          </div>
+
+          <div class="form-group">
+            <label for="razred">Разред:</label>
+            <select class="form-control" [(ngModel)]="promenaRazred" (input)="razred($event)" [class.is-invalid]="invalidRazred">
+                <option value="">Изабери разред</option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='5'>5</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='6'>6</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='7'>7</option>
+                <option *ngIf="user.tipSkole === 'основна'" value='8'>8</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="invalidRazred">
+                <p>{{razredError}}</p>
+              </div>
+            
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="changeFormUcenik.form.invalid || invalidImage || emailError|| invalidRazred || invalidTipSkole" (click)="izmeni()">Потврди</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Затвори</button>
+      </div>
+    </div>
+  </div>
+</div>

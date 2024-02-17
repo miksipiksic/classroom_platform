@@ -20,15 +20,13 @@ export class LoginComponent {
   login() {
     this.userService.dohvatiKorisnika(this.korisnickoIme).subscribe(
       data => {
-        if (data instanceof User) {
-          sessionStorage.setItem("loggedIn", this.korisnickoIme); 
+        if (data!= null) {
+          localStorage.setItem("loggedIn", this.korisnickoIme); 
           this.u = data;
+          this.router.navigate(['ucenik-nastavnici']);
         }
 
-        if (this.u.tip == 1) {
-          // ucenik
-          
-        }
+        
       }
     )
   }

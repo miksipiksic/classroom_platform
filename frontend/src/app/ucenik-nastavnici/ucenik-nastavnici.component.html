@@ -1,0 +1,47 @@
+
+<input class="search form-control" [(ngModel)]="searchIme" (change)="onSearch()" placeholder="Име" />
+<input class="search form-control" [(ngModel)]="searchPrezime" (change)="onSearch()" placeholder="Презиме" />
+<input class="search form-control" [(ngModel)]="searchPredmet" (change)="onSearch()" placeholder="Предмет" />
+
+<div class="top_margin15">
+  <button (click)="sortImeRastuce()" class="btn btn-secondary me-2">Име(растуће)</button>
+  <button (click)="sortImeOpadajuce()" class="btn btn-secondary me-2">Име(опадајуће)</button>
+  <button (click)="sortPrezimeRastuce()" class="btn btn-secondary me-2">Презиме(растуће)</button>
+  <button (click)="sortPrezimeOpadajuce()" class="btn btn-secondary me-2">Презиме(опадајуће)</button>
+  <button (click)="sortPredmetRastuce()" class="btn btn-secondary me-2">Предмет(растуће)</button>
+  <button (click)="sortPredmetOpadajuce()" class="btn btn-secondary me-2">Предмет(опадајуће)</button>
+  
+</div>
+<h3> Ангажовани наставници </h3>
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Предмет</th>
+            <th scope="col">Име наставника</th>
+            <th scope="col">Презиме наставника</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let u of angazovanjaUserSearch" class="table-group-divider">
+        <tr>
+          <td>{{u.predmet}}</td>
+          <td>
+            <table class="table table-bordered table-sm">
+                <tbody>
+                  <tr *ngFor="let n of u.nastavnici">
+                    <td>{{n.ime}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </td>
+          <td>
+            <table class="table table-bordered table-sm">
+                <tbody>
+                  <tr *ngFor="let n of u.nastavnici">
+                    <td>{{n.prezime}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </td>
+          </tr>
+    </tbody>
+</table>

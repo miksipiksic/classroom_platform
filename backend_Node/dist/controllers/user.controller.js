@@ -154,6 +154,78 @@ class UserController {
                 res.json({ message: "fail" });
             });
         };
+        this.promeniIme = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { ime: req.body.ime } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniPrezime = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { prezime: req.body.prezime } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniAdresu = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { adresa: req.body.adresa } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniImejl = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { imejl: req.body.imejl } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniKontaktTelefon = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { kontaktTelefon: req.body.kontaktTelefon } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniTipSkole = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { tipSkole: req.body.tipSkole } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniRazred = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { razred: req.body.razred } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniProfilnuSliku = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { profilnaSlika: req.body.profilnaSlika } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
     }
 }
 exports.UserController = UserController;

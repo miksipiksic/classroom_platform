@@ -76,5 +76,77 @@ export class UserService {
     }
     return this.http.post<Message>('http://localhost:4000/user/dodajPredmet', data)
   }
+
+  promeniIme(korisnickoIme: string, ime: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      ime: ime
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniIme', data)
+  }
   
+  
+  promeniPrezime(korisnickoIme: string, prezime: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      prezime: prezime
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniPrezime', data)
+  }
+
+  
+  promeniImejl(korisnickoIme: string, imejl: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      imejl: imejl
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniImejl', data)
+  }
+
+  
+  promeniAdresu(korisnickoIme: string, adresa: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      adresa: adresa
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniAdresu', data)
+  }
+
+  
+  promeniKontaktTelefon(korisnickoIme: string, kontaktTelefon: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      kontaktTelefon: kontaktTelefon
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniKontaktTelefon', data)
+  }
+
+  
+  promeniTipSkole(korisnickoIme: string, tipSkole: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      tipSkole: tipSkole
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniTipSkole', data)
+  }
+
+  
+  promeniRazred(korisnickoIme: string, razred: number) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      razred: razred
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniRazred', data)
+  }
+
+  promeniProfilnuSliku(korisnickoIme: string, profilnaSlika: string) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      profilnaSlika: profilnaSlika
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniProfilnuSliku', data)
+  }
+
+  
+
 }

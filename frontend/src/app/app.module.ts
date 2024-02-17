@@ -12,6 +12,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { RegisterComponent } from './register/register.component';
 import { SearchTeachersComponent } from './search-teachers/search-teachers.component';
 import { RegisterNastavnikComponent } from './register-nastavnik/register-nastavnik.component';
+import { UcenikProfilComponent } from './ucenik-profil/ucenik-profil.component';
+import { UcenikNastavniciComponent } from './ucenik-nastavnici/ucenik-nastavnici.component';
+import { UcenikCasoviComponent } from './ucenik-casovi/ucenik-casovi.component';
+import { UcenikObavestenjaComponent } from './ucenik-obavestenja/ucenik-obavestenja.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { RegisterNastavnikComponent } from './register-nastavnik/register-nastav
     ChangePasswordComponent,
     RegisterComponent,
     SearchTeachersComponent,
-    RegisterNastavnikComponent
+    RegisterNastavnikComponent,
+    UcenikProfilComponent,
+    UcenikNastavniciComponent,
+    UcenikCasoviComponent,
+    UcenikObavestenjaComponent
   ],
   imports: [
     BrowserModule,
