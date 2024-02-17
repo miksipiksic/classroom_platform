@@ -17,8 +17,7 @@
     <thead>
         <tr>
             <th scope="col">Предмет</th>
-            <th scope="col">Име наставника</th>
-            <th scope="col">Презиме наставника</th>
+            <th scope="col">Име и презиме наставника</th>
         </tr>
     </thead>
     <tbody *ngFor="let u of angazovanjaUserSearch" class="table-group-divider">
@@ -26,22 +25,17 @@
           <td>{{u.predmet}}</td>
           <td>
             <table class="table table-bordered table-sm">
-                <tbody>
-                  <tr *ngFor="let n of u.nastavnici">
-                    <td>{{n.ime}}</td>
+                <tbody *ngFor="let n of u.nastavnici">
+                  <tr >
+                    <td>{{n.ime}} {{n.prezime}}</td>
+                  </tr>
+                  <tr>
+                    <a href="detalji-nastavnik" (click)="pogledajDetalje(n.korisnickoIme)"> Погледајте детаље</a>
                   </tr>
                 </tbody>
               </table>
           </td>
-          <td>
-            <table class="table table-bordered table-sm">
-                <tbody>
-                  <tr *ngFor="let n of u.nastavnici">
-                    <td>{{n.prezime}}</td>
-                  </tr>
-                </tbody>
-              </table>
-          </td>
+          
           </tr>
     </tbody>
 </table>
