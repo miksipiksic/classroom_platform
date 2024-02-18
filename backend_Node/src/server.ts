@@ -7,6 +7,7 @@ import requestRouter from './routes/regrequest.routes';
 import engagementRouter from './routes/engagement.routes';
 import schoolSubjectRouter from './routes/schoolsubject.routes';
 import subjectRequestRouter from './routes/subjectrequest.routes';
+import classRequestRouter from './routes/scheduleClass.routes';
 
 
 
@@ -36,6 +37,8 @@ router.use('/schoolsubjects', schoolSubjectRouter)
 
 
 router.use('/subjectrequests', subjectRequestRouter)
+
+router.use('/classrequests', classRequestRouter)
 
 app.use('/', router)
 

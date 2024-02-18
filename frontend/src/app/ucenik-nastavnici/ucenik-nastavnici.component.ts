@@ -30,10 +30,10 @@ export class UcenikNastavniciComponent {
     if (loggedIn) {
       this.userService.dohvatiKorisnika(loggedIn).subscribe(
         u => {
-
+              this.user = u;
               this.schoolSubjectService.dohvatiPredmete().subscribe(
                 data => {
-                  this.predmeti = data;
+              //    this.predmeti = data;
                   this.engagementService.dohvatiAngazovanja().subscribe(
                     engs => {
                       this.angazovanja = engs;
@@ -152,7 +152,7 @@ export class UcenikNastavniciComponent {
   brojNastavnika: number = 0;
   nastavnici: User[] = [];
 
-  predmeti: SchoolSubject[] = [];
+ // predmeti: SchoolSubject[] = [];
   angazovanja: Engagement[] = [];
   angazovanjaSort: Engagement[] = [];
 
