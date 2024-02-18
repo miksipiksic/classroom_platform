@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class SchoolClassService {
+
+ 
   constructor(private http: HttpClient) { }
 
   uri = "http://localhost:4000/classes";
@@ -26,6 +28,17 @@ export class SchoolClassService {
     }
   
     return this.http.post<Message>('http://localhost:4000/classes/dodajCas', data);
+  }
+
+  odradiCas(nastavnik: string, korisnickoIme: string, predmet: string, pocetakCasa: string, odradjen: boolean) {
+    const data = {
+      nastavnik: nastavnik,
+      ucenik: korisnickoIme,
+      predmet: predmet,
+      pocetakCasa: pocetakCasa,
+      odradjen: odradjen
+    }
+    return this.http.post<Message>('http://locahost:4000/classes/odradiCas', data);
   }
 
   dohvatiCasove() {
@@ -47,4 +60,6 @@ export class SchoolClassService {
   
     return this.http.post<Message>('http://localhost:4000/classes/obrisiZahtev', data);
   }
+
+
 }

@@ -15,4 +15,10 @@ classRouter.route('/obrisiCas').post(
 )
 
 
+
+classRouter.route('/odradiCas').post(
+    (req, res) => new SchoolClassController().odradiCas(req, res)
+)
+
+
 export default classRouter;

@@ -28,7 +28,7 @@ export class LoginComponent {
             this.router.navigate(['ucenik-nastavnici']);
           } 
           if(this.u.tip == 2) {
-            this.router.navigate(['nastavnik-profil'])
+            this.router.navigate(['nastavnik-casovi'])
           }
         }
 

@@ -46,4 +46,35 @@ export class ScheduleClassService {
     return this.http.post<Message>('http://localhost:4000/classrequests/obrisiZahtev', data);
   }
 
+  odbijZahtev(nastavnik: string, 
+    ucenik: string, predmet: string, pocetakCasa: string,
+    krajCasa: string, tema: string, obrazlozenje: string){
+    const data = {
+      nastavnik: nastavnik,
+      ucenik: ucenik,
+      predmet: predmet,
+      pocetakCasa: pocetakCasa,
+      krajCasa: krajCasa, 
+      tema: tema,
+      obrazlozenje: obrazlozenje
+    }
+  
+    return this.http.post<Message>('http://localhost:4000/classrequests/odbijZahtev', data);
+  }
+  prihvatiZahtev(nastavnik: string, 
+    ucenik: string, predmet: string, pocetakCasa: string,
+    krajCasa: string, tema: string){
+    const data = {
+      nastavnik: nastavnik,
+      ucenik: ucenik,
+      predmet: predmet,
+      pocetakCasa: pocetakCasa,
+      krajCasa: krajCasa, 
+      tema: tema
+    }
+  
+    return this.http.post<Message>('http://localhost:4000/classrequests/prihvatiZahtev', data);
+  }
+
+
 }

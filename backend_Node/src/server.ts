@@ -9,6 +9,7 @@ import schoolSubjectRouter from './routes/schoolsubject.routes';
 import subjectRequestRouter from './routes/subjectrequest.routes';
 import classRequestRouter from './routes/scheduleClass.routes';
 import classRouter from './routes/schoolClass.routes';
+import gradeRouter from './routes/grade.routes';
 
 
 
@@ -42,6 +43,8 @@ router.use('/subjectrequests', subjectRequestRouter)
 router.use('/classrequests', classRequestRouter)
 
 router.use('/classes', classRouter)
+
+router.use('/grades', gradeRouter)
 
 app.use('/', router)
 

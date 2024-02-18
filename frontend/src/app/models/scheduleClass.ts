@@ -5,4 +5,6 @@ export class ScheduleClass {
     pocetakCasa: string = "";
     krajCasa: string = "";
     tema: string = "";
+    prihvacen: number = 0;
+    obrazlozenje: string = "";
 }

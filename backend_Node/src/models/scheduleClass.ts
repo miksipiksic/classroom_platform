@@ -20,6 +20,12 @@ let ScheduleClass = new Schema({
     },
     tema: {
         type: String
+    },
+    prihvacen: {
+        type:Number
+    },
+    obrazlozenje: {
+        type:String
     }
 })
 

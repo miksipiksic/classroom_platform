@@ -20,6 +20,11 @@ import { DetaljiNastavnikComponent } from './detalji-nastavnik/detalji-nastavnik
 import { NastavnikProfilComponent } from './nastavnik-profil/nastavnik-profil.component';
 import { NastavnikCasoviComponent } from './nastavnik-casovi/nastavnik-casovi.component';
 import { NastavnikUceniciComponent } from './nastavnik-ucenici/nastavnik-ucenici.component';
+import { DiagramBarComponent } from './diagram-bar/diagram-bar.component';
+import { DiagramPieComponent } from './diagram-pie/diagram-pie.component';
+import { DiagramHistogramComponent } from './diagram-histogram/diagram-histogram.component';
+import { DiagramLinesComponent } from './diagram-lines/diagram-lines.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -38,13 +43,18 @@ import { NastavnikUceniciComponent } from './nastavnik-ucenici/nastavnik-ucenici
     DetaljiNastavnikComponent,
     NastavnikProfilComponent,
     NastavnikCasoviComponent,
-    NastavnikUceniciComponent
+    NastavnikUceniciComponent,
+    DiagramBarComponent,
+    DiagramPieComponent,
+    DiagramHistogramComponent,
+    DiagramLinesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,9 @@
 import * as express from 'express';
 import SchoolClass from '../models/schoolClass';
+import { Request, Response } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
 export class SchoolClassController {
+    
 
     dohvatiCasove = (req: express.Request, res: express.Response) => {
         SchoolClass.find({}).then(reqs=>{
@@ -40,6 +43,20 @@ export class SchoolClassController {
         SchoolClass.deleteOne({nastavnik: req.body.nastavnik,
              predmet: req.body.predmet, ucenik: req.body.ucenik,
             pocetakCasa: req.body.pocetakCasa, krajCasa: req.body.krajCasa, tema: req.body.tema, odradjen: req.body.odradjen}).then(ok=>{
+            res.json({message: "ok" });
+            console.log(req.body.korisnickoIme);
+            console.log(req.body.imePredmeta)
+        }).catch((err)=>{
+            console.log(err)
+            res.json({message: "fail"})
+        })
+    }
+
+    odradiCas = (req: express.Request, res: express.Response)=>{
+        SchoolClass.updateOne({nastavnik: req.body.nastavnik,
+             predmet: req.body.predmet, ucenik: req.body.ucenik,
+            pocetakCasa: req.body.pocetakCasa},
+            {$set: {odradjen: req.body.odradjen}} ).then(ok=>{
             res.json({message: "ok" });
             console.log(req.body.korisnickoIme);
             console.log(req.body.imePredmeta)

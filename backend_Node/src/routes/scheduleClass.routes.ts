@@ -14,5 +14,12 @@ classRequestRouter.route('/obrisiZahtev').post(
     (req, res) => new ScheduleClassController().obrisiZahtev(req, res)
 )
 
+classRequestRouter.route('odbijZahtev').post(
+    (req, res) => new ScheduleClassController().odbijZahtev(req, res)
+)
+
+classRequestRouter.route('prihvatiZahtev').post(
+    (req, res) => new ScheduleClassController().prihvatiZahtev(req, res)
+)
 
 export default classRequestRouter;

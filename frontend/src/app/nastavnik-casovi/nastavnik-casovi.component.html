@@ -1,4 +1,25 @@
+<h3>Часови</h3>
 
+<table class="table table-bordered table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Име и презиме</th>
+            <th scope="col">Предмет</th>
+            <th scope="col">Датум</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let z of casoviSortiraniPrvih5" class="table-group-divider">
+        <tr>
+          <td>{{z.ucenik.ime}} {{z.ucenik.prezime}}</td>
+          <td>{{z.predmet}}</td>
+          <td>{{z.pocetakCasa}}</td>
+          <td>
+                <button class="btn btn-success" (click)="pridruziSe(z)">Придружи се часу</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <h3>Листа захтева за часовима</h3>
 
@@ -8,7 +29,7 @@
             <th scope="col">Име и презиме</th>
             <th scope="col">Предмет</th>
             <th scope="col">Тема</th>
-            <th scope="col">Просечна оцена ученика</th>
+            <th *ngIf="imaViseOdTriOcene" scope="col">Просечна оцена ученика</th>
             <th scope="col" colspan="2">Прихвати/Одбиј</th>
         </tr>
     </thead>
@@ -17,12 +38,12 @@
           <td>{{z.ucenik.ime}} {{z.ucenik.prezime}}</td>
           <td>{{z.predmet}}</td>
           <td>{{z.tema}}</td>
-          <td> 5</td>
+          <td *ngIf="imaViseOdTriOcene">{{z.prosecnaOcena}}</td>
           <td>
-                <button class="btn btn-success" (click)="odobriZahtev(u.korisnickoIme)">Прихвати</button>
+                <button class="btn btn-success" (click)="odobriZahtev(z)">Прихвати</button>
             </td>
             <td>
-                <button class="btn btn-danger" (click)="odbijZahtev(u.korisnickoIme)">Одбиј</button>
+                <button class="btn btn-danger" (click)="odbijZahtev(z)">Одбиј</button>
               
           </td>
         </tr>
@@ -41,15 +62,15 @@
         <div class="modal-body">
           <!-- Your modal content goes here -->
           
-          <div class="form-group" #odbijForm="ngModel">
+          <form #odbijForm="ngForm">
               <label for="ime">Образложење:</label>
-              <input type="text" class="form-control" [(ngModel)]="razlog" required
+              <input type="text" class="form-control" (change)="unesiObrazlozenje()" [(ngModel)]="razlog" required
               
               #obrazlozenje="ngModel" [class.is-invalid]="(obrazlozenje.invalid && obrazlozenje.touched) ">
-              <div class="invalid-feedback" *ngIf="(obrazlozenje.invalid && obrazlozenje.touched) && obrazlozenje.errors">
+              <div class="invalid-feedback"  *ngIf="(obrazlozenje.invalid && obrazlozenje.touched) && obrazlozenje.errors">
                 <p *ngIf="obrazlozenje.errors['required']">Морате унети корисничко име.</p>
             </div>
-            </div>
+          </form>
   
         </div>
         <div class="modal-footer">

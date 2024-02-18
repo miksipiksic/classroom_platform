@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { UcenikNastavniciComponent } from './ucenik-nastavnici/ucenik-nastavnici.component';
 import { DetaljiNastavnikComponent } from './detalji-nastavnik/detalji-nastavnik.component';
 import { NastavnikProfilComponent } from './nastavnik-profil/nastavnik-profil.component';
+import { NastavnikCasoviComponent } from './nastavnik-casovi/nastavnik-casovi.component';
+import { DiagramBarComponent } from './diagram-bar/diagram-bar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -21,7 +23,9 @@ const routes: Routes = [
   {path: 'ucenik-nastavnici', component: UcenikNastavniciComponent},
   {path: 'login', component: LoginComponent},
   {path: 'detalji-nastavnik', component: DetaljiNastavnikComponent},
-  {path: 'nastavnik-profil', component: NastavnikProfilComponent}
+  {path: 'nastavnik-profil', component: NastavnikProfilComponent},
+  {path: 'nastavnik-casovi', component: NastavnikCasoviComponent},
+  {path: 'bar', component:DiagramBarComponent}
 ];
 
 @NgModule({
