@@ -5,6 +5,8 @@ import { UserService } from '../services/user.service';
 import { Time } from '@angular/common';
 import { ScheduleClassService } from '../services/schedule-class.service';
 import { ScheduleClass } from '../models/scheduleClass';
+import { SchoolClassService } from '../services/school-class.service';
+import { SchoolClass } from '../models/schoolClass';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { ScheduleClass } from '../models/scheduleClass';
 })
 export class DetaljiNastavnikComponent {
 
-  constructor(private userService: UserService, private scheduleClassService: ScheduleClassService) { }
+  constructor(private userService: UserService, private scheduleClassService: ScheduleClassService, private classService: SchoolClassService) { }
 
   ngOnInit() {
 
@@ -26,10 +28,10 @@ export class DetaljiNastavnikComponent {
       this.userService.dohvatiKorisnika(nastavnik).subscribe(
         u => {
           this.nastavnik = u;
-          this.scheduleClassService.dohvatiZahteve().subscribe(
+          this.classService.dohvatiCasove().subscribe(
             rq => {
-              this.casoviZahtevi = rq;
-              this.casoviZahtevi = this.casoviZahtevi.filter((value) => (value.nastavnik) === this.nastavnik.korisnickoIme);
+              this.casovi = rq;
+              this.casovi = this.casovi.filter((value) => (value.nastavnik) === this.nastavnik.korisnickoIme);
             }
           )
           for (let p of this.nastavnik.predmet) {
@@ -66,7 +68,7 @@ export class DetaljiNastavnikComponent {
     this.odabranPredmet = true;
   }
 
-  casoviZahtevi: ScheduleClass[] = [];
+  casovi: SchoolClass[] = [];
 
   temaCas: string = "";
 
@@ -91,6 +93,7 @@ export class DetaljiNastavnikComponent {
   zauzet: boolean = false;
   minutiDodatak: number = 60;
   zakaziCas() {
+    this.message = "";
     this.zauzet = false;
     this.minutiDodatak = 60;
     this.datumVremeDate = new Date(this.datumVreme);
@@ -99,13 +102,23 @@ export class DetaljiNastavnikComponent {
       return;
     }
 
+    if (this.datumVremeDate.getHours() < 8 || this.datumVremeDate.getHours() > 22) {
+      this.message = "Могуће је заказати термин у периоду од 8-22h. ";
+      return;
+    }
+    
+
     if (this.dupliCas) this.minutiDodatak = 120;
 
     this.krajCasa = new Date(this.datumVremeDate.getTime() + this.minutiDodatak * 60000);
+    if (this.krajCasa.getHours() > 22) {
+      this.message = "Термин се мора завршити до 22h. ";
+      return;
+    }
 
     if (this.jedanPredmet) this.predmet = this.jediniPredmet;
 
-    for (let cas of this.casoviZahtevi) {
+    for (let cas of this.casovi) {
       console.log(cas.pocetakCasa);
       console.log(cas.krajCasa)
 
@@ -126,7 +139,7 @@ export class DetaljiNastavnikComponent {
         while (pocetakSmene < krajSmene - 1) {
           let proveraDana = new Date(this.datumVreme);
           proveraDana.setHours(pocetakSmene);
-          let proveraKraj = new Date(proveraDana.getTime() + this.minutiDodatak);
+          let proveraKraj = new Date(proveraDana.getTime() + this.minutiDodatak * 60000);
 
           if (!this.preklapanjeTermina(proveraDana, proveraKraj, this.datumVremeDate, this.krajCasa)) {
             nadjen = true;
@@ -157,7 +170,7 @@ export class DetaljiNastavnikComponent {
           let nadjen = false;
           while (pocetakSmene < krajSmene - 1) {
             datumManje.setHours(pocetakSmene);
-            let datumManjeKraj = new Date(datumManje.getTime() + this.minutiDodatak);
+            let datumManjeKraj = new Date(datumManje.getTime() + this.minutiDodatak * 60000);
 
             if (!this.preklapanjeTermina(datumManje, datumManjeKraj, this.datumVremeDate, this.krajCasa)) {
               nadjen = true;
@@ -184,7 +197,7 @@ export class DetaljiNastavnikComponent {
             let nadjen = false;
             while (pocetakSmene < krajSmene - 1) {
               datumVise.setHours(pocetakSmene);
-              let datumViseKraj = new Date(datumVise.getTime() + this.minutiDodatak);
+              let datumViseKraj = new Date(datumVise.getTime() + this.minutiDodatak * 60000);
 
               if (!this.preklapanjeTermina(datumVise, datumViseKraj, this.datumVremeDate, this.krajCasa)) {
                 nadjen = true;

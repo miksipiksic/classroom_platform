@@ -226,6 +226,24 @@ class UserController {
                 res.json({ message: "fail" });
             });
         };
+        this.promeniUzrast = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { uzrast: req.body.uzrast } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
+        this.promeniPredmete = (req, res) => {
+            user_1.default.updateOne({ korisnickoIme: req.body.korisnickoIme }, { $set: { predmet: req.body.predmet } }).then(ok => {
+                res.json({ message: "ok" });
+                console.log(req.body.korisnickoIme);
+            }).catch((err) => {
+                console.log(err);
+                res.json({ message: "fail" });
+            });
+        };
     }
 }
 exports.UserController = UserController;

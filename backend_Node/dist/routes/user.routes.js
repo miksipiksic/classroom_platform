@@ -25,4 +25,6 @@ userRouter.route('/promeniKontaktTelefon').post((req, res) => new user_controlle
 userRouter.route('/promeniTipSkole').post((req, res) => new user_controller_1.UserController().promeniTipSkole(req, res));
 userRouter.route('/promeniRazred').post((req, res) => new user_controller_1.UserController().promeniRazred(req, res));
 userRouter.route('/promeniProfilnuSliku').post((req, res) => new user_controller_1.UserController().promeniProfilnuSliku(req, res));
+userRouter.route('/promeniUzrast').post((req, res) => new user_controller_1.UserController().promeniUzrast(req, res));
+userRouter.route('/promeniPredmete').post((req, res) => new user_controller_1.UserController().promeniPredmete(req, res));
 exports.default = userRouter;

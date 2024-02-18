@@ -84,4 +84,13 @@ userRouter.route('/promeniRazred').post(
 userRouter.route('/promeniProfilnuSliku').post(
     (req, res) => new UserController().promeniProfilnuSliku(req, res)
 )
+
+userRouter.route('/promeniUzrast').post(
+    (req, res) => new UserController().promeniUzrast(req, res)
+)
+
+userRouter.route('/promeniPredmete').post(
+    (req, res) => new UserController().promeniPredmete(req, res)
+)
+
 export default userRouter;

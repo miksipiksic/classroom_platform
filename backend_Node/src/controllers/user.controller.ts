@@ -275,6 +275,27 @@ dodajPredmet = (req: express.Request, res: express.Response)=>{
         })
     }
 
+    promeniUzrast = (req: express.Request, res: express.Response)=>{
+        User.updateOne({ korisnickoIme: req.body.korisnickoIme },
+            { $set: { uzrast: req.body.uzrast} }).then(ok=>{
+            res.json({message: "ok" });
+            console.log(req.body.korisnickoIme);
+        }).catch((err)=>{
+            console.log(err)
+            res.json({message: "fail"})
+        })
+    }
 
+
+    promeniPredmete = (req: express.Request, res: express.Response)=>{
+        User.updateOne({ korisnickoIme: req.body.korisnickoIme },
+            { $set: { predmet: req.body.predmet} }).then(ok=>{
+            res.json({message: "ok" });
+            console.log(req.body.korisnickoIme);
+        }).catch((err)=>{
+            console.log(err)
+            res.json({message: "fail"})
+        })
+    }
 
 }

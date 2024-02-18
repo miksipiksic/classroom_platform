@@ -147,6 +147,21 @@ export class UserService {
     return this.http.post<Message>('http://localhost:4000/user/promeniProfilnuSliku', data)
   }
 
+  promeniPredmete(korisnickoIme: string, predmet: string[]) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      predmet: predmet
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniPredmete', data)
+  }
+
+  promeniUzrast(korisnickoIme: string, uzrast: string[]) {
+    const data = {
+      korisnickoIme: korisnickoIme,
+      uzrast: uzrast
+    }
+    return this.http.post<Message>('http://localhost:4000/user/promeniUzrast', data)
+  }
   
 
 }

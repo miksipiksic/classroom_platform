@@ -23,7 +23,13 @@ export class LoginComponent {
         if (data!= null) {
           localStorage.setItem("loggedIn", this.korisnickoIme); 
           this.u = data;
-          this.router.navigate(['ucenik-nastavnici']);
+          if (this.u.tip == 1) {
+
+            this.router.navigate(['ucenik-nastavnici']);
+          } 
+          if(this.u.tip == 2) {
+            this.router.navigate(['nastavnik-profil'])
+          }
         }
 
         

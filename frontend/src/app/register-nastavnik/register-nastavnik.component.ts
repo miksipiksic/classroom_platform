@@ -86,9 +86,24 @@ export class RegisterNastavnikComponent implements OnInit{
     this.schoolSubjectService.dohvatiPredmete().subscribe(
       data => {
         this.listaPredmeta = data;
+        for (let p of this.listaPredmeta) {
+          this.predmeti.push(p.imePredmeta);
+          this.predmetiBoolean.push(false);
+        }
+        this.predmetiRecnik = this.kreirajRecnik(this.predmeti, this.predmetiBoolean);
       }
     )
   }
+
+  kreirajRecnik(keys: string[], values: boolean[]): Record<string, boolean> {
+    const recnik: Record<string, boolean> = {};
+
+    keys.forEach((key, index) => {
+        recnik[key] = values[index];
+    });
+
+    return recnik;
+}
 
   listaPredmeta: SchoolSubject[] = [];
   loadImage(imagePath: string) {
@@ -195,6 +210,7 @@ export class RegisterNastavnikComponent implements OnInit{
       }
     )
 
+
     this.requestService.postojeciKorisnikIme(this.usernameInput).subscribe(
       data => {
         if (data.korisnickoIme == this.usernameInput)  {
@@ -254,24 +270,10 @@ export class RegisterNastavnikComponent implements OnInit{
     )
   }
 
+  predmetiBoolean: boolean[] = [];
+  predmeti: string[] = [];
+
   predmetiRecnik: { [key: string]: boolean } = {
-    "Математика": false,
-    "Физика": false,
-    "Хемија": false,
-    "Информатика": false,
-    "Програмирање": false,
-    "Српски језик и књижевност": false,
-    "Енглески језик": false,
-    "Немачки језик": false,
-    "Италијански језик": false,
-    "Француски језик": false,
-    "Шпански језик": false,
-    "Латински језик": false,
-    "Биологија": false,
-    "Историја": false,
-    "Географија": false,
-    "Свет око нас": false,
-    "dodatak": false
   };
 
   uzrastRecnik: {[key:string]: boolean} = {

@@ -17,6 +17,9 @@ import { UcenikNastavniciComponent } from './ucenik-nastavnici/ucenik-nastavnici
 import { UcenikCasoviComponent } from './ucenik-casovi/ucenik-casovi.component';
 import { UcenikObavestenjaComponent } from './ucenik-obavestenja/ucenik-obavestenja.component';
 import { DetaljiNastavnikComponent } from './detalji-nastavnik/detalji-nastavnik.component';
+import { NastavnikProfilComponent } from './nastavnik-profil/nastavnik-profil.component';
+import { NastavnikCasoviComponent } from './nastavnik-casovi/nastavnik-casovi.component';
+import { NastavnikUceniciComponent } from './nastavnik-ucenici/nastavnik-ucenici.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { DetaljiNastavnikComponent } from './detalji-nastavnik/detalji-nastavnik
     UcenikNastavniciComponent,
     UcenikCasoviComponent,
     UcenikObavestenjaComponent,
-    DetaljiNastavnikComponent
+    DetaljiNastavnikComponent,
+    NastavnikProfilComponent,
+    NastavnikCasoviComponent,
+    NastavnikUceniciComponent
   ],
   imports: [
     BrowserModule,
