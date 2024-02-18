@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'detalji-nastavnik', component: DetaljiNastavnikComponent},
   {path: 'nastavnik-profil', component: NastavnikProfilComponent},
   {path: 'nastavnik-casovi', component: NastavnikCasoviComponent},
-  {path: 'bar', component:DiagramBarComponent}
+  {path: 'dbar', component:DiagramBarComponent}
 ];
 
 @NgModule({

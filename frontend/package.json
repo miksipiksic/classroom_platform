@@ -29,7 +29,8 @@
     "tslib": "^2.3.0",
     "url": "^0.11.3",
     "util": "^0.12.5",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.13.0",
+    "ng2-charts": "^9.6.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.2",

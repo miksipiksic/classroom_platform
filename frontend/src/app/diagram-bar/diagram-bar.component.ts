@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { EngagementService } from '../services/engagement.service';
 import { UserService } from '../services/user.service';
 import { Engagement } from '../models/engagement';
-import { ChartType, ChartDataset } from 'chart.js';
+import { ChartType, ChartDataset, ChartOptions, LabelItem } from 'chart.js';
 import { Chart } from 'chart.js';
 
 @Component({
@@ -91,18 +91,20 @@ let uzrastDataSet = uzrastLabels.map(label => ({
 }
 
 
-  barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-  };
+  
 
-  barChartLabels: string[] = [];
-  barChartType: ChartType= 'bar';
-  barChartLegend: boolean = true;
   
 
 // Combine both data sets into barChartData
 barChartData :any[] = [];
+
+barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  barChartLabels: LabelItem[] = [];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [];
 
 chart: any;
 
@@ -122,5 +124,4 @@ createChart(){
     
   });
 }
-  
 }
