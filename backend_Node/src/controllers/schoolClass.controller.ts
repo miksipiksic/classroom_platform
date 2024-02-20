@@ -54,9 +54,8 @@ export class SchoolClassController {
 
     odradiCas = (req: express.Request, res: express.Response)=>{
         SchoolClass.updateOne({nastavnik: req.body.nastavnik,
-             predmet: req.body.predmet, ucenik: req.body.ucenik,
             pocetakCasa: req.body.pocetakCasa},
-            {$set: {odradjen: req.body.odradjen}} ).then(ok=>{
+            {$set: {odradjen: true}} ).then(ok=>{
             res.json({message: "ok" });
             console.log(req.body.korisnickoIme);
             console.log(req.body.imePredmeta)

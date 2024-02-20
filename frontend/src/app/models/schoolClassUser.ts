@@ -4,7 +4,7 @@ export class SchoolClassUser {
     nastavnik: string = "";
     ucenik: User = new User();
     predmet: string = "";
-    pocetakCasa: string = "";
+    pocetakCasa: Date = new Date();
     krajCasa: string = "";
     tema: string = "";
     odradjen: boolean = false;

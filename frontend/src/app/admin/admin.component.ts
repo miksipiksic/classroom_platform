@@ -23,6 +23,40 @@ export class AdminComponent {
 
   username: string = "";
 
+  messagePredmet: string = ""
+
+  bar: boolean = false;
+  pie: boolean = false;
+  histo: boolean = false;
+  line: boolean= false;
+  prikaziBar() {
+    this.bar = true;
+    this.pie = false;
+    this.histo = false;
+    this.line = false;
+  }
+
+  prikaziPie() {
+    this.pie = true;
+    this.bar = false;
+    this.histo = false;
+    this.line = false;
+  }
+
+  prikaziLine() {
+    this.line = true;
+    this.bar = false;
+    this.pie = false;
+    this.histo =false;
+  }
+
+  prikaziHisto() {
+    this.line = false;
+    this.histo = true;
+    this.pie = false;
+    this.bar = false;
+  }
+
   ngOnInit(): void {
     this.userService.dohvatiUcenike().subscribe(
       data => {
@@ -50,7 +84,7 @@ export class AdminComponent {
       }
     )
 
-    
+
   //  this.loggedIn = sessionStorage.getItem("loggedIn");
 
     if(this.loggedIn != "admin") {
@@ -108,12 +142,12 @@ export class AdminComponent {
                   )
                   this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
                     ok => {
-              
+
                     }
                   )
                 }
               )
-            } 
+            }
           }
         )
 
@@ -129,12 +163,12 @@ export class AdminComponent {
                     )
                     this.subjectRequestService.obrisiZahtev(korisnickoIme, imePredmeta).subscribe(
                       ok => {
-                
+
                       }
                     )
                   }
                 )
-              
+
             }
           }
         )
@@ -145,7 +179,7 @@ export class AdminComponent {
 
 
 
-    
+
   }
 
   odbijZahtevPredmet(korisnickoIme: string, imePredmeta: string) {
@@ -173,7 +207,7 @@ export class AdminComponent {
       }
     )
 
-    
+
 
   }
 
@@ -183,7 +217,7 @@ export class AdminComponent {
       data => {
         if (data.message == "ok") {
           alert("Obijen zahtev");
-          
+
           this.requestService.obrisiZahtev(zahtev.korisnickoIme).subscribe(
             ok => {
               if (ok.message == "ok") {
@@ -195,13 +229,13 @@ export class AdminComponent {
       }
     )
     this.zahtevi = this.zahtevi.filter((value) => value.korisnickoIme !== zahtev.korisnickoIme);
-    
+
   }
 
 
 
   odobriZahtev(korisnickoIme: string) {
-    
+
     this.requestService.postojeciKorisnikIme(korisnickoIme).subscribe(
       data => {
         this.nastavnikZahtev = data;
@@ -220,27 +254,25 @@ export class AdminComponent {
           for (let predmet of zahtev.predmet) {
             this.engagementService.dodajAngazovanjeNastavnika( predmet,zahtev.korisnickoIme).subscribe(
               ok => {
-                alert("Dodato angazovanje.");
               }
             )
           }
-          
+
           this.requestService.obrisiZahtev(zahtev.korisnickoIme).subscribe(
             ok => {
               if (ok.message == "ok") {
-                alert("Obrisan zahtev");
               }
             }
           )
-          
-        
+
+
     this.zahtevi = this.zahtevi.filter((value) => value.korisnickoIme !== zahtev.korisnickoIme);
-    
+
         }
       }
     )
 
-    
+
   }
 
   adminPredmet: string = "";
@@ -250,7 +282,7 @@ export class AdminComponent {
       ok => {
         this.engagementService.dodajPredmet(this.adminPredmet).subscribe(
           ok => {
-            
+            this.messagePredmet = "Успешно додат предмет."
           }
         )
       }

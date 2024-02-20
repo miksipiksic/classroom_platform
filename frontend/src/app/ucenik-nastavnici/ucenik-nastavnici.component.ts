@@ -6,6 +6,7 @@ import { SchoolSubject } from '../models/schoolsubject';
 import { UserService } from '../services/user.service';
 import { EngagementService } from '../services/engagement.service';
 import { SchoolsubjectService } from '../services/schoolsubject.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ucenik-nastavnici',
@@ -16,7 +17,8 @@ export class UcenikNastavniciComponent {
 
   constructor(private userService: UserService,
     private engagementService: EngagementService,
-    private schoolSubjectService: SchoolsubjectService) { }
+    private schoolSubjectService: SchoolsubjectService,
+    private router: Router) { }
   ngOnInit(): void {
     this.userService.dohvatiUcenike().subscribe(
       data => {
@@ -87,8 +89,8 @@ export class UcenikNastavniciComponent {
               )
         }
       )
-        
-            
+
+
     }
 
 
@@ -251,6 +253,20 @@ export class UcenikNastavniciComponent {
   pogledajDetalje(nastavnik: string) {
     localStorage.setItem("detaljiNastavnik", nastavnik);
   }
+
+  odjaviSe() {
+    localStorage.clear();
+    this.router.navigate(['']);
+  }
+
+  ucenikProfil() {
+    this.router.navigate(['ucenik-profil'])
+  }
+
+  ucenikCasovi() {
+    this.router.navigate(['ucenik-casovi'])
+  }
+
 
 
 

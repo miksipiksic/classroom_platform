@@ -90,7 +90,7 @@
             </td>
             <td>
                 <button class="btn btn-danger" (click)="odbijZahtev(u.korisnickoIme)">Одбиј</button>
-              
+
           </td>
         </tr>
     </tbody>
@@ -110,12 +110,12 @@
         <tr>
           <td>{{z.korisnickoIme}}</td>
           <td>{{z.imePredmeta}}</td>
-          <td> 
+          <td>
                 <button class="btn btn-success" (click)="odobriZahtevPredmet(z.korisnickoIme, z.imePredmeta)">Прихвати</button>
             </td>
             <td>
                 <button class="btn btn-danger" (click)="odbijZahtevPredmet(z.korisnickoIme, z.imePredmeta)">Одбиј</button>
-              
+
           </td>
         </tr>
     </tbody>
@@ -124,7 +124,49 @@
 <h3>Додај нови предмет</h3>
 <form>
   <input type="text" class="form-control" id="adminPredmet" [(ngModel)]="adminPredmet" name="adminPredmet">
-             
+
   <button type="button" class="btn btn-primary" (click)="dodajAdminPredmet()">Додај предмет</button>
-  
+
+  {{messagePredmet}}
+
 </form>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mt-3 mb-3">
+      <button class="btn btn-success" (click)="prikaziBar()">Прикажи број наставника за сваки предмет и за сваки од узраста</button>
+    </div>
+    <div class="col-md-6 mt-3 mb-3">
+      <button class="btn btn-success" (click)="prikaziPie()">Прикажи расподелу према полу</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mt-3 mb-3">
+      <button class="btn btn-success" (click)="prikaziHisto()">Прикажи просечан број одржаних часова по данима у седмици у 2023</button>
+    </div>
+    <div class="col-md-6 mt-3 mb-3">
+
+      <button class="btn btn-success" (click)="prikaziLine()">Прикажи број часова по месецима за најангажованије наставнике</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div *ngIf="bar">
+  <app-diagram-bar></app-diagram-bar>
+</div>
+<div *ngIf="pie">
+  <app-diagram-pie></app-diagram-pie>
+</div>
+<div *ngIf="histo">
+  <app-diagram-histogram></app-diagram-histogram>
+</div>
+<div *ngIf="line">
+  <app-diagram-lines></app-diagram-lines>
+</div>
+    
+

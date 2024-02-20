@@ -4,18 +4,21 @@ import { SchoolClassService } from '../services/school-class.service';
 import { UserService } from '../services/user.service';
 import { EngagementService } from '../services/engagement.service';
 
+import Chart, { ChartDataset } from 'chart.js/auto';
 @Component({
   selector: 'app-diagram-histogram',
   templateUrl: './diagram-histogram.component.html',
   styleUrls: ['./diagram-histogram.component.css']
 })
 export class DiagramHistogramComponent {
+ 
   constructor(private engagementService: EngagementService,
     private userService: UserService,
     private schoolClassService: SchoolClassService) {}
 
+    chart: any;
   ngOnInit() {
-    
+
     this.schoolClassService.dohvatiCasove().subscribe(
       casovi => {
         for (let cas of casovi) {
@@ -23,7 +26,7 @@ export class DiagramHistogramComponent {
           let godina = datum.getFullYear();
           if (godina == 2023) {
             if (datum.getDay() == 0) {
-              this.daniRecnik["НЕД"] = this.daniRecnik["НЕД"] + 1; 
+              this.daniRecnik["НЕД"] = this.daniRecnik["НЕД"] + 1;
             }
             if (datum.getDay() ==1) {
               this.daniRecnik["ПОН"] = this.daniRecnik["ПОН"] + 1;
@@ -56,47 +59,30 @@ export class DiagramHistogramComponent {
 
         let daniLabels = Object.keys(this.daniRecnik);
         let daniDataSet =daniLabels.map(label => ({
-          data: this.daniRecnik[label],
+          data: [this.daniRecnik[label]],
           label: label,
         }));
-        this.barChartData = [...daniDataSet];
-           
+        let data = [...daniDataSet];
+
+         this.chart = new Chart("MyChart", {
+              type: 'bar', //this denotes tha type of chart
+        
+              data: {// values on X-Axis
+                labels: [''],
+                 datasets: data
+              },
+              options: {
+                aspectRatio:2.5
+              }
+              
+            });
+
       }
     )
   }
 
-  
-  /*
-
-        let    predmetiLabels = Object.keys(this.predmetiRecnik);
-let uzrastLabels = Object.keys(this.uzrastRecnik);
-
-// Create data sets for subjects
-let predmetiDataSet =predmetiLabels.map(label => ({
-  data: this.predmetiRecnik[label],
-  label: label,
-}));
-
-// Create data sets for grades
-let uzrastDataSet = uzrastLabels.map(label => ({
-  data: this.uzrastRecnik[label],
-  label: label,
-}));
 
 
-            // napravljena oba recnika
-            this.barChartData = [...predmetiDataSet, ...uzrastDataSet];
-           
-          }
-        )
-
-
-      }
-    )
-
-
-  }
-  */
 
 
   daniRecnik: {[key:string]: number} = {
@@ -123,18 +109,7 @@ let uzrastDataSet = uzrastLabels.map(label => ({
 }
 
 
-  
 
-  
 
-// Combine both data sets into barChartData
-barChartData :any[] = [];
 
-barChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  barChartLabels: LabelItem[] = [];
-  
-  barChartLegend = true;
-  barChartPlugins = [];
 }

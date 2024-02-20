@@ -8,6 +8,7 @@ import { RegistrationRequestService } from '../services/registration-request.ser
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SchoolSubject } from '../models/schoolsubject';
+import { Router } from '@angular/router';
 
 
 
@@ -63,11 +64,11 @@ const convertBase64 = (file: File) => {
 })
 export class RegisterComponent {
 
-  
+
   @ViewChild('pol') pol!: ElementRef;
-  
+
   constructor(private userService:UserService, private requestService: RegistrationRequestService, private http:HttpClient
-    , private formBuilder: FormBuilder) {
+    ,private router: Router, private formBuilder: FormBuilder) {
       this.loginForm = this.formBuilder.group({
         username: ['', [Validators.required]],
         password: ['', [Validators.required]],
@@ -98,7 +99,7 @@ export class RegisterComponent {
     });
   }
 
-  
+
   odabranTipSkole: boolean = false;
   user: User = new User()
 
@@ -129,14 +130,15 @@ export class RegisterComponent {
   tipNastavnik() {
     this.userNastavnik = true;
     this.userUcenik = false;
+    this.router.navigate(['registerNastavnik']);
   }
 
   async registerUcenik() {
 
    // alert(this.user.lozinka)
       this.serviceUcenikRegister();
-    
-   // this.user.lozinka = await hashPassword(this.user.lozinka); 
+
+   // this.user.lozinka = await hashPassword(this.user.lozinka);
   }
 
   serviceUcenikRegister() {
@@ -175,8 +177,8 @@ export class RegisterComponent {
         if (data.korisnickoIme == this.usernameInput)  {
           this.usernameError = true;
           this.usernameMessage = "Постоји корисник са датим корисничким именом."
-        } 
-      
+        }
+
       }
     )
   }
@@ -190,15 +192,15 @@ export class RegisterComponent {
     this.emailInput = event.target.value;
     this.emailMessage = "";
     this.emailError = false;
-    
+
 
     this.userService.postojeciKorisnikImejl(this.emailInput).subscribe(
       data => {
         if (data.imejl == this.emailInput)  {
           this.emailError = true;
           this.emailMessage = "Постоји корисник са датом и-мејл адресом"
-          
-        } 
+
+        }
       }
     )
   }
@@ -224,7 +226,7 @@ export class RegisterComponent {
 
   imageUpload: string = "";
   pdfUpload: string = "";
-  
+
   selectedFile: File | undefined ;
 
   invalidImage: boolean = false;
@@ -233,7 +235,7 @@ export class RegisterComponent {
     this.messageImage = "";
     this.selectedFile = <File>event.target.files[0];
     if (this.selectedFile instanceof File) {
-      
+
       let fileName = this.selectedFile.name;
       let fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
       if (fileExtension.toLowerCase() !== 'jpg' && fileExtension.toLowerCase() !== 'png' && fileExtension.toLowerCase() !== 'jpeg') {
@@ -267,9 +269,9 @@ export class RegisterComponent {
       this.user.profilnaSlika = this.imageUpload;
     } else {
       this.imageUpload = "";
-      return; 
+      return;
     }
-    
+
   }
 
   async onPdfFileSelected(event: any) {
@@ -291,16 +293,16 @@ export class RegisterComponent {
     } else {
       return; // greska
     }
-  } 
+  }
 
   izabranPol = false;
   validacijaPola() {
     const radioButtons = this.pol.nativeElement.querySelectorAll('input[type="radio"]');
     this.izabranPol = Array.from(radioButtons).some((radio: any) => (radio as HTMLInputElement).checked);
-  
+
   }
 
 
-  
+
 
 }

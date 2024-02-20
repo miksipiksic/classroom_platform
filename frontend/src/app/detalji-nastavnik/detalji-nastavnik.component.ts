@@ -7,6 +7,7 @@ import { ScheduleClassService } from '../services/schedule-class.service';
 import { ScheduleClass } from '../models/scheduleClass';
 import { SchoolClassService } from '../services/school-class.service';
 import { SchoolClass } from '../models/schoolClass';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,8 @@ import { SchoolClass } from '../models/schoolClass';
 })
 export class DetaljiNastavnikComponent {
 
-  constructor(private userService: UserService, private scheduleClassService: ScheduleClassService, private classService: SchoolClassService) { }
+  constructor(private userService: UserService, private scheduleClassService: ScheduleClassService, private classService: SchoolClassService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -53,10 +55,17 @@ export class DetaljiNastavnikComponent {
     }
 
     this.trenutnoVreme = new Date();
-
+    this.scheduleClassService.dohvatiZahteve().subscribe(
+      ok =>
+      {
+        this.casoviZahtevi = ok;
+      }
+    )
 
 
   }
+
+  casoviZahtevi: ScheduleClass[] = []
   user: User = new User();
   nastavnik: User = new User();
   listaPredmeta: string[] = [];
@@ -92,8 +101,11 @@ export class DetaljiNastavnikComponent {
 
   zauzet: boolean = false;
   minutiDodatak: number = 60;
-  zakaziCas() {
-    this.message = "";
+  zakaziCas() {this.scheduleClassService.dohvatiZahteve().subscribe(
+    ok =>
+    {
+      this.casoviZahtevi = ok;
+      this.message = "";
     this.zauzet = false;
     this.minutiDodatak = 60;
     this.datumVremeDate = new Date(this.datumVreme);
@@ -106,7 +118,7 @@ export class DetaljiNastavnikComponent {
       this.message = "Могуће је заказати термин у периоду од 8-22h. ";
       return;
     }
-    
+
 
     if (this.dupliCas) this.minutiDodatak = 120;
 
@@ -117,6 +129,17 @@ export class DetaljiNastavnikComponent {
     }
 
     if (this.jedanPredmet) this.predmet = this.jediniPredmet;
+
+    for (let cas of this.casoviZahtevi) {
+      let casPocetak = new Date(cas.pocetakCasa);
+      let casKraj = new Date(cas.krajCasa);
+
+      if (this.preklapanjeTermina(this.datumVremeDate, this.krajCasa, casPocetak, casKraj)) {
+        this.message = this.message + "Заузет термин. ";
+        this.router.navigate(['detalji-nastavnik']);
+        return;
+      }
+    }
 
     for (let cas of this.casovi) {
       console.log(cas.pocetakCasa);
@@ -141,6 +164,8 @@ export class DetaljiNastavnikComponent {
           proveraDana.setHours(pocetakSmene);
           let proveraKraj = new Date(proveraDana.getTime() + this.minutiDodatak * 60000);
 
+
+
           if (!this.preklapanjeTermina(proveraDana, proveraKraj, this.datumVremeDate, this.krajCasa)) {
             nadjen = true;
           } else {
@@ -152,7 +177,7 @@ export class DetaljiNastavnikComponent {
         if (nadjen) {
           this.message = this.message + "Наставник је слободан у току дана. "
           return;
-        } 
+        }
         if (!nadjen) {
           this.message = "Наставник није слободан целог дана.";
         }
@@ -230,6 +255,10 @@ export class DetaljiNastavnikComponent {
 
 
 
+    }
+  )
+    
+
   }
 
   ranijiDatum(date1: Date, date2: Date): boolean {
@@ -239,8 +268,8 @@ export class DetaljiNastavnikComponent {
 
 
   preklapanjeTermina(cas1Pocetak: Date, cas1Kraj: Date, cas2Pocetak: Date, cas2Kraj: Date): boolean {
-    return cas1Pocetak < cas2Kraj && cas1Kraj > cas2Pocetak;
-   // return (this.ranijiDatum(cas1Pocetak, cas2Kraj) && this.ranijiDatum(cas2Pocetak, cas1Pocetak)) ||
+  //  return (cas1Pocetak < cas2Kraj || cas1Kraj > cas2Pocetak) ;
+    return (this.ranijiDatum(cas1Pocetak, cas2Kraj) && this.ranijiDatum(cas2Pocetak, cas1Pocetak)) ||
       (this.ranijiDatum(cas2Pocetak, cas1Kraj) && this.ranijiDatum(cas1Kraj, cas2Kraj));
   }
 

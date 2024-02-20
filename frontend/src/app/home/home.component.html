@@ -1,5 +1,5 @@
 
- 
+
  <!-- ======= Header ======= --> <!--
  <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
@@ -52,7 +52,7 @@
 
   <main id="main">
 
-    
+
 
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
@@ -81,7 +81,21 @@
 
       </div>
     </section>
-  --> 
+  -->
+
+  <div *ngIf="loggedUcenik">
+    <app-ucenik-profil></app-ucenik-profil>
+  </div>
+
+  <div *ngIf="loggedNastavnik">
+    <app-nastavnik-profil></app-nastavnik-profil>
+  </div>
+
+  <div *ngIf="!loggedNastavnik">
+    <div *ngIf="!loggedUcenik">
+
+
+  <button (click)="prijava()" class="btn btn-success">Пријави се</button>
   <h3>Број ученика</h3>
   {{brojUcenika}}
   <br>
@@ -100,7 +114,7 @@
     <button (click)="sortPrezimeOpadajuce()" class="btn btn-secondary me-2">Презиме(опадајуће)</button>
     <button (click)="sortPredmetRastuce()" class="btn btn-secondary me-2">Предмет(растуће)</button>
     <button (click)="sortPredmetOpadajuce()" class="btn btn-secondary me-2">Предмет(опадајуће)</button>
-    
+
   </div>
   <h3> Ангажовани наставници </h3>
   <table class="table table-bordered table-sm">
@@ -135,6 +149,10 @@
             </tr>
       </tbody>
   </table>
+
+
+</div>
+</div>
 
   <!--
     <section id="counts" class="counts section-bg">
@@ -327,7 +345,7 @@
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="course-item">
@@ -353,7 +371,7 @@
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
             <div class="course-item">
@@ -379,7 +397,7 @@
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
 
         </div>
 

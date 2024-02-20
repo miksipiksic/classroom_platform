@@ -147,6 +147,7 @@ export class UserController {
 
     dohvatiKorisnika = (req: express.Request, res: express.Response) => {
         let korisnickoIme = req.body.korisnickoIme;
+        
 
         
             User.findOne({korisnickoIme: korisnickoIme}).then(
@@ -167,8 +168,9 @@ export class UserController {
     }
     dohvatiNastavnike = (req: express.Request, res: express.Response) => {
         let tip = 2;
+        let prihvacen = 1;
     
-        User.find({tip: tip}).then(
+        User.find({tip: tip, prihvacen: prihvacen}).then(
             users=>{
                 res.json(users)
             }

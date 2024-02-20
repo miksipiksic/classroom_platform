@@ -40,15 +40,36 @@
           <td>{{z.tema}}</td>
           <td *ngIf="imaViseOdTriOcene">{{z.prosecnaOcena}}</td>
           <td>
-                <button class="btn btn-success" (click)="odobriZahtev(z)">Прихвати</button>
+                <button class="btn btn-success" [disabled]="neodobravanje" (click)="odobriZahtev(z)">Прихвати</button>
             </td>
             <td>
-                <button class="btn btn-danger" (click)="odbijZahtev(z)">Одбиј</button>
-              
+                <button class="btn btn-danger" [disabled]="odobravanje" (click)="odbijZahtev(z)">Одбиј</button>
+
           </td>
+
+
         </tr>
+
+
+
     </tbody>
 </table>
+
+<div *ngIf="odbijanje">
+  <input type="text" class="form-control" (change)="unesiObrazlozenje()" [(ngModel)]="razlog" required
+
+  #obrazlozenje="ngModel" [class.is-invalid]="(obrazlozenje.invalid && obrazlozenje.touched) ">
+  <div class="invalid-feedback"  *ngIf="(obrazlozenje.invalid && obrazlozenje.touched) && obrazlozenje.errors">
+    <p *ngIf="obrazlozenje.errors['required']">Морате унети корисничко име.</p>
+</div>
+
+<button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="!unetoObrazlozenje" (click)="izmeni()">Потврди</button>
+
+
+</div>
+
+
+{{zahtevZaObradu.nastavnik.korisnickoIme}}
 
 <div class="modal" tabindex="-1" role="dialog" style="display: none;" #myModal>
     <div class="modal-dialog" role="document">
@@ -61,22 +82,8 @@
         </div>
         <div class="modal-body">
           <!-- Your modal content goes here -->
-          
-          <form #odbijForm="ngForm">
-              <label for="ime">Образложење:</label>
-              <input type="text" class="form-control" (change)="unesiObrazlozenje()" [(ngModel)]="razlog" required
-              
-              #obrazlozenje="ngModel" [class.is-invalid]="(obrazlozenje.invalid && obrazlozenje.touched) ">
-              <div class="invalid-feedback"  *ngIf="(obrazlozenje.invalid && obrazlozenje.touched) && obrazlozenje.errors">
-                <p *ngIf="obrazlozenje.errors['required']">Морате унети корисничко име.</p>
-            </div>
-          </form>
-  
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="odbijForm.form.invalid" (click)="izmeni()">Потврди</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Затвори</button>
-        </div>
+
+
       </div>
     </div>
   </div>

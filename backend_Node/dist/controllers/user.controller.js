@@ -141,7 +141,8 @@ class UserController {
         };
         this.dohvatiNastavnike = (req, res) => {
             let tip = 2;
-            user_1.default.find({ tip: tip }).then(users => {
+            let prihvacen = 1;
+            user_1.default.find({ tip: tip, prihvacen: prihvacen }).then(users => {
                 res.json(users);
             }).catch(err => console.log(err));
         };

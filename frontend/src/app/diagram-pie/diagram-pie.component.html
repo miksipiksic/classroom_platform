@@ -1,19 +1,23 @@
-Наставници расподела
-<div class="chart-wrapper">
-    <canvas baseChart 
-    [data]="datasets" 
-    [options]="pieChartOptions" 
-    [type]="'pie'"> 
-    </canvas>
-</div>
-
-Ученици расподела
 
 
-<div class="chart-wrapper">
-    <canvas baseChart 
-    [data]="datasetsU" 
-    [options]="pieChartOptions1" 
-    [type]="'pie'"> 
-    </canvas>
-</div>
+  
+<div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="text-center">Наставници расподела</h6>
+        <div class="chart-container">
+            <canvas  id="MyChart" >{{ chart }}</canvas>
+          </div>
+      </div>
+  
+      
+      <div class="col-md-6">
+        <h6 class="text-center">Ученици расподела</h6>
+        <div class="chart-container">
+            <canvas  id="MyChart1" >{{ chart1 }}</canvas>
+          </div>
+      </div>
+    </div>
+  </div>
+ 
+

@@ -9,12 +9,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SchoolClassService {
 
- 
+
   constructor(private http: HttpClient) { }
 
   uri = "http://localhost:4000/classes";
 
-  dodajCas(nastavnik: string, 
+  dodajCas(nastavnik: string,
     ucenik: string, predmet: string, pocetakCasa: string,
     krajCasa: string, tema: string, odradjen: boolean){
     const data = {
@@ -22,30 +22,29 @@ export class SchoolClassService {
       ucenik: ucenik,
       predmet: predmet,
       pocetakCasa: pocetakCasa,
-      krajCasa: krajCasa, 
+      krajCasa: krajCasa,
       tema: tema,
       odradjen: odradjen
     }
-  
+
     return this.http.post<Message>('http://localhost:4000/classes/dodajCas', data);
   }
 
-  odradiCas(nastavnik: string, korisnickoIme: string, predmet: string, pocetakCasa: string, odradjen: boolean) {
+  odradiCas(nastavnik: string, pocetakCasa: string) {
     const data = {
       nastavnik: nastavnik,
-      ucenik: korisnickoIme,
-      predmet: predmet,
-      pocetakCasa: pocetakCasa,
-      odradjen: odradjen
+      pocetakCasa: pocetakCasa
     }
-    return this.http.post<Message>('http://locahost:4000/classes/odradiCas', data);
+    console.log(nastavnik)
+    console.log(pocetakCasa)
+    return this.http.post<Message>('http://localhost:4000/classes/odradiCas', {nastavnik: nastavnik, pocetakCasa: pocetakCasa});
   }
 
   dohvatiCasove() {
     return this.http.get<SchoolClass[]>('http://localhost:4000/classes/dohvatiCasove');
   }
 
-  obrisiZahtev(nastavnik: string, 
+  obrisiZahtev(nastavnik: string,
     ucenik: string, predmet: string, pocetakCasa: string,
     krajCasa: string, tema: string, odradjen: boolean){
     const data = {
@@ -53,11 +52,11 @@ export class SchoolClassService {
       ucenik: ucenik,
       predmet: predmet,
       pocetakCasa: pocetakCasa,
-      krajCasa: krajCasa, 
+      krajCasa: krajCasa,
       tema: tema,
       odradjen: odradjen
     }
-  
+
     return this.http.post<Message>('http://localhost:4000/classes/obrisiZahtev', data);
   }
 

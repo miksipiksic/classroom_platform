@@ -1,0 +1,15 @@
+<form class="login_form">
+  <div class="form-group top_margin5">
+      <label for="inputUsername">Корисничко име</label>
+      <input name="username" [(ngModel)]="korisnickoIme" type="text" class="form-control input_field_max_width" required id="inputUsername" aria-describedby="emailHelp" placeholder="Unesite korisnicko ime">
+  </div>
+  <div class="form-group top_margin5">
+      <label for="inputPassword">Лозинка</label>
+      <input name="password" [(ngModel)]="lozinka" type="password" class="form-control input_field_max_width" required id="inputPassword" placeholder="Unesite lozinku">
+  </div>
+  <div class="confirm top_margin15">
+      <button (click)="login()" class="btn btn-primary">Пријава</button>
+      <p class="text-danger">{{message}}</p>
+  </div>
+</form>
+

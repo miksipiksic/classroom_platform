@@ -38,8 +38,7 @@ export class ScheduleClassController {
 
     obrisiZahtev = (req: express.Request, res: express.Response)=>{
         ScheduleClass.deleteOne({nastavnik: req.body.nastavnik,
-             predmet: req.body.predmet, ucenik: req.body.ucenik,
-            pocetakCasa: req.body.pocetakCasa, krajCasa: req.body.krajCasa, tema: req.body.tema}).then(ok=>{
+            pocetakCasa: req.body.pocetakCasa, }).then(ok=>{
             res.json({message: "ok" });
             console.log(req.body.korisnickoIme);
             console.log(req.body.imePredmeta)

@@ -9,6 +9,8 @@ import { GradesService } from '../services/grades.service';
 import { SchoolClassService } from '../services/school-class.service';
 import { SchoolClass } from '../models/schoolClass';
 import { SchoolClassUser } from '../models/schoolClassUser';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-nastavnik-casovi',
@@ -17,13 +19,15 @@ import { SchoolClassUser } from '../models/schoolClassUser';
 })
 export class NastavnikCasoviComponent {
 
-  
+
   @ViewChild('myModal') myModal: any;
   constructor(private userService: UserService,
     private scheduleClassService: ScheduleClassService,
     private gradesService: GradesService,
-    private schoolClassService: SchoolClassService) { }
+    private schoolClassService: SchoolClassService, private router: Router) { }
 
+
+    krajForPetlje: boolean = false;
   ngOnInit(): void {
 
     let loggedIn = localStorage.getItem("loggedIn");
@@ -31,80 +35,144 @@ export class NastavnikCasoviComponent {
       this.userService.dohvatiKorisnika(loggedIn).subscribe(
         usr => {
             this.user = usr;
+            
+      this.kreirajCasove();
         }
       )
     }
 
-    this.schoolClassService.dohvatiCasove().subscribe(
-      x=> {
-        this.casovi = x;
-         // let zhtv = new ClassReqUser();
-         for (let cas of this.casovi) {
-          if (cas.odradjen == false ) { // neobradjeni
-          if (cas.nastavnik == this.user.korisnickoIme) {
-          let ucenik = new User();
-          let nastavnik = new User();
-          this.userService.dohvatiKorisnika(cas.ucenik).subscribe(
-            x => {
-              ucenik = x;
-              
-              this.userService.dohvatiKorisnika(this.user.korisnickoIme).subscribe(
-                x => {
-                  nastavnik = x;
-                  let c = {
-                    ucenik: <User>ucenik,
-                    nastavnik: nastavnik.korisnickoIme,
-                    pocetakCasa: cas.pocetakCasa,
-                    krajCasa: cas.krajCasa,
-                    tema: cas.tema,
-                    predmet: cas.predmet,
-                    odradjen: false
-                  }
+    
 
-                  this.casoviUser.push(c);
-                }
-                  
+    
+        
+ }
 
-              )
+ sortiraniPrvih5: SchoolClass[] = []
+
+casoviSortiraniPrvih5: SchoolClassUser[] = [];
+
+
+  
+kreirajCasove() {
+  this.schoolClassService.dohvatiCasove().subscribe(
+    x=> {
+
+      for (let cas of x) {
+        if (cas.nastavnik == this.user.korisnickoIme && cas.odradjen == false) {
+          this.casovi.push(cas);
+        }
+      }
+       // let zhtv = new ClassReqUser();
+       this.casovi.sort((a, b)=> {
+        let aPocetak = new Date(a.pocetakCasa);
+        let bPocetak = new Date(b.pocetakCasa);
+        if (this.ranijiDatum(aPocetak, bPocetak)) {
+          return -1; 
+        } else if (this.ranijiDatum(bPocetak, aPocetak)) {
+          return 1; 
+        } else {
+          return 0; 
+        }
+      });
+
+      this.trenutnoVreme = new Date();
+
+    for (let cas of this.casovi) {
+      console.log(cas.pocetakCasa);
+    }
+
+    let triDanaKasnije = new Date(this.trenutnoVreme.getTime() + (3 * 24 * 60 * 60 * 1000));
+    console.log("tri dana Kasnije: " +triDanaKasnije);
+    this.casovi = this.casovi.filter(cas => {
+      let pocetakCasa = new Date(cas.pocetakCasa);
+      return pocetakCasa.getTime() <= triDanaKasnije.getTime()
+    });
+    let i = 0;
+    for (let c of this.casovi) {
+      if (i == 5) break;
+     // this.casoviSortiraniPrvih5.push(c);
+     this.sortiraniPrvih5.push(c);
+      console.log(c.pocetakCasa);
+      i = i + 1;
+    }
+
+    for (let c of this.sortiraniPrvih5) {
+      this.userService.dohvatiKorisnika(c.ucenik).subscribe(
+        u => {
+          let ucenik = u;
+          this.userService.dohvatiKorisnika(c.nastavnik).subscribe(
+            p => {
+              let prof = p;
+              let uCas = {
+                ucenik: <User>ucenik,
+                nastavnik: c.nastavnik,
+                pocetakCasa: new Date(c.pocetakCasa),
+                  krajCasa: c.krajCasa,
+                  tema: c.tema,
+                  predmet: c.predmet, 
+                  odradjen: c.odradjen
+              }
+
+              this.casoviSortiraniPrvih5.push(uCas);
             }
           )
         }
+      )
+    }
 
-
-        }}
-        this.casoviUserSortirani = this.casoviUser;
-        this.casoviUserSortirani.sort((a, b)=> {
-          let aPocetak = new Date(a.pocetakCasa);
-          let bPocetak = new Date(b.pocetakCasa);
-          if (this.ranijiDatum(aPocetak, bPocetak)) {
-            return -1; // date1 comes before date2
-          } else if (this.ranijiDatum(bPocetak, aPocetak)) {
-            return 1; // date1 comes after date2
-          } else {
-            return 0; // dates are equal
-          }
-        });
-
-        // filtriraj da budu u naredna tri dana
-        this.trenutnoVreme = new Date();
-
-        let triDanaKasnije = new Date(this.trenutnoVreme.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.casoviUserSortirani = this.casoviUserSortirani.filter(cas => {
-          let pocetakCasa = new Date(cas.pocetakCasa);
-          return pocetakCasa.getTime() <= triDanaKasnije.getTime()
-        });
-        let i = 0;
-        for (let c of this.casoviUserSortirani) {
-          if (i == 5) break;
-          this.casoviSortiraniPrvih5.push(c);
-          i = i + 1;
-        }
+    this.kreirajZahteve();
+      
 
       }
-    )
+)
+}
 
-    
+sortiraj() {
+  this.sortiraniPrvih5 = [];
+  this.casoviSortiraniPrvih5 = [];
+  let triDanaKasnije = new Date(this.trenutnoVreme.getTime() + (3 * 24 * 60 * 60 * 1000));
+    console.log("tri dana Kasnije: " +triDanaKasnije);
+    this.casovi = this.casovi.filter(cas => {
+      let pocetakCasa = new Date(cas.pocetakCasa);
+      return pocetakCasa.getTime() <= triDanaKasnije.getTime()
+    });
+    let i = 0;
+    for (let c of this.casovi) {
+      if (i == 5) break;
+     // this.casoviSortiraniPrvih5.push(c);
+     this.sortiraniPrvih5.push(c);
+      console.log(c.pocetakCasa);
+      i = i + 1;
+    }
 
+    for (let c of this.sortiraniPrvih5) {
+      this.userService.dohvatiKorisnika(c.ucenik).subscribe(
+        u => {
+          let ucenik = u;
+          this.userService.dohvatiKorisnika(c.nastavnik).subscribe(
+            p => {
+              let prof = p;
+              let uCas = {
+                ucenik: <User>ucenik,
+                nastavnik: c.nastavnik,
+                pocetakCasa: new Date(c.pocetakCasa),
+                  krajCasa: c.krajCasa,
+                  tema: c.tema,
+                  predmet: c.predmet, 
+                  odradjen: c.odradjen
+              }
+
+              this.casoviSortiraniPrvih5.push(uCas);
+            }
+          )
+        }
+      )
+    }
+
+
+}
+
+  kreirajZahteve() {
     this.scheduleClassService.dohvatiZahteve().subscribe(
       x => {
         this.zahteviCasovi = x;
@@ -146,7 +214,7 @@ export class NastavnikCasoviComponent {
 
                   this.zahteviCasoviUser.push(zhtv);
                 }
-                  
+
 
               )
             }
@@ -164,7 +232,6 @@ export class NastavnikCasoviComponent {
   trenutnoVreme: Date = new Date();
 
   casoviUserSortirani: SchoolClassUser[] = [];
-  casoviSortiraniPrvih5: SchoolClassUser[] = [];
 
   ranijiDatum(date1: Date, date2: Date): boolean {
 
@@ -172,46 +239,26 @@ export class NastavnikCasoviComponent {
   }
 
   pridruziSe(cas: SchoolClassUser) {
-    this.schoolClassService.odradiCas(cas.nastavnik, cas.ucenik.korisnickoIme,
-      cas.predmet, cas.pocetakCasa, true).subscribe(
+    console.log(cas.nastavnik)
+    console.log(cas.pocetakCasa.toISOString())
+    this.schoolClassService.odradiCas(cas.nastavnik, cas.pocetakCasa.toISOString()).subscribe(
         ok => {
-          this.casoviUser.filter((value)=> value.odradjen !== true);
-          this.casoviUserSortirani = this.casoviUser;
-        this.casoviUserSortirani.sort((a, b)=> {
-          let aPocetak = new Date(a.pocetakCasa);
-          let bPocetak = new Date(b.pocetakCasa);
-          if (this.ranijiDatum(aPocetak, bPocetak)) {
-            return -1; // date1 comes before date2
-          } else if (this.ranijiDatum(bPocetak, aPocetak)) {
-            return 1; // date1 comes after date2
-          } else {
-            return 0; // dates are equal
-          }
-        });
+          console.log("odradjen cas")
+          
+          this.casovi = this.casovi.filter((value) => {
+            return cas.nastavnik != value.nastavnik && cas.pocetakCasa.toISOString() != value.pocetakCasa;
+          })
+          this.casoviUser = this.casoviUser.filter((value)=> {
+            return cas.nastavnik != value.nastavnik && value.pocetakCasa != cas.pocetakCasa;
+          })
 
-        // filtriraj da budu u naredna tri dana
-        this.trenutnoVreme = new Date();
-
-        let triDanaKasnije = new Date(this.trenutnoVreme.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.casoviUserSortirani = this.casoviUserSortirani.filter(cas => {
-          let pocetakCasa = new Date(cas.pocetakCasa);
-          return pocetakCasa.getTime() <= triDanaKasnije.getTime()
-        });
-        let i = 0;
-        for (let c of this.casoviUserSortirani) {
-          if (i == 5) break;
-          this.casoviSortiraniPrvih5.push(c);
-          i = i + 1;
-        }
+          this.sortiraj();
         }
       )
   }
   unetoObrazlozenje: boolean = false;
   unesiObrazlozenje() {
-    this.unetoObrazlozenje = false;
-    if (this.razlog !== "") {
-      this.unetoObrazlozenje = true;
-    }
+    this.unetoObrazlozenje = true;
   }
   zahteviCasovi: ScheduleClass[] = [];
   zahteviCasoviUser: ClassReqUser[] = [];
@@ -222,44 +269,117 @@ export class NastavnikCasoviComponent {
 
   user: User = new User();
 
+  odobravanje: boolean = false;
+  neodobravanje: boolean = false;
+
   odobriZahtev(zahtev: ClassReqUser) {
-    this.scheduleClassService.prihvatiZahtev(this.zahtevZaObradu.nastavnik.korisnickoIme,
-      this.zahtevZaObradu.ucenik.korisnickoIme, this.zahtevZaObradu.pocetakCasa, this.zahtevZaObradu.krajCasa, this.zahtevZaObradu.tema, this.zahtevZaObradu.tema).subscribe(
+    console.log("prihvata Cas")
+    this.odobravanje = true;
+    console.log(zahtev.pocetakCasa);
+    console.log(zahtev.nastavnik.korisnickoIme);
+    this.scheduleClassService.prihvatiZahtev(zahtev.nastavnik.korisnickoIme,zahtev.pocetakCasa ).subscribe(
 
         ok => {
+          console.log("prihvacen cas")
+          console.log(ok.message)
+          console.log()
+          this.zahteviCasoviUser.filter((value)=> value.prihvacen !== 1); // obradjen
+          this.schoolClassService.dodajCas(zahtev.nastavnik.korisnickoIme,
+            zahtev.ucenik.korisnickoIme, zahtev.predmet,
+            zahtev.pocetakCasa, zahtev.krajCasa,
+            zahtev.tema, false).subscribe(
+              ok => {
+                
+                let cas = {
+                  ucenik: <User>zahtev.ucenik,
+                  nastavnik:zahtev.nastavnik.korisnickoIme,
+                  pocetakCasa: new Date(zahtev.pocetakCasa),
+                  krajCasa: zahtev.krajCasa,
+                  tema:zahtev.tema, odradjen: false,
+                  predmet: zahtev.predmet
+
+                }
+                let casO = {
+                  ucenik: zahtev.ucenik.korisnickoIme,
+                  nastavnik:zahtev.nastavnik.korisnickoIme,
+                  pocetakCasa: zahtev.pocetakCasa,
+                  krajCasa: zahtev.krajCasa,
+                  tema:zahtev.tema, odradjen: false,
+                  predmet: zahtev.predmet
+                }
+                this.casovi.push(casO);
+                this.casoviUser.push(cas);
+                this.sortiraj();
+                console.log("dodat cas");
+              //  this.zahteviCasoviUser.filter((value)=> value.prihvacen !== 1); // obradjen
+                this.zahteviCasoviUser.filter((value)=> {
+                  return (value.nastavnik.korisnickoIme == this.zahtev.nastavnik.korisnickoIme
+                    && this.zahtev.pocetakCasa == value.pocetakCasa);
+                });
+                
+
+                this.scheduleClassService.obrisiZahtev(zahtev.nastavnik.korisnickoIme, zahtev.pocetakCasa).subscribe(
+                  ok => {
+                    
+                this.zahteviCasoviUser = [];
+                
+                this.kreirajZahteve();
+                this.odbijanje = false;
+                this.odobravanje = false;
+                  }
+                )
+              }
+            )
+
+
+
 
         }
       )
 
-      this.schoolClassService.dodajCas(this.zahtevZaObradu.nastavnik.korisnickoIme,
-        this.zahtevZaObradu.ucenik.korisnickoIme, this.zahtevZaObradu.predmet,
-        this.zahtevZaObradu.pocetakCasa, this.zahtevZaObradu.krajCasa,
-        this.zahtevZaObradu.tema, false).subscribe(
-          ok => {
 
-            this.zahteviCasoviUser.filter((value)=> value.prihvacen !== 1); // obradjen
-          }
-        )
+
   }
 
   casoviUser: SchoolClassUser[] = [];
   casovi: SchoolClass[] = [];
-
+  message: string = "";
+odbijanje: boolean = false;
   odbijZahtev(zahtev: ClassReqUser) {
-    this.zahtevZaObradu = zahtev;
-    this.openModal();
+    this.neodobravanje = !this.neodobravanje;
+    this.odbijanje = !this.odbijanje;
+    this.message = "odbijanje";
+    this.zahtev = zahtev;
+  //  this.openModal();
   }
+
+  zahtev: ClassReqUser = new ClassReqUser();
 
   zahtevZaObradu: ClassReqUser = new ClassReqUser();
 
   izmeni() {
     // odbij zahtev
-    this.scheduleClassService.odbijZahtev(this.zahtevZaObradu.nastavnik.korisnickoIme,
-      this.zahtevZaObradu.ucenik.korisnickoIme, this.zahtevZaObradu.pocetakCasa, this.zahtevZaObradu.krajCasa, this.zahtevZaObradu.tema, this.zahtevZaObradu.tema, this.razlog).subscribe(
+    this.message = "izmena";
+    this.scheduleClassService.odbijZahtev(this.zahtev.nastavnik.korisnickoIme,this.zahtev.pocetakCasa, this.razlog).subscribe(
         ok => {
-          this.zahteviCasoviUser.filter((value)=> value.prihvacen !== 2); // odbijen
+       //   this.closeModal();
+       
+       
+       this.scheduleClassService.obrisiZahtev(this.zahtev.nastavnik.korisnickoIme, this.zahtev.pocetakCasa).subscribe(
+        ok => {
+          
+       this.zahteviCasoviUser = [];
+       this.kreirajZahteve();
+       this.odbijanje = false;
+       this.odobravanje = false;
         }
       )
+      
+        }
+      )
+
+
+      // odbijen
   }
   razlog: string = "";
 

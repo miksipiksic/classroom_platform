@@ -1,3 +1,8 @@
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="odjaviSe()">Одјави се</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="ucenikProfil()">Профил</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="ucenikCasovi()">Часови</button>
+
+
 
 <input class="search form-control" [(ngModel)]="searchIme" (change)="onSearch()" placeholder="Име" />
 <input class="search form-control" [(ngModel)]="searchPrezime" (change)="onSearch()" placeholder="Презиме" />
@@ -10,7 +15,7 @@
   <button (click)="sortPrezimeOpadajuce()" class="btn btn-secondary me-2">Презиме(опадајуће)</button>
   <button (click)="sortPredmetRastuce()" class="btn btn-secondary me-2">Предмет(растуће)</button>
   <button (click)="sortPredmetOpadajuce()" class="btn btn-secondary me-2">Предмет(опадајуће)</button>
-  
+
 </div>
 {{user.korisnickoIme}}
 {{user.tipSkole}}
@@ -37,7 +42,7 @@
                 </tbody>
               </table>
           </td>
-          
+
           </tr>
     </tbody>
 </table>

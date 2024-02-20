@@ -24,7 +24,9 @@ import { DiagramBarComponent } from './diagram-bar/diagram-bar.component';
 import { DiagramPieComponent } from './diagram-pie/diagram-pie.component';
 import { DiagramHistogramComponent } from './diagram-histogram/diagram-histogram.component';
 import { DiagramLinesComponent } from './diagram-lines/diagram-lines.component';
-import { NgChartsModule } from 'ng2-charts';
+import { LoginAdminComponent } from './login-admin/login-admin.component';
+import { NgChartsModule} from 'ng2-charts';
+import { CreateJSONComponent } from './create-json/create-json.component'
 
 @NgModule({
   declarations: [
@@ -47,14 +49,15 @@ import { NgChartsModule } from 'ng2-charts';
     DiagramBarComponent,
     DiagramPieComponent,
     DiagramHistogramComponent,
-    DiagramLinesComponent
+    DiagramLinesComponent,
+    LoginAdminComponent,
+    CreateJSONComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

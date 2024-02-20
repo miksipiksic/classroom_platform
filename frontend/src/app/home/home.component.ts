@@ -6,6 +6,7 @@ import { EngagementService } from '../services/engagement.service';
 import { SchoolsubjectService } from '../services/schoolsubject.service';
 import { SchoolSubject } from '../models/schoolsubject';
 import { EngagementUser } from '../models/engagementUser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +16,29 @@ import { EngagementUser } from '../models/engagementUser';
 export class HomeComponent implements OnInit {
   constructor(private userService: UserService,
     private engagementService: EngagementService,
-    private schoolSubjectService: SchoolsubjectService) {}
+    private schoolSubjectService: SchoolsubjectService,
+    private router: Router) {}
+
+    loggedUcenik: boolean = false;
+    loggedNastavnik: boolean = false;
   ngOnInit() : void {
+    let loggedIn = localStorage.getItem("logged");
+    if (loggedIn) {
+      this.userService.dohvatiKorisnika(loggedIn).subscribe(
+        o =>  {
+          if (o.tip == 1) {
+            this.loggedUcenik = true;
+          }
+          if (o.tip == 2) {
+            this.loggedNastavnik = true;
+          }
+        }
+      )
+    }
     this.userService.dohvatiUcenike().subscribe(
       data => {
         this.ucenici = data;
-        
+
       this.brojUcenika = this.ucenici.length;
       }
     )
@@ -29,12 +47,12 @@ export class HomeComponent implements OnInit {
       data => {
         this.nastavnici = data;
         this.nastavnici = this.nastavnici.filter((value) => value.prihvacen !== 2);
-        
+
         this.brojNastavnika = this.nastavnici.length;
       }
     )
 
-    
+
 
     this.schoolSubjectService.dohvatiPredmete().subscribe(
       data => {
@@ -42,7 +60,7 @@ export class HomeComponent implements OnInit {
         this.engagementService.dohvatiAngazovanja().subscribe(
           engs => {
             this.angazovanja = engs;
-            
+
             for (let angazovanje of this.angazovanja) {
               let predmet = angazovanje.predmet;
               let nastavnici:User[] = [];
@@ -56,7 +74,7 @@ export class HomeComponent implements OnInit {
               let a = {
                 predmet: predmet,
                 nastavnici: nastavnici
-              }  
+              }
               this.angazovanjaUser.push(a);
             }
             this.angazovanjaUserSort = this.angazovanjaUser;
@@ -93,36 +111,36 @@ export class HomeComponent implements OnInit {
 
     this.filterItems(searchImeString, searchPrezimeString, searchPredmetString);
   }
-  
+
   filterItems(ime: string, prezime: string, predmet: string) {
-    this.angazovanjaUserSearch = this.angazovanjaUserSearch.filter((item) => 
+    this.angazovanjaUserSearch = this.angazovanjaUserSearch.filter((item) =>
     {
       const predmetMatch = item.predmet.toLowerCase().includes(predmet.toLowerCase());
       const imeMatch = item.nastavnici.some((nast) => nast.ime.toLowerCase().includes(ime.toLowerCase()));
-      const prezimeMatch = item.nastavnici.some((nast)=> nast.prezime.toLowerCase().includes(prezime));
+      const prezimeMatch = item.nastavnici.some((nast)=> nast.prezime.toLowerCase().includes(prezime.toLowerCase()));
 
       console.log(item.predmet)
       console.log(predmetMatch)
       console.log(imeMatch)
       console.log(prezimeMatch)
       return predmetMatch && imeMatch && prezimeMatch;
-      
+
     });
-  
+
   }
-  
+
   // Create the combined structure
-  
+
   angazovanjaUser: EngagementUser[] = [];
   angazovanjaUserSort: EngagementUser[] = [];
   angazovanjaUserSearch: EngagementUser[] = []
-  
+
   ucenici: User[] = [];
   brojUcenika: number = 0;
   brojNastavnika: number = 0;
   nastavnici : User[] = [];
 
-  predmeti: SchoolSubject[] = [];  
+  predmeti: SchoolSubject[] = [];
   angazovanja: Engagement[] = [];
   angazovanjaSort : Engagement[] = [];
 
@@ -142,7 +160,7 @@ export class HomeComponent implements OnInit {
 
   uporediPredmete = (a: EngagementUser, b: EngagementUser): number => {
     return a.predmet.localeCompare(b.predmet);
-  } 
+  }
 
 
   sortImeRastuce() {
@@ -182,7 +200,7 @@ export class HomeComponent implements OnInit {
 
 
   sortPrezimeOpadajuce() {
-   
+
   //  this.angazovanjaUserSearch = this.angazovanjaUserSort;
     this.angazovanjaUserSearch.sort((a,b) => {
       let poredjenje = this.uporediPrezime(a, b);
@@ -216,6 +234,10 @@ export class HomeComponent implements OnInit {
       return this.uporediPredmete(a, b);
     })
     this.angazovanjaUserSearch.reverse();
+  }
+
+  prijava() {
+    this.router.navigate(['login']);
   }
 
 

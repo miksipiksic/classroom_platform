@@ -16,25 +16,68 @@ export class LoginComponent {
   lozinka: string = "";
 
   u: User = new User();
+  message: string = "";
 
-  login() {
+  unetoKorisnickoIme() {
+    this.message = "";
+
+  this.invalidIme= false;
+  this.userService.dohvatiKorisnika(this.korisnickoIme).subscribe(
+    u => {
+      if (u.korisnickoIme == this.korisnickoIme) {
+        this.invalidIme = false;
+      } else {
+        this.invalidIme = true;
+
+        this.message = "Корисник не постоји."
+      }
+    }
+  )
+  }
+
+  unetaLozinka() {
+    this.message = "";
+
+    this.invalidLozinka = false;
     this.userService.dohvatiKorisnika(this.korisnickoIme).subscribe(
-      data => {
-        if (data!= null) {
-          localStorage.setItem("loggedIn", this.korisnickoIme); 
-          this.u = data;
-          if (this.u.tip == 1) {
+      u => {
+        if (u.lozinka == this.lozinka) {
+          this.invalidLozinka = false;
 
-            this.router.navigate(['ucenik-nastavnici']);
-          } 
-          if(this.u.tip == 2) {
-            this.router.navigate(['nastavnik-casovi'])
-          }
+        } else {
+          this.invalidLozinka = true;
+          this.message = "Погрешна лозинка."
         }
-
-        
       }
     )
+  }
+  invalidIme: boolean = true;
+  invalidLozinka: boolean = true;
+
+  login() {
+    if (!this.invalidIme && !this.invalidLozinka) {
+      this.userService.dohvatiKorisnika(this.korisnickoIme).subscribe(
+        ok => {
+          this.u = ok;
+          localStorage.setItem("loggedIn", this.korisnickoIme);
+          if (this.u.tip == 1) {
+
+            this.router.navigate(['ucenik-profil']);
+          }
+          if(this.u.tip == 2) {
+            this.router.navigate(['nastavnik-profil'])
+          }
+          if (this.u.tip == 0) {
+            this.message = "Корисник је админ."
+            return;
+          }
+
+        }
+      )
+
+
+      }
+
   }
 
 }

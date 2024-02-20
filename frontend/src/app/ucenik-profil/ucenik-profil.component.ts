@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../services/user.service';
 import User from '../models/user';
+import { Router } from '@angular/router';
 
 const convertBase64 = (file: File) => {
   return new Promise((reslove, reject) => {{
@@ -31,10 +32,11 @@ export class UcenikProfilComponent implements OnInit{
 
 
   @ViewChild('myModal') myModal: any;
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+    private router: Router) {}
 
   ngOnInit() {
-    
+
     let loggedIn = localStorage.getItem("loggedIn");
     //this.userService.updateNavbar(this.loggedIn);
     console.log(loggedIn)
@@ -65,7 +67,7 @@ export class UcenikProfilComponent implements OnInit{
   promenaTipSkole: string = "";
   promenaRazred: number | undefined;
 
-  
+
   emailMessage: string = "";
   emailError: boolean = false;
 
@@ -74,7 +76,7 @@ export class UcenikProfilComponent implements OnInit{
     this.promenaImejl = event.target.value;
     this.emailMessage = "";
     this.emailError = false;
-    
+
 
     this.userService.postojeciKorisnikImejl(this.promenaImejl).subscribe(
       data => {
@@ -82,14 +84,14 @@ export class UcenikProfilComponent implements OnInit{
           this.emailError = true;
           this.emailMessage = "Постоји корисник са датом и-мејл адресом"
           this.promenaImejl = "";
-        } 
+        }
       }
     )
   }
 
   imageUpload: string = "";
   pdfUpload: string = "";
-  
+
   selectedFile: File | undefined ;
 
   invalidImage: boolean = false;
@@ -98,7 +100,7 @@ export class UcenikProfilComponent implements OnInit{
     this.messageImage = "";
     this.selectedFile = <File>event.target.files[0];
     if (this.selectedFile instanceof File) {
-      
+
       let fileName = this.selectedFile.name;
       let fileExtension = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2);
       if (fileExtension.toLowerCase() !== 'jpg' && fileExtension.toLowerCase() !== 'png' && fileExtension.toLowerCase() !== 'jpeg') {
@@ -137,9 +139,9 @@ export class UcenikProfilComponent implements OnInit{
     //  this.user.profilnaSlika = this.imageUpload;
     } else {
       this.imageUpload = "";
-      return; 
+      return;
     }
-    
+
   }
 
   invalidTipSkole: boolean = false;
@@ -150,7 +152,7 @@ export class UcenikProfilComponent implements OnInit{
     if (event.target.value === "") {
       this.tipSkoleError = "";
       this.invalidTipSkole = false;
-      
+
     if (<number>this.promenaRazred < this.user.razred) {
       this.razredError = "Не можете прећи у разред мањи од тренутног";
       this.invalidRazred = true;
@@ -195,7 +197,7 @@ export class UcenikProfilComponent implements OnInit{
 
   razred(event: any) {
     if (event.target.value === "") {
-      
+
     this.invalidRazred = false;
     this.razredError = "";
     this.promenjenRazred = false;
@@ -300,6 +302,24 @@ export class UcenikProfilComponent implements OnInit{
 
 
   }
+
+  odjaviSe() {
+    localStorage.clear();
+    this.router.navigate(['']);
+  }
+
+  ucenikNastavnici() {
+    this.router.navigate(['ucenik-nastavnici'])
+  }
+
+  ucenikCasovi() {
+    this.router.navigate(['ucenik-casovi'])
+  }
+
+  promeniLozinku() {
+    this.router.navigate(['promeni']);
+  }
+
 
 }
 

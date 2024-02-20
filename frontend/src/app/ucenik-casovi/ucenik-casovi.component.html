@@ -1,1 +1,18 @@
-<p>ucenik-casovi works!</p>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="odjaviSe()">Одјави се</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="ucenikProfil()">Профил</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="ucenikNastavnici()">Наставници</button>
+
+<table class="table table-bordered table-sm">
+  <thead>
+      <tr>
+          <th scope="col">Предмет</th>
+          <th scope="col">Датум</th>
+      </tr>
+  </thead>
+  <tbody *ngFor="let z of casoviDate" class="table-group-divider">
+      <tr>
+        <td>{{z.predmet}}</td>
+        <td>{{z.pocetakCasa}}</td>
+      </tr>
+  </tbody>
+</table>

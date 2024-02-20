@@ -1,19 +1,23 @@
 <form class="login_form">
     <div class="form-group top_margin5">
-        <label for="inputUsername">Korisnicko Ime</label>
-        <input name="username" [(ngModel)]="korisnickoIme" type="text" class="form-control input_field_max_width" required id="inputUsername" aria-describedby="emailHelp" placeholder="Unesite korisnicko ime">
+        <label for="inputUsername">Корисничко име</label>
+        <input name="username" [(ngModel)]="korisnickoIme" (input)="unetoKorisnickoIme()" type="text" class="form-control input_field_max_width" required id="inputUsername" aria-describedby="emailHelp" >
     </div>
     <div class="form-group top_margin5">
-        <label for="inputPassword">Lozinka</label>
-        <input name="password" [(ngModel)]="lozinka" type="password" class="form-control input_field_max_width" required id="inputPassword" placeholder="Unesite lozinku">
+        <label for="inputPassword">Лозинка</label>
+        <input name="password" [(ngModel)]="lozinka" (input)="unetaLozinka()" type="password" class="form-control input_field_max_width" required id="inputPassword" >
     </div>
     <div class="confirm top_margin15">
-        <button (click)="login()" class="btn btn-primary">Potvrdi</button>
+        <button (click)="login()" [disabled]="invalidIme || invalidLozinka" class="btn btn-primary">Пријаве</button>
         <p class="confirm err_msg"></p>
     </div>
 </form>
 
+{{message}}
+
+{{u.tip}}
+
 <div class="login_form">
-    <p>Nemate nalog? Registrujte se <a href="register">ovde</a></p> 
+    <p>Региструјте се <a href="register">овде</a></p>
 </div>
 
