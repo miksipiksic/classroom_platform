@@ -1,0 +1,403 @@
+[{
+  "_id": {
+    "$oid": "65d1fcb40e59d390988f5c24"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2024-02-23T07:50:00.000Z",
+  "krajCasa": "2024-02-23T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": false
+},
+{
+  "_id": {
+    "$oid": "65d20110c6338cdc19f00fb3"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2024-02-22T09:30:00.000Z",
+  "krajCasa": "2024-02-22T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d2c6a2564de4c85cc79a"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-02-22T09:30:00.000Z",
+  "krajCasa": "2023-02-22T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d2d4a2564de4c85cc79b"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2023-02-23T07:50:00.000Z",
+  "krajCasa": "2023-02-23T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": true
+},
+{
+  "_id": {
+    "$oid": "65d3d2eaa2564de4c85cc79c"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2023-05-23T07:50:00.000Z",
+  "krajCasa": "2023-05-23T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": true
+},
+{
+  "_id": {
+    "$oid": "65d3d301a2564de4c85cc79d"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-01-22T09:30:00.000Z",
+  "krajCasa": "2023-01-22T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d31ca2564de4c85cc79e"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik1",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-03-15T09:30:00.000Z",
+  "krajCasa": "2023-03-15T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d331a2564de4c85cc79f"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-03-17T09:30:00.000Z",
+  "krajCasa": "2023-03-17T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d346a2564de4c85cc7a0"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2023-06-01T07:50:00.000Z",
+  "krajCasa": "2023-06-01T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": true
+},
+{
+  "_id": {
+    "$oid": "65d3d359a2564de4c85cc7a1"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-02-13T09:30:00.000Z",
+  "krajCasa": "2023-02-13T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d371a2564de4c85cc7a2"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-02-14T09:30:00.000Z",
+  "krajCasa": "2023-02-14T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d381a2564de4c85cc7a3"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-09-28T09:30:00.000Z",
+  "krajCasa": "2023-09-28T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3d3b3a2564de4c85cc7a5"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2023-11-13T07:50:00.000Z",
+  "krajCasa": "2023-11-13T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": true
+},
+{
+  "_id": {
+    "$oid": "65d3d3c3a2564de4c85cc7a6"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2023-12-23T07:50:00.000Z",
+  "krajCasa": "2023-12-23T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": true
+},
+{
+  "_id": {
+    "$oid": "65d3d3cfa2564de4c85cc7a7"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2023-02-10T07:50:00.000Z",
+  "krajCasa": "2023-02-10T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "odradjen": true
+},
+{
+  "_id": {
+    "$oid": "65d3d3e8a2564de4c85cc7a8"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2023-04-05T09:30:00.000Z",
+  "krajCasa": "2023-04-05T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3fb24f100f55b0c01067c"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "daca",
+  "predmet": "Историја",
+  "pocetakCasa": "2024-02-23T13:00:00.000Z",
+  "krajCasa": "2024-02-23T15:00:00.000Z",
+  "tema": "Династија Немањића",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3fbf38dae4fd37a0ff0cb"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "ucenik0",
+  "predmet": "Математика",
+  "pocetakCasa": "2024-02-21T14:00:00.000Z",
+  "krajCasa": "2024-02-21T15:00:00.000Z",
+  "tema": "Сабирање",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3fc6a8dae4fd37a0ff0eb"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "ucenik0",
+  "predmet": "Географија",
+  "pocetakCasa": "2024-02-27T15:25:00.000Z",
+  "krajCasa": "2024-02-27T16:25:00.000Z",
+  "tema": "Србија",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3fd888dae4fd37a0ff136"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "ucenik0",
+  "predmet": "Географија",
+  "pocetakCasa": "2024-02-27T14:00:00.000Z",
+  "krajCasa": "2024-02-27T15:00:00.000Z",
+  "tema": "Србија",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3fdba8dae4fd37a0ff167"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "ucenik0",
+  "predmet": "Географија",
+  "pocetakCasa": "2024-02-27T17:20:00.000Z",
+  "krajCasa": "2024-02-27T18:20:00.000Z",
+  "tema": "Србија",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d3ff0e8dae4fd37a0ff242"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "daca",
+  "predmet": "Биологија",
+  "pocetakCasa": "2024-02-24T16:10:00.000Z",
+  "krajCasa": "2024-02-24T18:10:00.000Z",
+  "tema": "Митохондрија",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40a878dae4fd37a0ff55a"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik0",
+  "predmet": "Француски језик",
+  "pocetakCasa": "2024-02-22T09:30:00.000Z",
+  "krajCasa": "2024-02-22T11:30:00.000Z",
+  "tema": "Козметика",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40ad38dae4fd37a0ff5ba"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik2",
+  "predmet": "Шпански језик",
+  "pocetakCasa": "2024-02-25T11:00:00.000Z",
+  "krajCasa": "2024-02-25T13:00:00.000Z",
+  "tema": "Прошло време",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40b4b8dae4fd37a0ffd51"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik2",
+  "predmet": "Шпански језик",
+  "pocetakCasa": "2024-02-25T07:00:00.000Z",
+  "krajCasa": "2024-02-25T09:00:00.000Z",
+  "tema": "Прошло време",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40b818dae4fd37a0ffd92"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik2",
+  "predmet": "Енглески језик",
+  "pocetakCasa": "2024-02-25T13:00:00.000Z",
+  "krajCasa": "2024-02-25T15:00:00.000Z",
+  "tema": "Конверзација",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40ba98dae4fd37a0ffdcf"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik2",
+  "predmet": "Шпански језик",
+  "pocetakCasa": "2024-02-25T09:00:00.000Z",
+  "krajCasa": "2024-02-25T11:00:00.000Z",
+  "tema": "Прошло време",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40bfa8dae4fd37a0ffe01"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik2",
+  "predmet": "Енглески језик",
+  "pocetakCasa": "2024-02-25T15:00:00.000Z",
+  "krajCasa": "2024-02-25T17:00:00.000Z",
+  "tema": "Конверзација",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40d588dae4fd37a0ffe29"
+  },
+  "nastavnik": "miki",
+  "ucenik": "mica",
+  "predmet": "Енглески језик",
+  "pocetakCasa": "2024-02-25T17:55:00.000Z",
+  "krajCasa": "2024-02-25T19:55:00.000Z",
+  "tema": "Конверзација",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40e5d8dae4fd37a0ffe55"
+  },
+  "nastavnik": "miki",
+  "ucenik": "ucenik1",
+  "predmet": "Српски језик и књижевност",
+  "pocetakCasa": "2024-02-24T09:50:00.000Z",
+  "krajCasa": "2024-02-24T10:50:00.000Z",
+  "tema": "Заменице",
+  "odradjen": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40e978dae4fd37a0ffe99"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Физика",
+  "pocetakCasa": "2024-02-22T08:40:00.000Z",
+  "krajCasa": "2024-02-22T10:40:00.000Z",
+  "tema": "Слободан пад",
+  "odradjen": true,
+  "__v": 0
+}]

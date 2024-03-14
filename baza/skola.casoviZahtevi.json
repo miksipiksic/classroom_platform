@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "65d17d298dd9721e6d29a9e5"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Математика",
+  "pocetakCasa": "2024-02-23T07:50:00.000Z",
+  "krajCasa": "2024-02-23T09:50:00.000Z",
+  "tema": "Тригонометрија",
+  "__v": 0,
+  "prihvacen": 1
+},
+{
+  "_id": {
+    "$oid": "65d17f9a8dd9721e6d29ab58"
+  },
+  "nastavnik": "miki",
+  "ucenik": "mica",
+  "predmet": "Енглески језик",
+  "pocetakCasa": "2024-02-25T20:00:00.000Z",
+  "krajCasa": "2024-02-25T21:00:00.000Z",
+  "tema": "Припрема за тест",
+  "__v": 0,
+  "prihvacen": 0
+},
+{
+  "_id": {
+    "$oid": "65d3f8f4c13062deead83385"
+  },
+  "nastavnik": "veljko",
+  "ucenik": "ucenik0",
+  "predmet": "Географија",
+  "pocetakCasa": "2024-02-27T20:30:00.000Z",
+  "krajCasa": "2024-02-27T21:30:00.000Z",
+  "tema": "Србија",
+  "prihvacen": 0,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40edd8dae4fd37a0ffef0"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Информатика",
+  "pocetakCasa": "2024-02-21T10:35:00.000Z",
+  "krajCasa": "2024-02-21T12:35:00.000Z",
+  "tema": "Увод у рачунаре",
+  "prihvacen": 0,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d40ef08dae4fd37a0ffef5"
+  },
+  "nastavnik": "milena",
+  "ucenik": "daca",
+  "predmet": "Програмирање",
+  "pocetakCasa": "2024-02-21T14:40:00.000Z",
+  "krajCasa": "2024-02-21T16:40:00.000Z",
+  "tema": "C#",
+  "prihvacen": 0,
+  "__v": 0
+}]

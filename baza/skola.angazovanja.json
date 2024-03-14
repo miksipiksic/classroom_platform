@@ -1,0 +1,169 @@
+[{
+  "_id": {
+    "$oid": "65cfe797385e3f773a63f66f"
+  },
+  "predmet": "Математика",
+  "nastavnici": [
+    "milena",
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe7b7385e3f773a63f670"
+  },
+  "predmet": "Физика",
+  "nastavnici": [
+    "milena",
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe7d9385e3f773a63f671"
+  },
+  "predmet": "Хемија",
+  "nastavnici": [
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe7e3385e3f773a63f672"
+  },
+  "predmet": "Информатика",
+  "nastavnici": [
+    "milena",
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe7ea385e3f773a63f673"
+  },
+  "predmet": "Програмирање",
+  "nastavnici": [
+    "milena",
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe7f7385e3f773a63f674"
+  },
+  "predmet": "Српски језик и књижевност",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe802385e3f773a63f675"
+  },
+  "predmet": "Енглески језик",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe80b385e3f773a63f676"
+  },
+  "predmet": "Немачки језик",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe815385e3f773a63f677"
+  },
+  "predmet": "Италијански језик",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe81e385e3f773a63f678"
+  },
+  "predmet": "Француски језик",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe82c385e3f773a63f679"
+  },
+  "predmet": "Шпански језик",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe835385e3f773a63f67a"
+  },
+  "predmet": "Латински језик",
+  "nastavnici": [
+    "miki"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe83e385e3f773a63f67b"
+  },
+  "predmet": "Биологија",
+  "nastavnici": [
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe845385e3f773a63f67c"
+  },
+  "predmet": "Историја",
+  "nastavnici": [
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe84d385e3f773a63f67d"
+  },
+  "predmet": "Географија",
+  "nastavnici": [
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65cfe857385e3f773a63f67e"
+  },
+  "predmet": "Свет око нас",
+  "nastavnici": [
+    "veljko"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65d0ef716937f65147e5b9b7"
+  },
+  "predmet": "Основи електротехнике",
+  "nastavnici": [
+    "veljko",
+    "milovan"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d4137be8f5ae220768bb8d"
+  },
+  "predmet": "",
+  "nastavnici": [
+    "milovan"
+  ],
+  "__v": 0
+}]

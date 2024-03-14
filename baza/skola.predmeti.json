@@ -1,0 +1,110 @@
+[{
+  "_id": {
+    "$oid": "65cfe797385e3f773a63f66f"
+  },
+  "imePredmeta": "Математика"
+},
+{
+  "_id": {
+    "$oid": "65cfe7b7385e3f773a63f670"
+  },
+  "imePredmeta": "Физика"
+},
+{
+  "_id": {
+    "$oid": "65cfe7d9385e3f773a63f671"
+  },
+  "imePredmeta": "Хемија"
+},
+{
+  "_id": {
+    "$oid": "65cfe7e3385e3f773a63f672"
+  },
+  "imePredmeta": "Информатика"
+},
+{
+  "_id": {
+    "$oid": "65cfe7ea385e3f773a63f673"
+  },
+  "imePredmeta": "Програмирање"
+},
+{
+  "_id": {
+    "$oid": "65cfe7f7385e3f773a63f674"
+  },
+  "imePredmeta": "Српски језик и књижевност"
+},
+{
+  "_id": {
+    "$oid": "65cfe802385e3f773a63f675"
+  },
+  "imePredmeta": "Енглески језик"
+},
+{
+  "_id": {
+    "$oid": "65cfe80b385e3f773a63f676"
+  },
+  "imePredmeta": "Немачки језик"
+},
+{
+  "_id": {
+    "$oid": "65cfe815385e3f773a63f677"
+  },
+  "imePredmeta": "Италијански језик"
+},
+{
+  "_id": {
+    "$oid": "65cfe81e385e3f773a63f678"
+  },
+  "imePredmeta": "Француски језик"
+},
+{
+  "_id": {
+    "$oid": "65cfe82c385e3f773a63f679"
+  },
+  "imePredmeta": "Шпански језик"
+},
+{
+  "_id": {
+    "$oid": "65cfe835385e3f773a63f67a"
+  },
+  "imePredmeta": "Латински језик"
+},
+{
+  "_id": {
+    "$oid": "65cfe83e385e3f773a63f67b"
+  },
+  "imePredmeta": "Биологија"
+},
+{
+  "_id": {
+    "$oid": "65cfe845385e3f773a63f67c"
+  },
+  "imePredmeta": "Историја"
+},
+{
+  "_id": {
+    "$oid": "65cfe84d385e3f773a63f67d"
+  },
+  "imePredmeta": "Географија"
+},
+{
+  "_id": {
+    "$oid": "65cfe857385e3f773a63f67e"
+  },
+  "imePredmeta": "Свет око нас"
+},
+{
+  "_id": {
+    "$oid": "65d0ef716937f65147e5b9b2"
+  },
+  "imePredmeta": "Основи електротехнике",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d4137be8f5ae220768bb88"
+  },
+  "imePredmeta": "",
+  "__v": 0
+}]
