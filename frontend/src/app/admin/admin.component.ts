@@ -193,13 +193,7 @@ export class AdminComponent {
 
   odbijZahtev(korisnickoIme: string) {
 
-   // this.requestService.dohvatiZahteve(korisnickoIme).subscribe(
-   //   data => {
-    //    this.nastavnikZahtev = data;
-
-    //  }
-   // )
-
+  
     this.requestService.postojeciKorisnikIme(korisnickoIme).subscribe(
       data => {
         this.nastavnikZahtev = data;
